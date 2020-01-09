@@ -1,0 +1,79 @@
+<div class="row positionPrincipalDiv" ng-init="departamentoCtrl.init()">
+	<div layout="row" class="apesaFont14">
+		<div flex="75"></div>
+		<div flex="4" class="dropdown" style="margin-left:55px;">
+			<md-button title="Agregar" permisopantalla permiso="2" idpantalla="11" ng-click="departamentoCtrl.newEdit()" class="md-raised md-primary">Agregar</md-button>				
+			<md-button class="md-icon-button" ng-disabled="departamentoCtrl.departamentos.length === 0 || departamentoCtrl.departamentos === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; margin-left:-4px;padding:0px; top:5px;">
+				<span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+			</md-button>
+			<ul class="table-export dropdown-menu excel-list" table-selector="'tablaDepartamento'" export-options="{type: 'excel', escape: true, ignoreColumn:[5], tableName: 'Departamentos' }" aria-labelledby="dropdownMenu1">
+					<li onclick="export_table_to_excel('tablaDepartamento','Departamentos','[1]','[5]')">
+							<span>Excel</span>
+					</li>
+					<li te-option te-value="'csv'" te-param="'type'">
+							<span>CSV</span>
+					</li>
+					<li te-option te-value="'txt'" te-param="'type'">
+							<span>TXT</span>
+					</li>
+			</ul>
+		</div>
+	</div>
+	<center>
+		<table style="width:1050px;" st-sticky-header st-table="departamentoCtrl.departamentosCollection" st-safe-src="departamentoCtrl.departamentos" class="table-bordered table-striped ng-table-monitor apesaFont" id="tablaDepartamento">
+			<thead style="border: 0;color: white;background: #22224b;z-index:1;">
+				<tr style="border: 0;">
+					<th style="text-align:center; width:150px;" st-sort="Departamento.Clave">Clave</th>
+					<th style="text-align:center; width:200px;" st-sort="Departamento.Nombre">Nombre</th>
+					<th style="text-align:center; width:300px;">Conceptos</th>
+					<th style="text-align:center; width:220px;" st-sort="Departamento.CuentaContable">Cuenta Contable</th>
+					<th style="text-align:center; width:80px;" st-sort="Departamento.Activo">Activo</th>
+					<th style="text-align:center;width:150px;"></th>
+				</tr>
+				<tr>
+					<td colspan="6">
+						<input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="deptoInfo in departamentoCtrl.departamentosCollection">
+					<td style="width:150px;position:relative;" title="{{deptoInfo.Departamento.Clave}}">
+						<div class="overflowContainer">{{deptoInfo.Departamento.Clave}}</div>
+					</td>
+					<td style="width:200px;position:relative;" title="{{deptoInfo.Departamento.Nombre}}">
+						<div class="overflowContainer">{{deptoInfo.Departamento.Nombre}}</div>
+					</td>
+					<td style="width:300px;">
+						<div style="height:25px;overflow: auto;width:inherit;">
+							<div class="overflowContainerDropDown" ng-repeat="concepto in deptoInfo.listConceptos" title="{{ concepto.Nombre }}">
+								{{ concepto.Nombre }}
+							</div>
+						</div>
+					</td>
+					<td style="width:220px;position:relative;" title="{{deptoInfo.Departamento.CuentaContable}}">
+						<div admin-mask mask="{{departamentoCtrl.mascara}}" mask-char="-" ng-Model="deptoInfo.Departamento.CuentaContable" class="overflowContainer">{{deptoInfo.Departamento.CuentaContable}}</div>
+					</td>
+					<td style="text-align:center;width:80px;">
+						<span class="glyphicon" style="text-align:center;">
+							<md-switch style="text-align:center;" ng-model="deptoInfo.Departamento.Activo" ng-disabled="true" class="md-switch md-primary" aria-label="Switch 2" ng-true-value="1" ng-false-value="0"></md-switch>
+						</span>
+						<span ng-hide="true">{{deptoInfo.Departamento.Activo == 1? "Si" :"No"}}</span>
+					</td>
+					<td style="text-align:center; width:100px; color:#333;">
+							<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-eye-open" title="Consultar" ng-click="departamentoCtrl.watch(deptoInfo)"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-pencil" permisopantalla permiso="3" idpantalla="11" title="Editar" ng-click="departamentoCtrl.edit(deptoInfo)"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-trash" permisopantalla permiso="4" idpantalla="11" title="Borrar" ng-click="departamentoCtrl.del(deptoInfo)"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</center>
+	<br>
+</div>
+<loading-modal class="modal show" loadshow="departamentoCtrl.loading" data-backdrop="static"/>

@@ -1,0 +1,101 @@
+<md-dialog style="width:800px;">
+  <form style="padding-top:20px; overflow:hidden;" name="grupocuentasCtrl.GrupocuentasForm" class="form-horizontal" ng-submit="Save()" role="form" novalidate>
+    <div layout="row" class="panel-body" style="height:50px">
+      <div flex="10"></div>
+      <div flex="30">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[grupocuentasCtrl.GrupocuentasForm.Nombre.$valid]">
+          <label for="IdGrupo" class="control-label">Grupo</label>
+          <input type="text" class="form-control" id="Nombre" name="Nombre" maxlength="10" placeholder="Nombre" ng-model="grupocuentasCtrl.editGrupo.Nombre" ng-disabled="grupocuentasCtrl.readOnlyEditDiv" tabindex="1" autocomplete="off" required capitalize/>
+          <span ng-show="grupocuentasCtrl.GrupocuentasForm.Nombre.$dirty && grupocuentasCtrl.GrupocuentasForm.Nombre.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="grupocuentasCtrl.GrupocuentasForm.Nombre.$dirty && grupocuentasCtrl.GrupocuentasForm.Nombre.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+      <div flex="10"></div>
+      <div flex="30">
+        <md-input-container class="md-block">
+          <label>Divisa</label>
+          <md-select style="margin-top:10px;" tabindex="2" id="IdDivisa" name="IdDivisa"  ng-model="grupocuentasCtrl.editGrupo.IdDivisa" ng-change="grupocuentasCtrl.divisaChange()" ng-disabled="grupocuentasCtrl.readOnlyEditDiv" md-on-close="grupocuentasCtrl.searchDivisa = ''"
+              data-md-container-class="selectdemoSelectHeader" required>
+            <md-select-header class="demo-select-header">
+              <input ng-keydown="grupocuentasCtrl.handleKeyup($event)" ng-model="grupocuentasCtrl.searchDivisa" ng-focus="grupocuentasCtrl.focusInput" type="search" placeholder="Buscar divisa" class="demo-header-searchbox _md-text">
+            </md-select-header>
+            <md-optgroup label="Divisa">
+              <md-option ng-click="grupocuentasCtrl.filtraCuentas()" ng-repeat="divisa in grupocuentasCtrl.divisas | filter:grupocuentasCtrl.searchDivisa" ng-value=divisa.IdDivisa>{{divisa.NombreCorto}}</option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+      </div>
+      <div flex="5"></div>
+      <div flex="30">
+        <center>
+          <button class="btn btn-primary btn-md" title="Guardar" ng-click="grupocuentasCtrl.checkDataReg()" ng-disabled="grupocuentasCtrl.GrupocuentasForm.$invalid || !grupocuentasCtrl.GrupocuentasForm.$dirty || grupocuentasCtrl.grupocuentasCtrl" ng-hide="grupocuentasCtrl.readOnlyEditDiv" tabindex="5">
+            <span class="glyphicon glyphicon-saved"></span>
+          </button>
+          <label for="IdGrupoCuenta" class="control-label" ng-hide="!grupocuentasCtrl.readOnlyEditDiv" style="margin:15px;">Id Gpo Cuenta: {{grupocuentasCtrl.editGrupo.IdGrupo}}</label>
+          <button class="btn btn-primary btn-md" title="Cancelar" tabindex="6" ng-click="grupocuentasCtrl.viewDialog()">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </center>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px">
+      <div flex="10"></div>
+      <div flex="30">
+        <label style="text-align:center" for="Activo" class="control-label">Activo</label>
+        <md-switch class="md-primary" ng-disabled="grupocuentasCtrl.readOnlyEditDiv" ng-model="grupocuentasCtrl.editGrupo.Activo" aria-label="Switch 2" ng-true-value="1" ng-false-value="0">
+        </md-switch>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px">
+      <div flex="10"></div>
+      <div flex="60">
+        <div class="form-group has-feedback">
+          <label for="CuentasNostro" class="control-label">Cuentas Nostro</label>
+          <div class="thumbnail thumbnail-area-drop" style="height:150px; overflow-y:auto; overflow-x:hidden;" data-drop="true" ng-model='grupocuentasCtrl.cuentasAsignadas' jqyoui-droppable="{multiple:true, onDrop:'grupocuentasCtrl.OnDrop'}" ng-disabled="grupocuentasCtrl.readOnlyEditDiv">
+            <section class="drop" ng-show="grupocuentasCtrl.dropSelected">
+              <p class="info">Asignar cuentas</p>
+            </section>
+            <div class="btn btn-draggable btn-drag-area" ng-repeat="item in grupocuentasCtrl.cuentasAsignadas" ng-show="item" data-drag="!grupocuentasCtrl.readOnlyEditDiv" data-jqyoui-options="{revert: 'invalid'}" ng-model="grupocuentasCtrl.cuentasAsignadas" jqyoui-draggable="{index: {{$index}},animate:true, onStart:'grupocuentasCtrl.OnDragStart', onStop:'grupocuentasCtrl.OnDragStop'}"
+                title="{{ (grupocuentasCtrl.CuentasInstitucion | filter:{IdCuentaCorriente:item})[0].Alias }}">
+                <div class="overflowContainer" style="font-size:10px; font-weight:bold;"> {{ (grupocuentasCtrl.CuentasInstitucion | filter:{IdCuentaCorriente:item})[0].Alias }}</div>
+              <a class="closebtn" ng-click="grupocuentasCtrl.DeleteChip(item)" ng-hide="grupocuentasCtrl.readOnlyEditDiv">
+                <span class="glyphicon glyphicon-remove glyphicon-removeChip" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-3 row-header">
+        <div class="row-col-bottom">
+          <center>
+            <div class="thumbnail thumbnail-area-drop-list" data-drop="true" ng-model='grupocuentasCtrl.cuentasFiltradas' jqyoui-droppable="{multiple:true, onDrop:'grupocuentasCtrl.OnDropList'}">
+              <section class="drop" ng-show="grupocuentasCtrl.dropList">
+                <p class="info">Desasignar cuenta</p>
+              </section>
+            </div>
+            <div class="dropup" ng-show="grupocuentasCtrl.DropVisible">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="grupocuentasCtrl.readOnlyEditDiv">Cuentas Nostro
+              <span class="caret"></span>
+            </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li ng-repeat="item in grupocuentasCtrl.cuentasFiltradas">
+                  <div class="btn btn-draggable btn-drop-area" style="width:150px;" ng-show="item" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="grupocuentasCtrl.cuentasFiltradas" jqyoui-draggable="{index: {{$index}},animate:true, onStart:'grupocuentasCtrl.OnDragStartList', onStop:'grupocuentasCtrl.OnDragStopList'}"
+                      title="{{ (grupocuentasCtrl.CuentasInstitucion | filter:{IdCuentaCorriente:item})[0].Alias }}">
+                    <div class="overflowContainer" style="font-size:10px; font-weight:bold;"> {{ (grupocuentasCtrl.CuentasInstitucion | filter:{IdCuentaCorriente:item})[0].Alias }}</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </center>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px"></div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px"></div>
+    <br>
+  </form>
+</md-dialog>

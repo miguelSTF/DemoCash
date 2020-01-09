@@ -1,0 +1,123 @@
+<md-dialog ng-style="{'height': monitorReclaCtrl.infoIngresoNI.Estatus === 'R' ? '850' : '450','width' : monitorReclaCtrl.infoIngresoNI.Estatus === 'R' ? '850' : '800'}" style="overflow-y: auto;overflow-x: hidden;">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Reclasificación de  Ingreso no Identificado</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="monitorReclaCtrl.Close()" aria-label="Cerrar">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <div class="row positionPrincipalDiv" layout-align="center">
+            <div style="padding-left: 90px" layout="row" layout-align="left" ng-show="monitorReclaCtrl.infoIngresoNI.Estatus === 'R'">
+                <div flex>
+                    <label>Departamento:  </label> {{ monitorReclaCtrl.infoIngresoNI.Departamento}}
+                </div>
+            </div>
+            <div style="padding-left: 90px" layout="row" layout-align="left" ng-show="monitorReclaCtrl.infoIngresoNI.Estatus === 'R'">
+                <div flex>
+                    <label>Concepto:  </label> {{ monitorReclaCtrl.infoIngresoNI.Concepto}}
+                </div>
+            </div>
+            <div style="padding-left: 90px" layout="row" layout-align="left" ng-show="monitorReclaCtrl.infoIngresoNI.Estatus === 'R'">
+                <div flex="75">
+                    <label>Contraparte:  </label> {{ monitorReclaCtrl.Contraparte}}
+                </div>
+                <div flex></div>
+                <div flex="50">
+                    <label>Fecha Reclasificación:  </label> {{ monitorReclaCtrl.infoIngresoNI.FechaReclasificacion}}
+                </div>
+            </div>
+            <br>
+            <div layout="row" layout-align="center">
+                <div flex="25">
+                    <label>Monto</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="sizing-addon2">$</span>
+                        <input disabled id="Monto" type="text" class="form-control" ng-model="monitorReclaCtrl.infoIngresoNI.Importe" ng-currency required/>
+                    </div>
+                </div>
+                <div flex="5"></div>
+                <div flex="20" style="position:center">
+                    <label>Fecha Mov. Edo. Cta</label>
+                    <md-datepicker ng-disabled="true" ng-model="monitorReclaCtrl.fecha"/>
+                </div>
+                <div flex="5"></div>
+                <div flex="25">
+                    <div layout="row" layout-align="center">
+                        <div flex="90">
+                            <label>Folio</label>
+                            <input disabled type="text" class="form-control" autocomplete="off" ng-model="monitorReclaCtrl.infoIngresoNI.Folio" required/>
+                        </div>
+                        <div flex="5"></div>
+                        <div flex="5" style="padding-top:30px">
+                            <span class="glyphicon glyphicon-list-alt" ng-click="consultaDetalle(monitorReclaCtrl.infoIngresoNI)">
+                                <md-tooltip md-direction="top">Ver detalle</md-tooltip>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div layout="row" layout-align="center">
+                <div flex="65">
+                    <md-input-container class="md-block">
+                        <label>Departamento</label>
+                        <md-select ng-change="monitorReclaCtrl.DepartamentoChange()" ng-model="monitorReclaCtrl.departamento" multiple="false" md-on-close="monitorReclaCtrl.searchDepa = ''" data-md-container-class="selectdemoSelectHeader" required>
+                            <md-select-header class="demo-select-header">
+                                <input ng-keydown="monitorReclaCtrl.handleKeyup($event)" ng-model="monitorReclaCtrl.searchDepa" ng-focus="monitorReclaCtrl.focusInput" type="search" placeholder="Buscar departamento" class="demo-header-searchbox _md-text">
+                            </md-select-header>
+                            <md-optgroup label="Departamento">
+                                <md-option ng-value="departamento" ng-repeat="departamento in monitorReclaCtrl.departamentos | orderBy: departamento.Nombre | filter:monitorReclaCtrl.searchDepa">{{departamento.Nombre}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div flex="15">
+                    <md-input-container>
+                        Mostrar todo
+                        <md-checkbox ng-click="monitorReclaCtrl.loadDeptos();" class="md-checkbox md-primary" aria-label="Checkbox 2" ng-model="monitorReclaCtrl.mostrarTodo"></md-checkbox>
+                    </md-input-container>
+                </div>
+            </div>
+            <div layout="row" layout-align="center">
+                <div flex="80">
+                    <md-input-container class="md-block">
+                        <label>Concepto</label>
+                        <md-select ng-change="monitorReclaCtrl.ConceptoChange()" ng-model="monitorReclaCtrl.concepto" multiple="false" md-on-close="monitorReclaCtrl.searchCepto = ''" data-md-container-class="selectdemoSelectHeader" required>
+                            <md-select-header class="demo-select-header">
+                                <input ng-keydown="monitorReclaCtrl.handleKeyup($event)" ng-model="monitorReclaCtrl.searchCepto" ng-focus="monitorReclaCtrl.focusInput" type="search" placeholder="Buscar concepto" class="demo-header-searchbox _md-text">
+                            </md-select-header>
+                            <md-optgroup label="Concepto">
+                                <md-option ng-value="concepto" ng-repeat="concepto in monitorReclaCtrl.conceptos | filter:monitorReclaCtrl.searchCepto">{{concepto.Nombre}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+            <div layout="row" layout-align="center">
+                <div flex="80">
+                    <md-input-container class="md-block">
+                        <label>Contraparte de Negocio</label>
+                        <md-select ng-model="monitorReclaCtrl.cliente" data-md-container-class="selectdemoSelectHeader" multiple="false" required>
+                            <md-select-header class="demo-select-header">
+                            <input ng-keydown="monitorReclaCtrl.handleKeyup($event)" ng-model="monitorReclaCtrl.searchTerm" ng-focus="monitorReclaCtrl.focusInput" type="search" placeholder="Buscar Contraparte" class="demo-header-searchbox _md-text">
+                            </md-select-header>
+                            <md-optgroup label="Beneficiarios">
+                            <md-option class="md-option" ng-value="cliente.IdContraparte" ng-repeat="cliente in monitorReclaCtrl.clientes | filter:monitorReclaCtrl.searchTerm">{{cliente.NombreCorto}} ( {{cliente.IdClaveExterna}} )</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+            <div layout="row" layout-align="center">
+                <div flex="25">
+                    <md-button ng-disabled="!monitorReclaCtrl.infoIngresoNI.Historico" class="md-raised md-primary" ng-click="monitorReclaCtrl.GetOpers()">Operacion Existente</md-button>
+                </div>
+                <div flex="50">
+                </div>
+                <div flex="10">
+                    <md-button ng-disabled="monitorReclaCtrl.departamento.IdDepartamento === undefined || monitorReclaCtrl.concepto.IdConcepto === undefined || monitorReclaCtrl.cliente === null" class="md-raised md-primary" ng-click="monitorReclaCtrl.reclasificar()">Reclasificar</md-button>
+                </div>
+            </div>
+        </div>
+</md-dialog>

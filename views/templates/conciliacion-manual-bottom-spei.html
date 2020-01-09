@@ -1,0 +1,120 @@
+<md-bottom-sheet class="conciliacion-manual" style="z-index:0;">
+  <div layout="column" flex>
+      <table st-table="conciliacionManCtrl.displayedCollectionDetailsA" st-safe-src="conciliacionManCtrl.dataDetailA" class="table-bordered table-striped ng-table-monitor">
+        <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+          <tr>
+            <th style="width:85px; max-width:85px; min-width:85px;text-align:center;" st-sort="Hora">Hora</th>
+            <th style="width:190px; max-width:190px; min-width:190px;text-align:center;" st-sort="Origen">Origen</th>
+            <th style="width:130px; max-width:130px; min-width:130px;text-align:center;" st-sort="Concepto"><md-tooltip md-direction="top">Concepto</md-tooltip>Cpto.</th>
+            <th style="width:180px; max-width:180; min-width:180px;text-align:center;" st-sort="Instruccion"><md-tooltip md-direction="top">Instrucción</md-tooltip>Instruc.</th>
+            <th style="width:160px; max-width:160px; min-width:160px;text-align:center;" st-sort="Importe">Importe</th>
+            <th style="width:80px; max-width:80px; min-width:80px;text-align:center;" st-sort="Sentido">Mov.</th>
+            <th style="width:90px; max-width:90px; min-width:90px;text-align:center;" st-sort="Payload.TipoPago">Tipo Pago</th>
+            <th style="width:110px; max-width:110px; min-width:110px;text-align:center;" st-sort="Departamento"><md-tooltip md-direction="top">Departamento</md-tooltip>Depto.</th>
+            <th style="width:80px; max-width:80px; min-width:80px;text-align:center;" st-sort="DiasRetraso"><md-tooltip md-direction="top">Dias de Retraso</md-tooltip>Retraso</th>
+            <th style="width:85px; max-width:85px; min-width:85px;text-align:center;" st-sort="Status">Estatus</th>
+            <th style="text-align:center;"></th>
+          </tr>
+        </thead>
+      </table>
+      <div style="height:70px; overflow-y: scroll;">
+        <table st-table="conciliacionManCtrl.displayedCollectionDetailsA" st-safe-src="conciliacionManCtrl.dataDetailA" class="table-bordered table-striped ng-table-monitor">
+          <tr ng-repeat="registro in conciliacionManCtrl.displayedCollectionDetailsA">
+            <td title="'{{registro.Hora}}'" style="width:85px; max-width:85px; min-width:85px;" format={{registro.Hora}} tipo="Hora"></td>
+            <td title="'{{registro.Origen}}'" style="width:190px; max-width:190px; min-width:190px;text-align:center;">{{registro.Origen}}</td>
+            <td title="'{{registro.Concepto}}'" style="width:130px; max-width:130px; min-width:130px;text-align:center;">{{(registro.Concepto.length >= 11 ? registro.Concepto.substring(0,9) + '...' : registro.Concepto)}}</td>
+            <td title="'{{registro.Instruccion}}'" style="width:180px; max-width:180px; min-width:180px;text-align:center;">{{(registro.Instruccion.length >= 10 ? (registro.Instruccion).substring(0,9) + '...' : registro.Instruccion)}}</td>
+            <td title="'{{registro.Importe}}'"style="width:160px; max-width:160px; min-width:160px;" format={{registro.Importe}} tipo="Numerico"></td>
+            <td title="'{{registro.Sentido}}'" style="width:80px; max-width:80px; min-width:80px;text-align:center;">{{registro.Sentido.substring(0,1)}}</td>
+            <td title="'{{registro.Payload.TipoPago}}'"style="width:90px; max-width:90px; min-width:90px;text-align:center;">{{registro.Payload.TipoPago}}</td>
+            <td title="'{{registro.Departamento}}'" style="width:110px; max-width:110px; min-width:110px;text-align:center;" title="{{registro.Departamento}}">{{(registro.Departamento.length >= 11 ? registro.Departamento.substring(0,9) + '...' : registro.Departamento)}}</td>
+            <td title="'{{registro.DiasRetraso}}'" style="width:80px; max-width:80px; min-width:80px;text-align:center;">{{registro.DiasRetraso | number}}</td>
+            <td title="'{{registro.IdMotivoSistema === 24 ? 'Pre-Conciliada' : registro.Status}}'" style="width:85px; max-width:85px; min-width:85px;text-align:center;">{{registro.IdMotivoSistema === 24 ? registro.Status + '*' : registro.Status}}</td>
+            <td style="text-align:center;">
+            </td>
+          </tr>
+        </table>
+      </div>
+  </div>
+  <br/>
+  <div layout="column" flex>
+      <table st-table="conciliacionManCtrl.displayedCollectionDetailsB" st-safe-src="conciliacionManCtrl.dataDetailB" class="table-bordered table-striped ng-table-monitor">
+        <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+          <tr>
+            <th style="width:85px; max-width:85px; min-width:85px;text-align:center;" st-sort="Hora">Hora</th>
+            <th style="width:190px; max-width:190px; min-width:190px;text-align:center;" st-sort="Origen">Origen</th>
+            <th style="width:130px; max-width:130px; min-width:130px;text-align:center;" st-sort="Concepto"><md-tooltip md-direction="top">Concepto</md-tooltip>Cpto.</th>
+            <th style="width:180px; max-width:180px; min-width:180px;text-align:center;" st-sort="Instruccion"><md-tooltip md-direction="top">Instrucción</md-tooltip>Instruc.</th>
+            <th style="width:160px; max-width:160px; min-width:160px;text-align:center;" st-sort="Importe">Importe</th>
+            <th style="width:80px; max-width:80px; min-width:80px;text-align:center;" st-sort="Sentido">Mov.</th>
+            <th style="width:90px; max-width:90px; min-width:90px;text-align:center;" st-sort="Payload.TipoPago">Tipo Pago</th>
+            <th style="width:110px; max-width:110px; min-width:110px;text-align:center;" st-sort="Departamento"><md-tooltip md-direction="top">Departamento</md-tooltip>Depto.</th>
+            <th style="width:80px; max-width:80px; min-width:80px;text-align:center;" st-sort="DiasRetraso"><md-tooltip md-direction="top">Dias de Retraso</md-tooltip>Retraso</th>
+            <th style="width:85px; max-width:85px; min-width:85px;text-align:center;" st-sort="Status">Estatus</th>
+            <th style="text-align:center;"></th>
+          </tr>
+        </thead>
+      </table>
+      <div style="height:70px; overflow-y: scroll;">
+        <table st-table="conciliacionManCtrl.displayedCollectionDetailsB" st-safe-src="conciliacionManCtrl.dataDetailB" class="table-bordered table-striped ng-table-monitor">
+          <tr ng-repeat="registro in conciliacionManCtrl.displayedCollectionDetailsB">
+            <td title="'{{registro.Hora}}'" style="width:85px; max-width:85px; min-width:85px;" format={{registro.Hora}} tipo="Hora"></td>
+            <td title="'{{registro.Origen}}'" style="width:190px; max-width:190px; min-width:190px;text-align:center;">{{registro.Origen}}</td>
+            <td title="'{{registro.Concepto}}'" style="width:130px; max-width:130px; min-width:130px;text-align:center;">{{(registro.Concepto.length >= 11 ? registro.Concepto.substring(0,9) + '...' : registro.Concepto)}}</td>
+            <td title="'{{registro.Instruccion}}'" style="width:180px; max-width:180px; min-width:180px;text-align:center;">{{(registro.Instruccion.length >= 10 ? (registro.Instruccion).substring(0,9) + '...' : registro.Instruccion)}}</td>
+            <td title="'{{registro.Importe}}'"style="width:160px; max-width:160px; min-width:160px;" format={{registro.Importe}} tipo="Numerico"></td>
+            <td title="'{{registro.Sentido}}'" style="width:80px; max-width:80px; min-width:80px;text-align:center;">{{registro.Sentido.substring(0,1)}}</td>
+            <td title="'{{registro.Payload.TipoPago}}'" style="width:90px; max-width:90px; min-width:90px;text-align:center;">{{registro.Payload.TipoPago}}</td>
+            <td title="'{{registro.Departamento}}'" style="width:110px; max-width:110px; min-width:110px;text-align:center;" title="{{registro.Departamento}}">{{(registro.Departamento.length >= 11 ? registro.Departamento.substring(0,9) + '...' : registro.Departamento)}}</td>
+            <td title="'{{registro.DiasRetraso}}'" style="width:80px; max-width:80px; min-width:80px;text-align:center;">{{registro.DiasRetraso | number}}</td>
+            <td title="'{{registro.IdMotivoSistema === 24 ? 'Pre-Conciliada' : registro.Status}}'" style="width:85px; max-width:85px; min-width:85px;text-align:center;">{{registro.IdMotivoSistema === 24 ? registro.Status + '*' : registro.Status}}</td>
+            <td style="text-align:center;">
+            </td>
+          </tr>
+        </table>
+      </div>
+  </div>
+  <div style="height:50px;" layout="row">
+    <div flex="60">
+      <md-input-container flex="20">
+        <label>Movimientos:</label>
+        <input ng-model="conciliacionManCtrl.movimientosA" readonly>
+      </md-input-container>
+      <md-input-container flex="40">
+        <label>Importe:</label>
+        <input ng-model="conciliacionManCtrl.importeA | number:2" readonly>
+      </md-input-container>
+      <md-input-container flex="40">
+        <label>Diferencia:</label>
+        <input style="color:red" ng-model="conciliacionManCtrl.diferencia | number:2" readonly>
+      </md-input-container>
+    </div>
+    <div flex="60" style="text-align: center;" ng-hide="conciliacionManCtrl.fechaHistorico">
+      <md-button permisopantalla permiso="12" idpantalla="23" ng-show="conciliacionManCtrl.existN" ng-disabled="(conciliacionManCtrl.dataDetailA.length === 0 || conciliacionManCtrl.dataDetailB.length === 0 || (conciliacionManCtrl.origenA === 'EdoCta' && conciliacionManCtrl.origenB === 'EdoCta' && conciliacionManCtrl.existDiff))" class="md-raised md-primary" ng-click="conciliacionManCtrl.CheckFunction('Conciliar',false);">
+        Conciliar
+      </md-button>
+      <md-button permisopantalla permiso="13" idpantalla="23" ng-show="conciliacionManCtrl.existDiff" ng-disabled="(conciliacionManCtrl.dataDetailA.length === 0 || conciliacionManCtrl.dataDetailB.length === 0 || conciliacionManCtrl.enableAjuste || (conciliacionManCtrl.origenA === 'EdoCta' && conciliacionManCtrl.origenB === 'EdoCta') )" class="md-raised md-primary" ng-click="conciliacionManCtrl.CheckFunction('Conciliar',true);">
+        Ajustar
+      </md-button>
+      <md-button permisopantalla permiso="12" idpantalla="23" ng-show="conciliacionManCtrl.existConcil"  class="md-raised md-primary" ng-click="conciliacionManCtrl.CheckFunction('Desconciliar',false);">
+        Desconciliar
+      </md-button>
+      <md-button permisopantalla permiso="14" idpantalla="23" ng-disabled="conciliacionManCtrl.existConcil" ng-show="conciliacionManCtrl.dataDetailB.length === 1 && conciliacionManCtrl.dataDetailA.length === 0 && conciliacionManCtrl.origenB === 'EdoCta'" class="md-raised md-primary" ng-click="conciliacionManCtrl.confirmGenerateIngresos();"> <md-tooltip md-direction="top">Registrar como Ingreso No Identificado</md-tooltip>
+        Ingreso N.I.
+      </md-button>
+      <md-button permisopantalla permiso="25" idpantalla="23" ng-disabled="conciliacionManCtrl.existPreConcil || conciliacionManCtrl.existConcil" ng-show="conciliacionManCtrl.dataDetailB.length === 0 && conciliacionManCtrl.dataDetailA.length === 1 && conciliacionManCtrl.origenA === 'Ikos' || conciliacionManCtrl.dataDetailB.length === 1 && conciliacionManCtrl.dataDetailA.length === 0 && conciliacionManCtrl.origenB === 'Ikos'" class="md-raised md-primary" ng-click="conciliacionManCtrl.PreconciliarOper();"> <md-tooltip md-direction="top">Pre-Conciliar Operacion</md-tooltip>
+        Pre-Conciliar
+      </md-button>
+    </div>
+    <div flex="40">
+      <md-input-container flex="30">
+        <label>Movimientos:</label>
+        <input ng-model="conciliacionManCtrl.movimientosB" readonly>
+      </md-input-container>
+      <md-input-container flex="50">
+        <label>Importe:</label>
+        <input ng-model="conciliacionManCtrl.importeB | number:2" readonly>
+      </md-input-container>
+    </div>
+  </div>
+</md-bottom-sheet>

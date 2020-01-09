@@ -1,0 +1,53 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Configuraciones</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Close" ng-click="Close()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    <md-tooltip md-direction="top">Cerrar</md-tooltip>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle">
+            <md-content class="md-padding">
+              <div layout="row" layout-align="center center">
+                <div flex="50" layout="row" layout-align="center center">
+                    <span><strong>Fecha Operación</strong></span>
+                    <md-datepicker ng-change="obtenerFecha()" ng-model="FechaOperacion.Valor"></md-datepicker>
+                </div>
+              </div>
+              <br>
+              <div layout="row" layout-align="space-around center">
+                <div flex="10" layout="row">
+                </div>
+                <div flex="80">
+                    <label for="UmbralInicio" class="control-label">Umbral Inicio</label>
+                    <input type="text" class="form-control" id="UmbralInicio" name="UmbralInicio" maxlength="6" placeholder="Umbral Inicio" ng-model="UmbralInicioDia.Valor" tabindex="1" autocomplete="off">
+                </div>
+                <div flex="20" layout="row">
+                </div>
+                <div flex="80">
+                    <label text-align="right" for="UmbralCupon" class="">Umbral Cupón</label>
+                    <input type="text" class="form-control" id="UmbralCupon" name="UmbralCupon" maxlength="6" placeholder="Umbral Cupon" ng-model="UmbralCupones.Valor" tabindex="2" autocomplete="off">
+                </div>
+                <div flex="20" layout="row">
+                </div>
+                <div flex="80">
+                    <label for="UmbralIntradia" class="control-label">Umbral Intradia</label>
+                    <input type="text" class="form-control" id="UmbralIntradia" name="UmbralIntradia" maxlength="6" placeholder="Umbral Intradia" ng-model="UmbralIntradia.Valor" tabindex="3" autocomplete="off">
+                </div>
+                <div flex="10" layout="row">
+                </div>
+              </div>
+              <br>          
+              <div layout="row" layout-align="end center">
+                <md-button class="md-raised md-primary" ng-click="saveUmbral()" tabindex="4">
+                  Guardar
+                </md-button>
+              </div>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>

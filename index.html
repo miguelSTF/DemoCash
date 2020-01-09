@@ -1,0 +1,261 @@
+<!doctype html>
+<html style="background-color: #ECF0F1;" lang="en" ng-app="appCash">
+  <head>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cache-control" content="no-cache">
+    <title>IKOS Cash</title>
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
+    <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.min.css" />
+    <link rel="stylesheet" href="bower_components/angular-material-datetimepicker/css/material-datetimepicker.min.css" />
+    <!-- endbower -->
+
+    <!-- injector:css -->
+    <link rel="stylesheet" href="scripts/third-party/ngToast/ngToast-animations.css">
+    <link rel="stylesheet" href="scripts/third-party/ngToast/ngToast.css">
+    <link rel="stylesheet" href="styles/apesa.css">
+    <!-- endinjector -->
+  </head>
+
+  <body ng-init="init()" onload="getBtnsList()" ng-controller="SidebarController as ctrl" ng-cloak>
+    <toast></toast>
+    <nav role="navigation">
+      <md-toolbar class="md-hue-2">
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleState()" flex="5">
+              <a><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+            </md-button>
+            <h2 flex="7">/ Ikos Cash /&nbsp</h2>
+            <h3 flex>{{userInfo.route}}</h3>
+            <a ng-click="showAccessList = false" href="/#/login" style="padding-top:8px; padding-right:15px;"><span class="glyphicon glyphicon-user"></span></a>
+            <span class="md-body-2">{{userInfo.Nombre}}</span>
+            <span class="md-body-2"> &nbsp {{fechaOper}}</span>
+            <span class="md-body-2"> &nbsp {{statusDia}}</span>
+            <md-button class="md-icon-button" aria-label="More" style="margin-right:0px; padding-right:0px;" ng-click="Notificacion()">
+              <span class="glyphicon glyphicon-inbox"></span>
+              <span class="glyphicon glyphicon-exclamation-sign" style="color:red; margin-left: -15px;" ng-model="hasItem" ng-show="hasItem === true"></span>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="More" style="margin:0px; padding:0px; top:5px;" ng-click="showQuickAccessBtns()">
+              <span class="glyphicon glyphicon-tags" style="font-size: 20px;"></span>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="More" style="margin:0px; padding:0px; top:5px;" ng-click="searchVersionApp()">
+              <span class="glyphicon glyphicon-info-sign" style="font-size: 20px;"></span>
+            </md-button>
+          </div>
+          <loading-modal class="modal show" loadshow="ctrl.loading" data-backdrop="static" />
+      </md-toolbar>
+      <!-- Quick Access Menu -->
+      <div layout="row" ng-show="showAccessList" layout-align="center" style="background-color:#ecf0f1;">
+        <div  style="display:inline-block; width:auto; height:auto; overflow-x:auto;">
+        <md-button class="quickAccessArrows" ng-click="moveLeft()" ng-show="ShowArrows">
+          <span class="glyphicon glyphicon-menu-left" style="color:#22224b !important;"></span>
+        </md-button>
+        <ul id="quickAccessList">
+          <li ng-repeat="subMenu in firstTenSubmenus">
+            <md-button title="{{subMenu.Title}}" ng-href="{{subMenu.Route}}" ng-click="refreshSubmenuTitle(subMenu.Title)" class="quickAccessButton" style="background-color:#22224b !important;">
+              <span>{{subMenu.Title}}</span>
+            </md-button>
+          </li>
+        </ul>
+          <md-button class="quickAccessArrows" ng-click="moveRight()" ng-show="ShowArrows">
+            <span class="glyphicon glyphicon-menu-right	" style="color:#22224b !important;"></span>
+          </md-button>
+        </div>
+      </div>
+      <div layout="row" style="background-color: #ECF0F1;">
+        <md-sidenav class="md-sidenav-left" style="width:280px;" md-component-id="left" md-disable-backdrop md-whiteframe="4" side-nav menu-settings="{{menuContent}}">
+          <md-toolbar>
+            <div layout="row" class="md-toolbar-tools">
+              <span flex="80">Ikos Cash</span>
+              <md-button class="md-icon-button" ng-click="toggleState()" flex="20">
+                <a href=""><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+              </md-button>
+            </div>
+          </md-toolbar>
+        </md-sidenav>
+      </div>
+    </nav>
+    <ng-view flex layout="column" style="margin: -15px 40px">
+      <md-content flex></md-content>
+    </ng-view>
+    <style>
+      @media screen and (min-width:0\0) {
+        .md-sidenav-left{
+           overflow-y:visible;
+           min-height:930px;
+        }
+      }
+    </style>
+
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/angular-ui-date/src/date.js"></script>
+    <script src="bower_components/angular-dragdrop/src/angular-dragdrop.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+    <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.js"></script>
+    <script src="bower_components/sockjs/sockjs.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/postal.js/lib/postal.js"></script>
+    <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+    <script src="bower_components/ng-idle/angular-idle.js"></script>
+    <script src="bower_components/angular-smart-table/dist/smart-table.js"></script>
+    <script src="bower_components/angular-fixed-table-header/src/fixed-table-header.js"></script>
+    <script src="bower_components/momentjs/moment.js"></script>
+    <script src="bower_components/angular-material-datetimepicker/js/angular-material-datetimepicker.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-momentjs/angular-momentjs.js"></script>
+    <!-- endbower -->
+
+    <!-- injector:js -->
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+    <script src="scripts/controllers/bitacora.controller.js"></script>
+    <script src="scripts/controllers/bitacoraEdoCuenta.controller.js"></script>
+    <script src="scripts/controllers/bitacora_emision.controller.js"></script>
+    <script src="scripts/controllers/captura_masiva.controller.js"></script>
+    <script src="scripts/controllers/cliente-ceptodepto.controller.js"></script>
+    <script src="scripts/controllers/concepto.controller.js"></script>
+    <script src="scripts/controllers/conciliacionmanual.controller.js"></script>
+    <script src="scripts/controllers/configContable.controller.js"></script>
+    <script src="scripts/controllers/configuracion_traspasos.controller.js"></script>
+    <script src="scripts/controllers/consultaGral.controller.js"></script>
+    <script src="scripts/controllers/cuenta_corriente.controller.js"></script>
+    <script src="scripts/controllers/cuentas_institucion.controller.js"></script>
+    <script src="scripts/controllers/departamento.controller.js"></script>
+    <script src="scripts/controllers/dias_inhabiles.controller.js"></script>
+    <script src="scripts/controllers/divisa.controller.js"></script>
+    <script src="scripts/controllers/envio_no_indetificado.controller.js"></script>
+    <script src="scripts/controllers/generaPoliza.controller.js"></script>
+    <script src="scripts/controllers/grupocuentas.controller.js"></script>
+    <script src="scripts/controllers/inicio_fin_dia.controller.js"></script>
+    <script src="scripts/controllers/institucion.controller.js"></script>
+    <script src="scripts/controllers/limites.controller.js"></script>
+    <script src="scripts/controllers/login.controller.js"></script>
+    <script src="scripts/controllers/mapa_configuracion.controller.js"></script>
+    <script src="scripts/controllers/mensaje.controller.js"></script>
+    <script src="scripts/controllers/monitor.controller.js"></script>
+    <script src="scripts/controllers/monitor_autorizacion.controller.js"></script>
+    <script src="scripts/controllers/monitor_confirmacion.js"></script>
+    <script src="scripts/controllers/monitor_emisiones.controller.js"></script>
+    <script src="scripts/controllers/monitor_reclasificacion.controller.js"></script>
+    <script src="scripts/controllers/monitorext.controller.js"></script>
+    <script src="scripts/controllers/monitorteso.controller.js"></script>
+    <script src="scripts/controllers/obtener_bitacoras.controller.js"></script>
+    <script src="scripts/controllers/parametros.controller.js"></script>
+    <script src="scripts/controllers/parametros_generales.controller.js"></script>
+    <script src="scripts/controllers/perfiles.controller.js"></script>
+    <script src="scripts/controllers/plaza.controller.js"></script>
+    <script src="scripts/controllers/sidebar.controller.js"></script>
+    <script src="scripts/controllers/sucursal.controller.js"></script>
+    <script src="scripts/controllers/tablero_posicion.controller.js"></script>
+    <script src="scripts/controllers/usuario.controller.js"></script>
+    <script src="scripts/controllers/via.controller.js"></script>
+    <script src="scripts/directives/admin-mask.directive.js"></script>
+    <script src="scripts/directives/capitalize.directive.js"></script>
+    <script src="scripts/directives/currency.directive.js"></script>
+    <script src="scripts/directives/errorServicio.directive.js"></script>
+    <script src="scripts/directives/fill-payload.js"></script>
+    <script src="scripts/directives/format.directive.js"></script>
+    <script src="scripts/directives/json-viewer.js"></script>
+    <script src="scripts/directives/loading.directive.js"></script>
+    <script src="scripts/directives/lrStickyHeader.directive.js"></script>
+    <script src="scripts/directives/permisos_pantalla.js"></script>
+    <script src="scripts/directives/show-hide-slide.directive.js"></script>
+    <script src="scripts/directives/side-menu.js"></script>
+    <script src="scripts/directives/sidebar.directive.js"></script>
+    <script src="scripts/directives/stStickyHeader.directive.js"></script>
+    <script src="scripts/directives/tree-grid-view.js"></script>
+    <script src="scripts/directives/whenScrolled.directive.js"></script>
+    <script src="scripts/filters/home.filters.js"></script>
+    <script src="scripts/services/UrlBuilder.service.js"></script>
+    <script src="scripts/services/api.service.js"></script>
+    <script src="scripts/services/bitacora.service.js"></script>
+    <script src="scripts/services/bitacoraEdoCuenta.service.js"></script>
+    <script src="scripts/services/catalogos.service.js"></script>
+    <script src="scripts/services/clientes.service.js"></script>
+    <script src="scripts/services/concepto.service.js"></script>
+    <script src="scripts/services/conciliador.service.js"></script>
+    <script src="scripts/services/configContable.service.js"></script>
+    <script src="scripts/services/configTraspasos.js"></script>
+    <script src="scripts/services/cuenta_corriente.service.js"></script>
+    <script src="scripts/services/cuentas_institucion.service.js"></script>
+    <script src="scripts/services/departamento.service.js"></script>
+    <script src="scripts/services/diasInhabiles.service.js"></script>
+    <script src="scripts/services/divisa.service.js"></script>
+    <script src="scripts/services/enum_via.service.js"></script>
+    <script src="scripts/services/generaPoliza.service.js"></script>
+    <script src="scripts/services/grupocuentas.service.js"></script>
+    <script src="scripts/services/institucion.service.js"></script>
+    <script src="scripts/services/limites.service.js"></script>
+    <script src="scripts/services/log.service.js"></script>
+    <script src="scripts/services/login.service.js"></script>
+    <script src="scripts/services/monitor_teso.service.js"></script>
+    <script src="scripts/services/monitorex.service.js"></script>
+    <script src="scripts/services/ordenes.service.js"></script>
+    <script src="scripts/services/parametros.service.js"></script>
+    <script src="scripts/services/perfiles.service.js"></script>
+    <script src="scripts/services/plaza.service.js"></script>
+    <script src="scripts/services/sender.service.js"></script>
+    <script src="scripts/services/sucursal.service.js"></script>
+    <script src="scripts/services/usuario.service.js"></script>
+    <script src="scripts/services/utils.service.js"></script>
+    <script src="scripts/services/validateSession.service.js"></script>
+    <script src="scripts/services/via.service.js"></script>
+    <script src="scripts/services/vias.service.js"></script>
+    <script src="scripts/third-party/angular-export-table/export/smartTableDirectives.js"></script>
+    <script src="scripts/third-party/angular-export-table/export/table-export-directive.js"></script>
+    <script src="scripts/third-party/angular-export-table/export/table-export-option-directive.js"></script>
+    <script src="scripts/third-party/angular-export-table/kayalshri-table-export.jquery.plugin-a891806/html2canvas.js"></script>
+    <script src="scripts/third-party/angular-export-table/kayalshri-table-export.jquery.plugin-a891806/jquery.base64.js"></script>
+    <script src="scripts/third-party/angular-export-table/kayalshri-table-export.jquery.plugin-a891806/jspdf/jspdf.js"></script>
+    <script src="scripts/third-party/angular-export-table/kayalshri-table-export.jquery.plugin-a891806/jspdf/libs/base64.js"></script>
+    <script src="scripts/third-party/angular-export-table/kayalshri-table-export.jquery.plugin-a891806/jspdf/libs/sprintf.js"></script>
+    <script src="scripts/third-party/angular-export-table/kayalshri-table-export.jquery.plugin-a891806/table-export.js"></script>
+    <script src="scripts/third-party/crypto.js"></script>
+    <script src="scripts/third-party/js-xlsx/jszip.js"></script>
+    <script src="scripts/third-party/js-xlsx/ods.js"></script>
+    <script src="scripts/third-party/js-xlsx/shim.js"></script>
+    <script src="scripts/third-party/js-xlsx/xlsx.js"></script>
+    <script src="scripts/third-party/ngToast/ngToast.js"></script>
+    <script src="scripts/third-party/stomp.js"></script>
+    <script src="scripts/third-party/xlsx/Export2Excel.js"></script>
+    <script src="scripts/third-party/xlsx/FileSaver.js"></script>
+    <!-- endinjector -->
+    <script type="text/ng-template" id="warning-dialog.html">
+      <div class="modal-header">
+      <h3>Cerrando sesion!</h3>
+      </div>
+      <div idle-countdown="countdown" ng-init="countdown=5" class="modal-body">
+      <uib-progressbar max="5" value="5" animate="false" class="progress-striped active">Cerrando en: {{countdown}} segundo(s).</uib-progressbar>
+      </div>
+    </script>
+
+    <script type="text/ng-template" id="fin-dialog.html">
+      <div class="modal-header">
+      <h3>Cerrando sesion!</h3>
+      </div>
+      <div class="modal-body">
+      <uib-progressbar animate="false" class="progress-striped active">Cerrando por fin de dia.</uib-progressbar>
+      </div>
+    </script>
+  </body>

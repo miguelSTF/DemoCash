@@ -1,0 +1,58 @@
+<md-dialog>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Detalles Lectura Operación</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Close" ng-click="Close()">
+          <span class="glyphicon glyphicon-remove"></span>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="modalDetalle">
+      <md-content class="md-padding">
+        <div style="height:25px;" layout="row" class="panel-body">
+          <div flex="5"></div>
+          <div flex >
+            <div>
+              <label>Nombre archivo: </label>
+              <label style="font:100% sans-serif;">{{CapturaMasivaCtrl.nameArchivo}}</label>
+            </div>
+          </div>
+        </div>
+        <div style="height:25px;" layout="row" class="panel-body">
+          <div flex="5"></div>
+          <div flex>
+            <div>
+              <label>Operaciones leídas: </label>
+              <label style="font:100% sans-serif;">{{CapturaMasivaCtrl.totalOpers}}</label>
+            </div>
+          </div>
+          <div flex>
+            <div>
+              <label>Importe total: </label>
+              <label style="font:100% sans-serif;" format="{{CapturaMasivaCtrl.totalImport}}" tipo="Numerico"> </label>
+            </div>
+          </div>
+        </div>
+        <div layout="row" class="panel-body">
+          <div flex="5"></div>
+          <div flex="90">
+            <label for="Comentario" class="control-label">Validaciones: </label>
+            <textarea ng-disabled="true" style="resize:none; max-height:250px" rows="{{CapturaMasivaCtrl.NumErrors}}" type="text" class="form-control" id="Comentario" name="Comentario" placeholder="Comentario" ng-model="CapturaMasivaCtrl.textError" tabindex="1" autocomplete="off" capitalize>
+            </textarea>
+          </div>
+        </div>
+        <div layout="row" class="panel-body">
+          <div flex="80"></div>
+          <div flex="20">
+            <md-button ng-click="Close()" title="Cancelar" class="md-raised md-primary" data-toggle="dropdown">Cancelar</md-button>
+          </div>
+          <div flex="20">
+            <md-button ng-disabled="CapturaMasivaCtrl.error === true" ng-click="CapturaMasivaCtrl.createListOper()" title="Enviar" class="md-raised md-primary" data-toggle="dropdown">Enviar</md-button>
+          </div>
+        </div>
+      </md-content>
+    </md-dialog-content>
+  </form>
+</md-dialog>

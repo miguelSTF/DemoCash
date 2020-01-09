@@ -1,0 +1,41 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Consulta General</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Close" ng-click="Close()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle" style="width:auto;">
+            <md-content class="md-padding">
+              <center>
+                  <table st-sticky-header st-table="datasetGralCollection" t-safe-src="datasetGral" class="table-bordered table-striped ng-table-monitor table-hover" id="tablaMonitorEmision">
+                      <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+                          <tr style="border: 0;">
+                              <th style="text-align:center; width:200px;" st-sort="CuentaCorriente">Cuenta Corriente</th> 
+                              <th style="text-align:center; width:50px;"  st-sort="Divisa">Divisa</th>                              
+                              <th style="text-align:center; width:220px;" st-sort="Departamento">Departamento</th>
+                              <th style="text-align:center; width:240px;" st-sort="Concepto">Concepto</th>
+                              <th style="text-align:center; width:100px;" st-sort="Sistema">Folio Cash</th>
+                              <th style="text-align:center; width:170px;" st-sort="Importe">Importe</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr ng-repeat="detail in datasetGralCollection">
+                              <td style="text-align:center; width:200px;" title="{{detail.CuentaCorriente}}"><div class="overflowContainer">{{detail.CuentaCorriente}}</div></td>                                
+                              <td style="text-align:center; width:50px;" title="{{detail.Divisa}}"><div class="overflowContainer">{{detail.Divisa}}</div></td>                              
+                              <td style="text-align:left; width:220px; padding-left:5px;" title="{{detail.Departamento}}"><div class="overflowContainer">{{detail.Departamento}}</div></td>
+                              <td style="text-align:left; width:240px; padding-left:5px;" title="{{detail.Concepto}}"><div class="overflowContainer">{{detail.Concepto}}</div></td>
+                              <td style="text-align:left; width:100px; padding-left:5px;" title="{{detail.Sistema}}"><div class="overflowContainer">{{detail.Sistema}}</div></td>
+                              <td style="text-align:center;width:170px;" title="{{detail.Importe}}"><div class="overflowContainer" format="{{detail.Importe}}" tipo="Numerico"></div> </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </center>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>

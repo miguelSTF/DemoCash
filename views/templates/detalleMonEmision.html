@@ -1,0 +1,20 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Detalle de Emisión</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="monitorEmiCtrl.Close()" aria-label="Cerrar">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="md-padding" style="width: auto; height: auto">
+          <div layout="row" class="layout-ro2 flex">
+            <div flex="100" class="layout-row" style="text-align:right;">
+              <p>{{monitorEmiCtrl.registro}}</p>
+            </div>
+          </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

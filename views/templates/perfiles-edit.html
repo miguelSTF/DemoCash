@@ -1,0 +1,73 @@
+<md-dialog style="width:850px; height:1000px">
+  <form name="perfilCtrl.PerfilForm" class="form-horizontal" role="form" novalidate>
+    <div layout="row" class="panel-body" style="height:75px">
+      <div flex="10"></div>
+      <div flex="40">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[perfilCtrl.PerfilForm.Clave.$valid]">
+          <label for="Clave" class="control-label">Nombre de Perfil</label>
+          <input type="text" class="form-control" id="Clave" name="Clave" maxlength="25" placeholder="Clave del Perfil" ng-model="perfilCtrl.perfilEdit.Clave" ng-disabled="perfilCtrl.readOnlyEditDiv" tabindex="1" autocomplete="off" required capitalize>
+          <span ng-show="perfilCtrl.PerfilForm.Clave.$dirty && perfilCtrl.PerfilForm.Clave.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="perfilCtrl.PerfilForm.Clave.$dirty && perfilCtrl.PerfilForm.Clave.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+      <div flex="10"></div>
+      <div flex="5">
+        <label for="Activo" class="control-label">Activo</label>
+        <md-switch class="md-primary" tabindex="3" ng-disabled="perfilCtrl.readOnlyEditDiv" ng-model="perfilCtrl.perfilEdit.Activo" ng-change="perfilCtrl.formDirty=true" aria-label="Switch 2" ng-true-value="1" ng-false-value="0">
+        </md-switch>
+      </div>
+      <div flex="15"></div>
+      <div flex="20">
+        <button class="btn btn-primary btn-md" title="Guardar" ng-click="perfilCtrl.checkDataReg()" ng-disabled="!perfilCtrl.formDirty && !perfilCtrl.PerfilForm.$dirty || perfilCtrl.disabledSave" tabindex="5" ng-hide="perfilCtrl.readOnlyEditDiv">
+           <span class="glyphicon glyphicon-saved"></span>
+        </button>
+        <label for="IdPerfil" class="control-label" ng-hide="!perfilCtrl.readOnlyEditDiv" style="margin:15px;">Id Perfil: {{perfilCtrl.perfilEdit.IdTipoPerfil}}</label>
+        <button class="btn btn-primary btn-md" title="Cancelar" tabindex="6" ng-click="perfilCtrl.viewDialog()">
+           <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </div>
+    </div>
+    <div layout="row" class="panel-body" style="height:25px">
+      <div flex="15"></div>
+      <div flex="50">
+        <fieldset class="demo-fieldset">
+          <legend class="demo-legend">Permisos Disponibles:</legend>
+        </fieldset>
+      </div>
+    </div>
+    <div layout="row" class="panel-body">
+      <div flex="15"></div>
+      <div flex="70">
+        <md-content style="height:385px;" md-theme="altTheme">
+          <section ng-repeat="ite in perfilCtrl.menu">
+            <md-button class=" md-icon-button md-primary" style="height:30px;width:30px;margin-top:3px;margin-bottom:3px;" ng-click="isCollapsed = !isCollapsed">
+              <span class="glyphicon glyphicon-menu-down" ng-show="!isCollapsed"></span>
+              <span class="glyphicon glyphicon-menu-up" ng-show="isCollapsed"></span>
+            </md-button>
+            <md-checkbox style="margin-top:3px;margin-bottom:3px;" class="md-primary" ng-disabled="perfilCtrl.readOnlyEditDiv" ng-checked="perfilCtrl.isChecked(ite.IdPermiso)" aria-label="Select All" ng-model="ite.Selected" ng-click="perfilCtrl.formDirty=true;perfilCtrl.selectAll(ite.IdPermiso)">
+              {{ite.NombreObjeto}}
+            </md-checkbox>
+            <div uib-collapse="!isCollapsed">
+              <div style="padding-left: 40px;" flex="100" ng-repeat="item in ite.SubMenus">
+                <md-button class=" md-icon-button md-primary" style="height:30px;width:30px;margin-top:3px;margin-bottom:3px;" ng-click="isCollapsedD = !isCollapsedD" >
+                  <span class="glyphicon glyphicon-menu-down" ng-show="!isCollapsedD"></span>
+                  <span class="glyphicon glyphicon-menu-up" ng-show="isCollapsedD"></span>
+                </md-button>
+                <md-checkbox style="margin-top:3px;margin-bottom:3px;" ng-disabled="perfilCtrl.readOnlyEditDiv" class="md-primary" ng-model="item.Selected" ng-checked="perfilCtrl.isCheckedY(item.IdPermiso,item.Selected)" ng-click="perfilCtrl.formDirty=true; perfilCtrl.selectAllY(item.IdPermiso,item.Selected)">
+                  {{ item.NombreObjeto }}
+                </md-checkbox>
+                <div style="padding-left: 80px;" flex="100" ng-repeat="permiso in item.PermisoPantalla ">
+                  <div uib-collapse="!isCollapsedD">
+                    <md-checkbox style="margin-top:3px;margin-bottom:3px;" ng-disabled="perfilCtrl.readOnlyEditDiv" class="md-primary" ng-model="permiso.Selected" ng-click="perfilCtrl.formDirty=true;">
+                      {{ permiso.Clave }}
+                    </md-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </md-content>
+      </div>
+    </div>
+  </form>
+</md-dialog>

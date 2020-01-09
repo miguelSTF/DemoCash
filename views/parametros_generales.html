@@ -1,0 +1,120 @@
+<div style="margin-top:30px;" ng-init="paramGenCtrl.init()">
+    <md-content>
+        <div style="background-color:#ECF0F1; height:40px;">
+            <div class="md-toolbar-tools" style="padding-left: 76%">
+                <md-button class="md-raised md-primary" permisopantalla permiso="3" idpantalla="56" ng-click="paramGenCtrl.enableEdit()" ng-disabled="paramGenCtrl.edit === true">Editar</md-button>
+                <md-button class="md-raised md-primary" permisopantalla permiso="3" idpantalla="56" ng-click="paramGenCtrl.save()" ng-disabled="paramGenCtrl.edit === false || paramGenCtrl.ConfigForm.$invalid || !paramGenCtrl.ConfigForm.$dirty">Guardar</md-button>
+                <md-button class="md-raised md-primary" permisopantalla permiso="3" idpantalla="56" ng-click="paramGenCtrl.cancelEdit()" ng-disabled="paramGenCtrl.edit === false">Cancelar</md-button>
+            </div>
+        </div>
+        <form name="paramGenCtrl.ConfigForm">        
+        <md-tabs md-dynamic-height="" md-border-bottom="">
+            <md-tab label="Configuración SPEI" ng-click="paramGenCtrl.SetTab(1)">
+                <md-content class="md-padding">
+                    <div layout="row" style="height: 30px"></div>
+                        <div layout="row" class="apesaFont14" style="padding-left:50px;">
+                            <div flex="30">
+                                <md-input-container class="md-block" ng-class="{ 'has-error' : paramGenCtrl.ConfigForm.$invalid && !paramGenCtrl.ConfigForm.$pristine }">
+                                    <label>Cuenta Principal</label>
+                                    <md-select ng-disabled="paramGenCtrl.edit === false" ng-change="paramGenCtrl.ctaNostroChange()" ng-model="paramGenCtrl.ctaNostro" multiple="false" md-on-close="paramGenCtrl.searchCta = ''" data-md-container-class="selectdemoSelectHeader" required>
+                                        <md-select-header class="demo-select-header">
+                                            <input ng-keydown="paramGenCtrl.handleKeyup($event)" ng-model="paramGenCtrl.searchCta" ng-focus="paramGenCtrl.focusInput" type="search" placeholder="Buscar cuenta nostro" class="demo-header-searchbox _md-text">
+                                        </md-select-header>
+                                        <md-optgroup label="Cuenta Principal">
+                                            <md-option ng-value="ctaNostro" ng-repeat="ctaNostro in paramGenCtrl.cuentasNostro | filter:paramGenCtrl.searchCta">{{ctaNostro.Alias}} ({{ctaNostro.Cuenta}})</md-option>
+                                        </md-optgroup>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <br>
+                </md-content>
+            </md-tab>
+            <md-tab label="Configuración Seguridad" ng-click="paramGenCtrl.SetTab(2)">
+                <md-content flex layout-padding>
+                    <div layout="column" >
+                        <div>
+                            <div layout="row" class="apesaFont14">
+                                <div flex="100">
+                                <fieldset>
+                                    <legend style="color: white;background: #22224b;width:41%;padding-left:1%">Reglas de manejo de sesión</legend>
+                                    <table style="border-collapse:separate; border-spacing:10px 10px;">
+                                        <tr><td><span>Número máximo de sesiones simultáneas</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false" type="number" min="1" ng-model="paramGenCtrl.NumMaxSesionesSimultaneas.value" tabindex="1" class="form-control seguridadLocalInputs" ng-change="paramGenCtrl.NumMaxSesionesSimultaneas.value = paramGenCtrl.NumMaxSesionesSimultaneas.value === e ? 1 : paramGenCtrl.NumMaxSesionesSimultaneas.value > 100 ? 100 : paramGenCtrl.NumMaxSesionesSimultaneas.value" /></td></tr>
+                                        <tr><td><span>Minutos máximos de inactividad en sesión</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false" type="number" min="1" ng-model="paramGenCtrl.MinutosMaxInactividadSesion.value" tabindex="2" class="form-control seguridadLocalInputs" ng-change="paramGenCtrl.MinutosMaxInactividadSesion.value = paramGenCtrl.MinutosMaxInactividadSesion.value === e ? 1 : paramGenCtrl.MinutosMaxInactividadSesion.value > 100 ? 100 : paramGenCtrl.MinutosMaxInactividadSesion.value"/></td></tr>
+                                        <tr><td><span>Número máximo de intentos para acceso</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false" type="number" min="1" ng-model="paramGenCtrl.NumMaxIntentosAcceso.value" tabindex="3" class="form-control seguridadLocalInputs" ng-change="paramGenCtrl.NumMaxIntentosAcceso.value = paramGenCtrl.NumMaxIntentosAcceso.value === e ? 1 : paramGenCtrl.NumMaxIntentosAcceso.value > 100 ? 100 : paramGenCtrl.NumMaxIntentosAcceso.value"/></td></tr>
+                                        <tr><td><span>Minutos para bloqueo por acceso fallido</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false" type="number" min="1" ng-model="paramGenCtrl.MinutosBloqueoAccesoFallido.value" tabindex="4" class="form-control seguridadLocalInputs" ng-change="paramGenCtrl.MinutosBloqueoAccesoFallido.value = paramGenCtrl.MinutosBloqueoAccesoFallido.value === e ? 1 : paramGenCtrl.MinutosBloqueoAccesoFallido.value > 100 ? 100 : paramGenCtrl.MinutosBloqueoAccesoFallido.value"/></td></tr>
+                                        <tr><td colspan="2"></td></tr>
+                                        <tr>
+                                            <td colspan="20"><legend style="color: white;background: #22224b;width:85%;padding-left:1%">Reglas de conformación para usuario</legend></td>
+                                        </tr>
+                                        <tr><td> <span>Caracteres mínimos para usuario</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false" type="number" min="1" max="40" ng-model="paramGenCtrl.CaracteresMin_43SR.value" tabindex="5" ng-change="paramGenCtrl.CaracteresMin_43SR.value = paramGenCtrl.CaracteresMin_43SR.value === e ? 1 : paramGenCtrl.CaracteresMin_43SR.value > 40 ? 40 : paramGenCtrl.CaracteresMin_43SR.value;" class="form-control seguridadLocalInputs"/></td></tr>
+                                        <tr><td><span>Caracteres máximos para usuario</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false" type="number" min="1" max="40" ng-model="paramGenCtrl.CaracteresMax_43SR.value" tabindex="6" ng-change="paramGenCtrl.CaracteresMax_43SR.value = paramGenCtrl.CaracteresMax_43SR.value === e ? 1 : paramGenCtrl.CaracteresMax_43SR.value > 40 ? 40 : paramGenCtrl.CaracteresMax_43SR.value;" class="form-control seguridadLocalInputs"/></td></tr>
+                                    </table>
+                                    <br>
+                                </fieldset>
+                                </div>
+                                <div flex="100">
+                                <fieldset>
+                                    <legend style="color: white;background: #22224b;width:57%;padding-left:1%">Reglas de conformación para contraseña</legend>
+                                    <table style="border-collapse:separate; border-spacing:10px 10px;">
+                                        <tr><td><span>Número de días para cambiar contraseña</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false" type="number" min="1" ng-model="paramGenCtrl.NumDiasCambio_P01SS.value" tabindex="7" class="form-control seguridadLocalInputs" ng-change="paramGenCtrl.NumDiasCambio_P01SS.value = paramGenCtrl.NumDiasCambio_P01SS.value === e ? 1 : paramGenCtrl.NumDiasCambio_P01SS.value > 100 ? 100 : paramGenCtrl.NumDiasCambio_P01SS.value"/></td></tr>
+                                        <tr><td> <span>Número máximo de contraseñas históricas</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false" type="number" min="1" ng-model="paramGenCtrl.NumMaxP01SSHistPermitidas.value" tabindex="8" class="form-control seguridadLocalInputs" ng-change="paramGenCtrl.NumMaxP01SSHistPermitidas.value = paramGenCtrl.NumMaxP01SSHistPermitidas.value === e ? 1 : paramGenCtrl.NumMaxP01SSHistPermitidas.value > 100 ? 100 : paramGenCtrl.NumMaxP01SSHistPermitidas.value"/></td></tr>
+                                        <tr><td><span>Caracteres mínimos</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false" type="number" min="1" ng-model="paramGenCtrl.CaracteresMin.value" tabindex="9" ng-change="paramGenCtrl.CaracteresMin.value = paramGenCtrl.CaracteresMin.value === e ? 1 : paramGenCtrl.CaracteresMin.value > 100 ? 100 : paramGenCtrl.CaracteresMin.value;" class="form-control seguridadLocalInputs"/></td></tr>
+                                        <tr><td><span>Caracteres máximos</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false" type="number" min="1" ng-model="paramGenCtrl.CaracteresMax.value" tabindex="10" ng-change="paramGenCtrl.CaracteresMax.value = paramGenCtrl.CaracteresMax.value === e ? 1 : paramGenCtrl.CaracteresMax.value > 100 ? 100 : paramGenCtrl.CaracteresMax.value;" class="form-control seguridadLocalInputs"/></td></tr>
+                                        <tr>
+                                            <td><span>Caracteres permitidos</span></td>
+                                            <td>
+                                                <md-select ng-disabled="paramGenCtrl.edit === false"  style="margin:0px;" class="md-selectStyle" tabindex="11" ng-model="paramGenCtrl.CaracteresPermitidos.value" ng-change="paramGenCtrl.disableOptionsAllowedCharacters()" >
+                                                        <md-option ng-value="obj.value" ng-repeat="obj in paramGenCtrl.allowedCharacters">{{obj.text}}</md-option>
+                                                </md-select>
+                                            </td>
+                                        </tr>
+                                        <tr><td><span>Número mínimo de mayúsculas</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false || paramGenCtrl.CaracteresPermitidos.value === 2 || paramGenCtrl.CaracteresPermitidos.value === 3" type="number" min="0" ng-model="paramGenCtrl.NumMinMayusculas.value" tabindex="12" class="form-control seguridadLocalInputs" ng-change="paramGenCtrl.NumMinMayusculas.value = paramGenCtrl.NumMinMayusculas.value === e ? 1 : paramGenCtrl.NumMinMayusculas.value > 100 ? 100 : paramGenCtrl.NumMinMayusculas.value"/></td></tr>
+                                        <tr><td><span>Número mínimo de minúsculas</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false || paramGenCtrl.CaracteresPermitidos.value === 2 || paramGenCtrl.CaracteresPermitidos.value === 3" type="number" min="0" ng-model="paramGenCtrl.NumMinMinusculas.value" tabindex="13" class="form-control seguridadLocalInputs" ng-change="paramGenCtrl.NumMinMinusculas.value = paramGenCtrl.NumMinMinusculas.value === e ? 1 : paramGenCtrl.NumMinMinusculas.value > 100 ? 100 : paramGenCtrl.NumMinMinusculas.value"/></td></tr>
+                                        <tr><td><span>Número mínimo de caracteres numéricos</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false" type="number" min="0" ng-model="paramGenCtrl.NumMinCaracteresNum.value" tabindex="14" class="form-control seguridadLocalInputs" ng-change="paramGenCtrl.NumMinCaracteresNum.value = paramGenCtrl.NumMinCaracteresNum.value === e ? 1 : paramGenCtrl.NumMinCaracteresNum.value > 100 ? 100 : paramGenCtrl.NumMinCaracteresNum.value"/></td></tr>
+                                        <tr><td><span>Número mínimo de caracteres especiales</span></td><td><input ng-keypress="paramGenCtrl.filterValue($event)" style="text-align: right" oncopy="return false" onpaste="return false" ng-disabled="paramGenCtrl.edit === false" type="number" min="0" ng-model="paramGenCtrl.NumMinCaracteresEspeciales.value" tabindex="15" class="form-control seguridadLocalInputs" ng-change="paramGenCtrl.NumMinCaracteresEspeciales.value = paramGenCtrl.NumMinCaracteresEspeciales.value === e ? 1 : paramGenCtrl.NumMinCaracteresEspeciales.value > 100 ? 100 : paramGenCtrl.NumMinCaracteresEspeciales.value"/></td></tr>
+                                        <tr><td><span>Requiere mayúsculas intermedias</span></td>
+                                            <td>
+                                                <md-select ng-disabled="paramGenCtrl.edit === false || paramGenCtrl.CaracteresPermitidos.value === 3" style="margin:0px;" class="md-selectStyle" tabindex="17" ng-model="paramGenCtrl.RequiereMayusIntermedias.value">
+                                                    <md-option ng-value="obj.value" ng-repeat="obj in paramGenCtrl.yesOrNot">{{obj.text}}</md-option>
+                                                </md-select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>Requiere minúsculas intermedios</span></td>
+                                            <td>
+                                                <md-select ng-disabled="paramGenCtrl.edit === false || paramGenCtrl.CaracteresPermitidos.value === 2" style="margin:0px;" class="md-selectStyle" tabindex="17" ng-model="paramGenCtrl.RequiereMinusIntermedias.value">
+                                                    <md-option ng-value="obj.value" ng-repeat="obj in paramGenCtrl.yesOrNot">{{obj.text}}</md-option>
+                                                </md-select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>Requiere números intermedios</span></td>
+                                            <td>
+                                                <md-select ng-disabled="paramGenCtrl.edit === false" style="margin:0px;" class="md-selectStyle" tabindex="18" ng-model="paramGenCtrl.RequiereNumIntermedios.value">
+                                                        <md-option ng-value="obj.value" ng-repeat="obj in paramGenCtrl.yesOrNot">{{obj.text}}</md-option>
+                                                </md-select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>Requiere caracteres especiales intermedios</span></td>
+                                            <td>
+                                                <md-select ng-disabled="paramGenCtrl.edit === false" style="margin:0px;" class="md-selectStyle" tabindex="19" ng-model="paramGenCtrl.RequiereCaracteresEspeciales.value">
+                                                        <md-option ng-value="obj.value" ng-repeat="obj in paramGenCtrl.yesOrNot">{{obj.text}}</md-option>
+                                                </md-select>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+        </form>
+    </md-content>
+</div>
+<loading-modal class="modal show" loadshow="paramGenCtrl.loading" data-backdrop="static" />

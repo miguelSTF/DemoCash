@@ -1,0 +1,158 @@
+<div class="row positionPrincipalDiv" ng-init="consultaGralCtrl.init()">
+    <div layout="row" class="apesaFont14">
+        <div flex></div>
+        <div flex="8" style="text-align:center; ">
+          <h5 style="text-align:center; margin:0px;">Fecha</h5>
+          <md-datepicker ng-change="consultaGralCtrl.reloadData()" ng-model="consultaGralCtrl.fecha"></md-datepicker>
+        </div>
+        <div flex="5"></div>
+        <div flex="15" class="td-MCuentaCorriente">
+            <md-input-container>
+                Incluir Canceladas <md-checkbox ng-checked="consultaGralCtrl.incluirCancel" ng-click="consultaGralCtrl.incluirCanceladas();" class="md-checkbox md-primary" aria-label="Checkbox 1"></md-checkbox>
+            </md-input-container>
+        </div>
+        <div flex="5"></div>
+        <div flex="15" class="dropdown" style="text-align:right; margin-right:29px;">
+            <md-button class="md-raised md-primary" ng-click="consultaGralCtrl.reloadData()">Filtrar</md-button>
+        <md-button class="md-icon-button" ng-disabled="consultaGralCtrl.dataset.length === 0 || consultaGralCtrl.dataset === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+            <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+        </md-button>
+            <ul class="table-export dropdown-menu excel-list" style="left:50px; width:50px;" table-selector="'tablaConsultaGeneralExport'" export-options="{type: 'excel', escape: true, tableName: 'Monitor de Operaciones',ignoreColumn: [16] }" style="top:60%;" aria-labelledby="dropdownMenu1">
+                <li onclick="export_table_to_excel('tablaConsultaGeneralExport','Consulta General','[1]','[15]')">
+                    <span>Excel</span>
+                </li>
+                <li te-option te-value="'csv'" te-param="'type'">
+                    <span style="cursor:pointer">CSV</span>
+                </li>
+                <li te-option te-value="'txt'" te-param="'type'">
+                    <span style="cursor:pointer">TXT</span>
+                </li>
+            </ul>
+        </div>
+        <div flex="8" style="margin-left:-6px;"></div>
+    </div>
+    <center>
+        <table st-sticky-header st-table="consultaGralCtrl.datasetCollection" st-safe-src="consultaGralCtrl.dataset" style="width: 1250px;" class="table-bordered table-striped table-hover apesaFont14" id="tablaMonitor">
+            <thead style="border: 0;color: white;background: #22224b;z-index:1; width:inherit;">
+                <tr style="border: 0;" >
+                    <th style="text-align:center; width:90px;" st-sort="IdSolicitud">Folio Cash</th>
+                    <th style="text-align:center; width:110px;" st-sort="NombreDepartamento">Departamento</th>
+                    <th style="text-align:center; width:120px;" st-sort="NombreConceptoOriginal">Concepto</th>
+                    <th style="text-align:center; width:140px;" st-sort="NombreContraParte">Contraparte</th>
+                    <th style="text-align:center; width:130px;" st-sort="IdSistemaExterno">Id Externo</th>
+                    <th style="text-align:center; width:100px;" st-sort="Instruccion">Instrucción</th>
+                    <th style="text-align:center; width:150px;" st-sort="Importe">Monto</th>
+                    <th style="text-align:center; width:70px;" st-sort="Sentido">Tipo</th>
+                    <th style="text-align:center; width:80px;" st-sort="DescripcionStatus">Estatus</th>
+                    <th style="text-align:center; width:170px;" st-sort="FechaRegistroS">Fecha Registro</th>
+                    <th style="text-align:center; width:25px;"></th>
+                </tr>
+                <tr>
+                    <td style="text-align:center; width:90px;">
+                        <input ng-model="consultaGralCtrl.IdSolicitud" placeholder="Folio Cash" class="input-sm form-control" type="text">
+                    </td>
+                    <td style="text-align:center; width:110px;">
+                        <input ng-model="consultaGralCtrl.NombreDepartamento"  placeholder="Departamento" class="input-sm form-control" type="text">
+                    </td>
+                    <td style="text-align:center; width:120px;">
+                        <input ng-model="consultaGralCtrl.NombreConceptoOriginal" placeholder="Concepto" class="input-sm form-control" type="text">
+                    </td>
+                    <td style="text-align:center; width:140px;">
+                        <input ng-model="consultaGralCtrl.NombreContraParte" placeholder="Contraparte" class="input-sm form-control" type="text">
+                    </td>
+                    <td style="text-align:center; width:130px;">
+                        <input ng-model="consultaGralCtrl.IdSistemaExterno" placeholder="Id Externo" class="input-sm form-control" type="text">
+                    </td>
+                    <td style="text-align:center; width:100px;">
+                        <input ng-model="consultaGralCtrl.Instruccion" placeholder="Instrucción" class="input-sm form-control" type="text">
+                    </td>
+                    <td "text-align:center; width:150px;">
+                        <input ng-model="consultaGralCtrl.Importe" placeholder="Monto" class="input-sm form-control" type="text">
+                    </td>
+                    <td style="text-align:center; width:70px;">
+                        <input ng-model="consultaGralCtrl.Sentido" placeholder="Tipo" class="input-sm form-control" type="text">
+                    </td>
+                    <td style="text-align:center; width:80px;">
+                        <input ng-model="consultaGralCtrl.DescripcionStatus" placeholder="Estatus" class="input-sm form-control" type="text">
+                    </td>
+                    <td style="text-align:center; width:170px;" >
+                        <input ng-model="consultaGralCtrl.FechaRegistro" placeholder="Fecha Registro" class="input-sm form-control" type="text">
+                    </td>
+                    <td style="text-align:center; width:25px;" >
+                        <input ng-disabled="true" class="input-sm form-control" type="text">
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="ordenpago in consultaGralCtrl.datasetCollection | filter : {IdSolicitud:consultaGralCtrl.IdSolicitud,NombreDepartamento:consultaGralCtrl.NombreDepartamento,NombreConceptoOriginal:consultaGralCtrl.NombreConceptoOriginal,NombreContraParte:consultaGralCtrl.NombreContraParte,IdSistemaExterno:consultaGralCtrl.IdSistemaExterno,Instruccion:consultaGralCtrl.Instruccion,Importe:consultaGralCtrl.Importe,Sentido:consultaGralCtrl.Sentido,DescripcionStatus:consultaGralCtrl.DescripcionStatus,FechaRegistroS:consultaGralCtrl.FechaRegistro}" >
+                    <td style="width:90px;text-align:center;" title="{{ordenpago.IdSolicitud}}" ><div class="overflowContainer"> {{ordenpago.IdSolicitud}} </div></td>
+                    <td style="text-align:left;width:110px;padding-left:10px;" title="{{ordenpago.NombreDepartamento}}"><div class="overflowContainer"> {{ordenpago.NombreDepartamento}} </div></td>
+                    <td style="text-align:left;width:120px;padding-left:5px;" title="{{ordenpago.NombreConceptoOriginal  }}"><div class="overflowContainer">{{ordenpago.NombreConceptoOriginal}} </div></td>
+                    <td style="text-align:left;width:140px;padding-left:10px;" title="{{ordenpago.NombreContraParte}}"><div class="overflowContainer"> {{ordenpago.NombreContraParte}} </div></td>
+                    <td style="text-align:left;width:130px;padding-left:10px;" title="{{ordenpago.IdSistemaExterno}}"> <div class="overflowContainer">{{ordenpago.IdSistemaExterno}} </div></td>
+                    <td style="text-align:left;width:100px;padding-left:5px;" title="{{ordenpago.Instruccion}}"><div class="overflowContainer"> {{ordenpago.Instruccion}} </div></td>
+                    <td style="text-align:left;width:150px;" format="{{ordenpago.Importe}}" class="isNumberExcel" tipo="Numerico" title="{{ordenpago.Importe}}"></td>
+                    <td style="width:70px;"><div class="overflowContainer" title="{{ordenpago.Sentido}}"> {{ordenpago.Sentido}} </div></td>
+                    <td style="text-align:left;width:80px;" title="{{ordenpago.DescripcionStatus}}"><div class="overflowContainer">{{ordenpago.DescripcionStatus}}</div></td>
+                    <td style="text-align:left;width:170px;padding-left:10px;" title="{{ordenpago.FechaRegistroS}}"><div class="overflowContainer">{{ordenpago.FechaRegistroS}}</div></td>
+                    <td style ="width:25px;">
+                        <span title="Detalle" style="color:#333; margin-left:5px;" class="glyphicon glyphicon-list-alt" ng-click="consultaGralCtrl.Consultar(ordenpago.PayloadString)"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+    <br>
+    <div style="height:1px;width:1px;overflow-y:scroll;">
+        <table st-sticky-header st-table="consultaGralCtrl.datasetCollection" st-safe-src="consultaGralCtrl.dataset" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaConsultaGeneralExport">
+            <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+                <tr style="border: 0;" >
+                    <th style="text-align:center; width:85px;" st-sort="IdSolicitud">Folio Cash</th>
+                    <th style="text-align:center; width:110px;" st-sort="NombreDepartamento">Departamento</th>
+                    <th style="text-align:center; width:120px;" st-sort="NombreConceptoOriginal">Concepto</th>
+                    <th style="text-align:center; width:140px;" st-sort="NombreContraParte">Contraparte</th>
+                    <th style="text-align:center; width:130px;" st-sort="IdSistemaExterno">Id Externo</th>
+                    <th style="text-align:center; width:100px;" st-sort="Instruccion">Instrucción</th>
+                    <th style="text-align:center; width:150px; " st-sort="Importe">Monto</th>
+                    <th style="text-align:center; width:70px;" st-sort="Sentido">Tipo</th>
+                    <th style="text-align:center; width:80px;" st-sort="Status">Estatus</th>
+                    <th style="text-align:center; width:170px;" st-sort="FechaRegistro">Fecha Registro</th>
+                    <th style="text-align:center; width:100px;" st-sort="Instruccion">Clave Rastreo</th>
+                    <th style="text-align:center; width:100px;" st-sort="Instruccion">Institución</th>
+                    <th style="text-align:center; width:100px;" st-sort="Instruccion">Cuenta Beneficiario</th>
+                    <th style="text-align:center; width:170px;" st-sort="FechaRegistro">Capturó</th>
+                    <th style="text-align:center; width:170px;" st-sort="Descripcion">Descripción</th>
+                    <th style="text-align:center; width:25px;"></th>
+                </tr>
+                <tr>
+                    <td colspan="16">
+                        <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="ordenpago in consultaGralCtrl.datasetCollection" >
+                    <td style="width:85px;text-align:center;" title="{{ordenpago.IdSolicitud}}" ><div class="overflowContainer"> {{ordenpago.IdSolicitud}} </div></td>
+                    <td style="text-align:left;width:110px;padding-left:10px;" title="{{ordenpago.NombreDepartamento}}"><div class="overflowContainer"> {{ordenpago.NombreDepartamento}} </div></td>
+                    <td style="text-align:left;width:120px;padding-left:5px;" title="{{ordenpago.NombreConceptoOriginal  }}"><div class="overflowContainer">{{ordenpago.NombreConceptoOriginal}} </div></td>
+                    <td style="text-align:left;width:140px;padding-left:10px;" title="{{ordenpago.NombreContraParte}}"><div class="overflowContainer"> {{ordenpago.NombreContraParte}} </div></td>
+                    <td style="text-align:left;width:130px;padding-left:10px;" title="{{ordenpago.IdSistemaExterno}}"> <div class="overflowContainer">{{ordenpago.IdSistemaExterno}} </div></td>
+                    <td style="text-align:left;width:100px;padding-left:5px;" title="{{ordenpago.Instruccion}}"><div class="overflowContainer"> {{ordenpago.Instruccion}} </div></td>
+                    <td style="text-align:left;width:130px;" format="{{ordenpago.Importe}}" class="isNumberExcel" tipo="Numerico" title="{{ordenpago.Importe}}"></td>
+                    <td style="width:70px;"><div class="overflowContainer" title="{{ordenpago.Sentido}}"> {{ordenpago.Sentido}} </div></td>
+                    <td style="text-align:left;width:80px;" title="{{ordenpago.DescripcionStatus}}"><div class="overflowContainer">{{ordenpago.DescripcionStatus}}</div></td>
+                    <td style="text-align:left;width:170px;padding-left:10px;" format="{{ordenpago.FechaRegistro}}" tipo="FechaCompleta" title="{{ordenpago.FechaRegistro}}"><div class="overflowContainer">{{ordenpago.FechaRegistro}}</div></td>
+                    <td style="text-align:left;width:100px;padding-left:5px;" title="{{ordenpago.PayloadExport.ClaveRastreo}}"><div class="overflowContainer"> {{ordenpago.PayloadExport.ClaveRastreo}} </div></td>
+                    <td style="text-align:left;width:100px;padding-left:5px;" title="{{ordenpago.PayloadExport.InstitucionBen}}"><div class="overflowContainer"> {{ordenpago.PayloadExport.InstitucionBen}} </div></td>
+                    <td style="text-align:left;width:100px;padding-left:5px;" title="{{ordenpago.PayloadExport.CtaBen}}"><div class="overflowContainer"> {{ordenpago.PayloadExport.CtaBen}} </div></td>
+                    <td style="text-align:left;width:170px;padding-left:10px;"><div class="overflowContainer">{{ordenpago.UsuarioOper}}</div></td>
+                    <td style="text-align:left;width:170px;padding-left:10px;"><div class="overflowContainer">{{ordenpago.PayloadExport.ConceptoPago}}</div></td>
+                    <td style ="width:25px;">
+                        <span title="Detalle" style="margin:5px; color:#333;" class="glyphicon glyphicon-list-alt" ng-click="consultaGralCtrl.Consultar(ordenpago.PayloadString)"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<loading-modal class="modal show" loadshow="consultaGralCtrl.loading" data-backdrop="static" />

@@ -1,0 +1,25 @@
+<div class="row positionPrincipalDiv apesaFont14" ng-init="inicioFinDiaCtrl.init(35)">
+    <div layout="row" style="height: 40px"></div>
+        <form ng-submit="inicioFinDiaCtrl.init()" id="finDia" name="inicioFinDiaCtrl.ConfigForm">
+            <div layout="row" layout-align="center">
+                <div flex="30">
+                    <label style="font-weight: 100;"> Fecha actual:</label>
+                    <label> {{inicioFinDiaCtrl.fechaOper}}</label>
+                </div>
+                <div flex="5"></div>
+                <div flex="40">
+                    <label style="font-weight: 100;"> Estatus del día:</label>
+                    <label> {{inicioFinDiaCtrl.statusDia}}</label>
+                </div>
+            </div>
+            <br>
+            <div style="padding-left: 160px;" layout="row" layout-align="left">
+                <div flex="35">
+                    <md-button title="Abrir día" ng-disabled="inicioFinDiaCtrl.statusDia === 'Abierto'" ng-click="inicioFinDiaCtrl.ConfirmAction('inicio');" class="md-raised md-warn">Abrir Día</md-button>
+                </div>
+                <div flex="5"></div>
+            </div>
+            <br>
+        </form>
+</div>
+<loading-modal class="modal show" loadshow="inicioFinDiaCtrl.loading" data-backdrop="static" />

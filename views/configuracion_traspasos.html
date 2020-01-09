@@ -1,0 +1,80 @@
+<div class="row positionPrincipalDiv" ng-init="configTrasCtrl.init()">
+    <div layout="row">
+		<div flex></div>
+		<div flex="9" class="dropdown">
+			<md-button ng-disabled="configTrasCtrl.divisasCollection.length === 0" title="Exportar" class="md-raised md-warn dropdown-toggle" data-toggle="dropdown" >Exportar</md-button>
+			<ul class="table-export dropdown-menu excel-list" table-selector="'tablatraspaso'" export-options="{type: 'excel', escape: true, ignoreColumn: [7],tableName: 'Configuracion_Traspasos' }" aria-labelledby="dropdownMenu1">
+					<li onclick="export_table_to_excel('tablatraspaso','Configuracion_Traspasos','[1]','[7]')">
+							<span>Excel</span>
+					</li>
+					<li te-option te-value="'csv'" te-param="'type'">
+							<span>CSV</span>
+					</li>
+					<li te-option te-value="'txt'" te-param="'type'">
+							<span>TXT</span>
+					</li>
+			</ul>
+		</div>
+		<div flex="9">
+			<md-button title="Agregar" permisopantalla permiso="2" idpantalla="37" ng-click="configTrasCtrl.newEdit()" class="md-raised md-primary">Agregar</md-button>
+		</div>
+	</div>
+    <center>
+		<table st-sticky-header st-table="configTrasCtrl.traspasosCollection" st-safe-src="configTrasCtrl.traspasos" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablatraspaso">
+			<thead style="border: 0;color: white;background: #22224b;z-index:1;">
+				<tr style="border: 0;">
+					<th style="text-align:center; width:150px;" st-sort="NombreCorto">Nombre</th>
+					<th style="text-align:center; width:150px;" st-sort="NombreCuentaOrigen">Cuenta Origen</th>
+					<th style="text-align:center; width:180px;" st-sort="NombreDepaOrigen">Departamento Origen</th>
+					<th style="text-align:center; width:170px;" st-sort="NombreCeptoOrigen">Concepto Origen</th>
+					<th style="text-align:center; width:150px;" st-sort="NombreCuentaDestino">Cuenta Destino</th>
+					<th style="text-align:center; width:180px;" st-sort="NombreDepaDestino">Departamento Destino</th>
+					<th style="text-align:center; width:170px;" st-sort="NombreCeptoDestino">Concepto Destino</th>
+					<th style="text-align:center; width:100px;"></th>
+				</tr>
+				<tr>
+                    <td colspan="8">
+                        <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+                    </td>
+                </tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="traspaso in configTrasCtrl.traspasosCollection">
+					<td style="text-align:left; width:150px;height:25px;" title="{{traspaso.Nombre}}">
+						<div class="overflowContainer">{{traspaso.Nombre}} </div>
+					</td>
+					<td style="width:150px;" title="{{traspaso.NombreCuentaOrigen}}">
+						<div class="overflowContainer">{{traspaso.NombreCuentaOrigen}} </div>
+					</td>
+                    <td style="width:180px;" title="{{traspaso.NombreDepaOrigen}}">
+						<div class="overflowContainer">{{traspaso.NombreDepaOrigen}} </div>
+					</td>
+                    <td style="width:170px;" title="{{traspaso.NombreCeptoOrigen}}">
+						<div class="overflowContainer">{{traspaso.NombreCeptoOrigen}} </div>
+					</td>
+                    <td style="width:150px;" title="{{traspaso.NombreCuentaDestino}}">
+						<div class="overflowContainer">{{traspaso.NombreCuentaDestino}} </div>
+					</td>
+                    <td style="width:180px;" title="{{traspaso.NombreDepaDestino}}">
+						<div class="overflowContainer">{{traspaso.NombreDepaDestino}} </div>
+					</td>
+                    <td style="width:170px;" title="{{traspaso.NombreCeptoDestino}}">
+						<div class="overflowContainer">{{traspaso.NombreCeptoDestino}} </div>
+					</td>
+					<td style="text-align:center;width:100px; color:#333;">
+							<span class="glyphicon"></span>
+                            <span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-eye-open" title="Consultar" ng-click="configTrasCtrl.watch(traspaso)"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-pencil" permisopantalla permiso="3" idpantalla="37" title="Editar" ng-click="configTrasCtrl.edit(traspaso)"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-trash" permisopantalla permiso="4" idpantalla="37" title="Borrar" ng-click="configTrasCtrl.del(traspaso)"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</center>
+</div>
+<loading-modal class="modal show" loadshow="configTrasCtrl.loading" data-backdrop="static"/>

@@ -1,0 +1,232 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Detalle de Registro</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="Close()" aria-label="Cerrar">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle">
+            <md-content class="md-padding">
+
+                <div layout="row"  style="height:25px">
+                        <div flex="25">
+                                <strong>Descripción</strong>
+                        </div>
+                        <div flex style="text-align:left;">
+                                <p>{{registro.Descripcion}}</p>
+                        </div>
+                </div>
+                <div layout="row"  style="height:25px">
+                        <div flex="25">
+                                <strong>Fecha y Hora</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>{{registro.FechaLiquidacion.substring(0,10)}}
+                                {{registro.FechaLiquidacion.substring(11,20)}}
+                                </p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25"></div>
+                        <div flex="25"></div>
+                </div>
+
+                <div layout="row"  style="height:25px">
+                        <div flex="25">
+                                <strong>Participante</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>{{registro.IdParticipante}}</p>
+                        </div>
+
+                        <div flex="20"></div>
+
+                        <div flex="25">
+                                <strong>Folio Participante</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>{{registro.FolioParticipante}}</p>
+                        </div>
+                </div>
+
+                <div layout="row"  style="height:25px">
+                      <div flex="25">
+                              <strong>Cuenta Participante</strong>
+
+                      </div>
+                      <div flex="25" style="text-align:right;">
+                              <p >{{registro.CuentaParticipante}}</p>
+                      </div>
+
+                      <div flex="20"></div>
+
+                      <div flex="25">
+                                <strong>Id Contraparte</strong>
+                      </div>
+                      <div flex="25" style="text-align:right;">
+                                <p>{{registro.IdContraparte}}</p>
+                      </div>
+                </div>
+
+                <div layout="row"  style="height:25px">
+                    <div flex="25">
+                            <strong>Folio Contraparte</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                            <p>{{registro.FolioContraparte}}</p>
+                    </div>
+                    <div flex="20"></div>
+                    <div flex="25">
+                              <strong>Cuenta Contraparte</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                              <p>{{registro.CuentaContraparte}} </p>
+                    </div>
+                </div>
+
+                <div layout="row"  style="height:25px">
+                    <div flex="25">
+                            <strong>Folio Instrucción</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                            <p>{{registro.FolioInstruccion}}</p>
+                    </div>
+                    <div flex="20"></div>
+                    <div flex="25">
+                              <strong>Cobro</strong>
+
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                              <p>{{registro.Cobro | number:2}}</p>
+                    </div>
+                </div>
+
+                <div layout="row"  style="height:25px">
+                    <div flex="25">
+                            <strong>Pago</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                            <p>{{registro.Pago | number:2}}</p>
+                    </div>
+
+                    <div flex="20"></div>
+
+                    <div flex="25">
+                              <strong>Tipo Instrucción</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                              <p>{{registro.TipoIntruccion}}</p>
+                    </div>
+                </div>
+
+                <div layout="row"  style="height:25px">
+                    <div flex="25">
+                            <strong>Tipo D/R</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                            <p>{{registro.TipoDr}}</p>
+                    </div>
+
+                    <div flex="20"></div>
+
+                    <div flex="25">
+                              <strong>Plazo</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                              <p> {{registro.Plazo}}</p>
+                    </div>
+                </div>
+
+                <div layout="row"  style="height:25px">
+                    <div flex="25">
+                            <strong>Tasa</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                            <p>{{registro.Tasa | number:5}}</p>
+                    </div>
+
+                    <div flex="20"></div>
+
+                    <div flex="25">
+                              <strong>Tipo Valor</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                              <p>{{registro.Tv}}</p>
+                    </div>
+                </div>
+
+                <div layout="row"  style="height:25px">
+                    <div flex="25">
+                            <strong>Emisora</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                            <p>{{registro.Emisora}}</p>
+                    </div>
+
+                    <div flex="20"></div>
+                    
+                    <div flex="25">
+                              <strong>Serie</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                              <p>{{registro.Serie}}</p>
+                    </div>
+                </div>
+                <div layout="row"  style="height:25px">
+                    <div flex="25">
+                            <strong>Cupón</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                            <p>{{registro.Cupon}}</p>
+                    </div>
+                    <div flex="20"></div>
+                    <div flex="25">
+                              <strong>Mercado</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                              <p>{{registro.Mercado}}</p>
+                    </div>
+                </div>
+
+                <div layout="row"  style="height:25px">
+                    <div flex="25">
+                            <strong>Cantidad</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                            <p>{{registro.Cantidad}}</p>
+                    </div>
+
+                    <div flex="20"></div>
+
+                    <div flex="25">
+                              <strong>Precio</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                              <p>{{registro.Precio | number:2}}</p>
+                    </div>
+                </div>
+
+                <div layout="row"  style="height:25px">
+                    <div flex="25">
+                            <strong>Cuenta Receptor</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                            <p>{{registro.CuentaReceptor}}</p>
+                    </div>
+
+                    <div flex="20"></div>
+
+                    <div flex="25">
+                              <strong>Cuenta Traspasante</strong>
+                    </div>
+                    <div flex="25" style="text-align:right;">
+                              <p>{{registro.CuentaTraspasante}}</p>
+                    </div>
+                </div>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>

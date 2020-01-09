@@ -1,0 +1,35 @@
+<md-dialog style="width:950px; height:150px;">
+  <form style="padding-top:20px" name="diasInhabilesCtrl.DiaInhabilForm" ng-submit="Save()" role="form" novalidate>
+    <div layout="row">
+      <div flex="5"></div>
+      <div flex="60">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[diasInhabilesCtrl.DiaInhabilForm.Descripcion.$valid]">
+          <label for="Descripcion" class="control-label">Descripción</label>
+          <input type="text" class="form-control" id="Descripcion" name="Descripcion" maxlength="50" placeholder="Descripción" ng-model="diasInhabilesCtrl.diaInhabilEdit.Descripcion" ng-disabled="diasInhabilesCtrl.readOnlyEditDiv" tabindex="1" autocomplete="off" required capitalize>
+          <span ng-show="diasInhabilesCtrl.DiaInhabilForm.Descripcion.$dirty && diasInhabilesCtrl.DiaInhabilForm.Descripcion.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="diasInhabilesCtrl.DiaInhabilForm.Descripcion.$dirty && diasInhabilesCtrl.DiaInhabilForm.Descripcion.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+      <div flex="5"></div>
+      <div flex="30">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[diasInhabilesCtrl.DiaInhabilForm.Fecha.$valid]">
+          <label for="Fecha" class="control-label">Fecha</label>
+          <div>
+            <md-datepicker ng-if="diasInhabilesCtrl.editRow"  ng-model="diasInhabilesCtrl.diaInhabilEdit.Fecha" disabled></md-datepicker>
+            <md-datepicker ng-if="!diasInhabilesCtrl.editRow" md-min-date="diasInhabilesCtrl.fechaOperacion" md-date-filter="diasInhabilesCtrl.onlyWeekendsPredicate" ng-model="diasInhabilesCtrl.diaInhabilEdit.Fecha" tabindex="2"></md-datepicker>
+          </div>
+        </div>
+      </div>
+      <div flex="5"></div>
+      <div flex="15">
+        <button class="btn btn-primary btn-md" title="Guardar" ng-click="diasInhabilesCtrl.checkDataReg()" ng-disabled="diasInhabilesCtrl.DiaInhabilForm.$invalid || !diasInhabilesCtrl.DiaInhabilForm.$dirty || diasInhabilesCtrl.disabledSave" tabindex="3" ng-hide="diasInhabilesCtrl.readOnlyEditDiv">
+          <span class="glyphicon glyphicon-saved"></span>
+        </button>
+        <button class="btn btn-primary btn-md" title="Cancelar" tabindex="4" ng-click="diasInhabilesCtrl.viewDialog()">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </div>
+    </div>
+
+  </form>
+</md-dialog>

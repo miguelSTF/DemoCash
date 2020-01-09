@@ -1,0 +1,56 @@
+<md-dialog style="width: 900px;">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Traspasos  {{tableroposCtrl.dateInfo}}  {{tableroposCtrl.divisaName}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="tableroposCtrl.Close()" aria-label="Cerrar">
+            <span class="glyphicon glyphicon-remove"></span>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content class="md-padding" style="max-height:500px">
+      <div style="overflow: auto; max-height: 400px">
+        <table  st-table="tableroposCtrl.traspasosCollection" st-safe-src="tableroposCtrl.traspasos" class="table-bordered table-striped ng-table-monitor">
+          <thead style="border: 0;color: white;background: #22224b;z-index:1;" fix-head>
+            <tr>
+              <th style="width:120px; text-align:center;" st-sort="CuentaNostroSalida">Cuenta Salida</th>
+              <th style="width:120px; text-align:center;" st-sort="CuentaNostroEntrada">Cuenta Entrada</th>
+              <th style="width:120px; text-align:center;" st-sort="IdSolicitud">Folio Cash</th>
+              <th style="width:120px; text-align:center;" st-sort="Referencia">Referencia</th>
+              <th style="width:150px; text-align:center;" st-sort="Importe">Importe</th>
+              <th style="width:150px; text-align:center;" st-sort="FechaRegistroS">Fecha</th>
+            </tr>
+            <tr>
+              <th colspan="6">
+                <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="trasp in tableroposCtrl.traspasosCollection">
+              <td style="width:120px; text-align:left;" title="{{trasp.CuentaNostroSalida}}">
+                <div class="overflowContainer">{{trasp.CuentaNostroSalida}}</div>
+              </td>
+              <td style="width:120px; text-align:left;" title="{{trasp.CuentaNostroEntrada}}">
+                <div class="overflowContainer">{{trasp.CuentaNostroEntrada}}</div>
+              </td>
+              <td style="width:120px; text-align:left;" title="{{trasp.IdSolicitud}}">
+                <div class="overflowContainer">{{trasp.IdSolicitud}}</div>
+              </td>
+              <td style="width:120px; text-align:left;" title="{{trasp.Referencia}}">
+                <div class="overflowContainer">{{trasp.Referencia}}</div>
+              </td>
+              <td style="width:150px; text-align:center;" title="{{trasp.Importe | currency:''}}">
+                <div class="overflowContainer" format="{{trasp.Importe}}" tipo="Numerico"></div>
+              </td>
+              <td style="width:150px; text-align:center;" title="{{trasp.FechaRegistroS}}">
+                <div class="overflowContainer">{{trasp.FechaRegistroS}}</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </md-content>
+  </form>
+</md-dialog>

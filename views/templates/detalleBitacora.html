@@ -1,0 +1,16 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Detalle de Registro</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="bitacoraCtrl.Close()" aria-label="Cerrar">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+          <md-dialog-content class="md-padding" style="width:auto;height:auto;">
+          <json-viewer data="{{bitacoraCtrl.registro}}"></json-viewer>
+        </md-dialog-content>
+    </form>
+</md-dialog>

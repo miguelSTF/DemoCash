@@ -1,0 +1,105 @@
+<div layout="column" class="positionPrincipalDiv" ng-init="envioNoIdentCtrl.init()">
+    <div layout="row" style="color:#333; font-size:14px;">
+          <div flex="15" style="text-align: center">
+           <h5>Fecha</h5>
+           <md-datepicker ng-disabled="envioNoIdentCtrl.filterFor === 2" md-placeholder="Fecha" md-max-date="envioNoIdentCtrl.maxDate" ng-model="envioNoIdentCtrl.fechaHasta" ng-change="envioNoIdentCtrl.getOperToINI()"></md-datepicker>
+         </div>
+         <div flex="10"></div>
+         <div flex="20">
+             <h5>Consultar Ingresos</h5>
+             <md-select class="md-selectStyle" ng-model="envioNoIdentCtrl.filterFor" placeholder="Selecciona un elemento" ng-change="envioNoIdentCtrl.getOperToINI()">
+                 <md-option ng-value="filtro.Id" ng-repeat="filtro in envioNoIdentCtrl.statusToMonitorReclasif">{{filtro.Nombre}}</md-option>
+             </md-select>
+         </div>
+         <div flex="5"></div>
+         <div flex="30">
+           <h5>Cuenta Corriente</h5>
+           <md-select ng-change="envioNoIdentCtrl.getOperToINI()" ng-model="envioNoIdentCtrl.cuentaCorriente" multiple="false" md-on-close="envioNoIdentCtrl.searchCuenta = ''" data-md-container-class="selectdemoSelectHeader">
+             <md-select-header class="demo-select-header">
+               <input ng-keydown="envioNoIdentCtrl.handleKeyup($event)" ng-model="envioNoIdentCtrl.searchCuenta" ng-focus="envioNoIdentCtrl.focusInput" type="searchCuenta" placeholder="Buscar cuenta corriente" class="demo-header-searchbox _md-text">
+             </md-select-header>
+             <md-optgroup label="Cuenta Corriente">
+               <md-option ng-value="cuentaCorriente.IdCuentaCorriente" ng-repeat="cuentaCorriente in envioNoIdentCtrl.cuentasCorrientes | filter:envioNoIdentCtrl.searchCuenta">{{cuentaCorriente.Alias}} {{cuentaCorriente.Cuenta}}</md-option>
+             </md-optgroup>
+           </md-select>
+         </div>
+         <div flex="5" ng-show="envioNoIdentCtrl.filterFor === 1"></div>
+         <div flex="20" ng-show="envioNoIdentCtrl.filterFor !== 1"></div>
+         <div flex="30" ng-show="envioNoIdentCtrl.filterFor === 1">
+            <h5>Departamento</h5>
+            <md-select ng-change="envioNoIdentCtrl.getOperToINI()" ng-model="envioNoIdentCtrl.departamento" multiple="false" md-on-close="envioNoIdentCtrl.searchDepa = ''" data-md-container-class="selectdemoSelectHeader">
+            <md-select-header class="demo-select-header">
+                <input ng-keydown="envioNoIdentCtrl.handleKeyup($event)" ng-model="envioNoIdentCtrl.searchDepa" ng-focus="envioNoIdentCtrl.focusInput" type="search" placeholder="Buscar departamento" class="demo-header-searchbox _md-text">
+            </md-select-header>
+            <md-optgroup label="Departamento">
+                <md-option ng-value="departamento.IdDepartamento" ng-repeat="departamento in envioNoIdentCtrl.departamentos | filter:envioNoIdentCtrl.searchDepa">{{departamento.Nombre}}</md-option>
+            </md-optgroup>
+            </md-select>
+         </div>
+         <div flex="20"></div>
+         <div flex="20" class="dropdown">
+             <br></br>
+           <md-button class="md-raised md-primary" ng-click="envioNoIdentCtrl.getOperToINI()">Filtrar</md-button>
+            <md-button class="md-icon-button" ng-disabled="envioNoIdentCtrl.opersToNoI.length === 0 || envioNoIdentCtrl.opersToNoI === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+             <span class="glyphicon glyphicon-save" style="font-size:30px;"></span>
+           </md-button>
+            <ul style="position:absolute; margin-top:-48px;" class="table-export dropdown-menu excel-list" table-selector="'tablaEnvioNoIdent'" export-options="{type: 'excel', escape: true, tableName: 'Envio No Identificados',deleteLastColumn:'false',ignoreColumn: [6,7] }" aria-labelledby="dropdownMenu1">
+                <li onclick="export_table_to_excel('tablaEnvioNoIdent','Envio_No_Identificado','[1]','[6,7]')">
+                    <span>Excel</span>
+                </li>
+                <li te-option te-value="'csv'" te-param="'type'">
+                    <span style="cursor:pointer">CSV</span>
+                </li>
+                <li te-option te-value="'txt'" te-param="'type'">
+                    <span>TXT</span>
+                </li>
+            </ul>
+          </div>
+       </div>
+      <center>
+        <table style="color:#333; font-size:14px;" st-sticky-header st-table="envioNoIdentCtrl.datasetCollection" st-safe-src="envioNoIdentCtrl.opersToNoI" class="table-bordered table-striped ng-table-monitor table-hover" id="tablaEnvioNoIdent">
+          <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+              <tr style="border: 0;" >
+                <th style="text-align:center; width:80px;" st-sort="Fecha">Fecha</th>
+                <th style="text-align:center;width:150px;" st-sort="CuentaCorriente">Cuenta Corriente</th>
+                <th style="text-align:center;width:300px;" st-sort="Departamento">Departamento</th>
+                <th style="text-align:center;width:320px;" st-sort="Concepto">Concepto</th>
+                <th style="text-align:center; width:220px;" st-sort="Importe">Importe</th>
+                <th style="text-align:center;width:40px;"></th>
+                <th style="text-align:center;width:40px;"></th>
+                <th style="text-align:center;width:40px;"></th>
+              </tr>
+              <tr>
+                <td colspan="10">
+                    <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+                </td>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="ordenpago in envioNoIdentCtrl.datasetCollection">
+                <td style="text-align:center; width:80px;padding-left:10px;">{{ordenpago.Fecha}}</td>
+                <td style="text-align:left;width:150px;padding-left:10px;">{{ordenpago.CuentaCorriente}}</td>
+                <td style="text-align:left;width:300px;padding-left:10px;">{{ordenpago.Departamento}}</td>
+                <td style="text-align:left;width:320px;padding-left:10px;">{{ordenpago.Concepto}}</td>
+                <td style="text-align:right;width:220px;padding-right:10px;" class="isNumberExcel">{{ordenpago.Importe | currency:''}}</td>
+                <td style="text-align: center;width:40px;">
+                    <span class="glyphicon glyphicon-list-alt" ng-click="envioNoIdentCtrl.Consultar(ordenpago.PayloadString)">
+                        <md-tooltip md-direction="top">Ver Detalle</md-tooltip>
+                    </span>
+                </td>
+                <td style="text-align: center;width:40px;">
+                    <span class="glyphicon glyphicon-th-list" ng-click="envioNoIdentCtrl.ConsultarConcil(ordenpago)" ng-show="envioNoIdentCtrl.filterFor === 1">
+                        <md-tooltip md-direction="top">Ver Conciliación</md-tooltip>
+                    </span>
+                </td>
+                <td style="text-align: center;width:40px;">
+                    <span ng-show="ordenpago.Estatus === 'C' || ordenpago.Estatus === 'R'" class="glyphicon glyphicon-share" ng-click="envioNoIdentCtrl.SendToIni(ordenpago)">
+                        <md-tooltip md-direction="top">Enviar a No Identificado</md-tooltip>
+                    </span>
+                </td>
+              </tr>
+          </tbody>
+      </table>
+    </center>
+</div>
+<loading-modal class="modal show" loadshow="envioNoIdentCtrl.loading" data-backdrop="static" />

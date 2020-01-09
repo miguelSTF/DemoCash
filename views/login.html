@@ -1,0 +1,18 @@
+<div ng-init="loginCtrl.init()"/>
+<script type="text/ng-template" id="warning-dialog.html">
+  <div class="modal-header">
+   <h3>Cerrando sesion!</h3>
+  </div>
+  <div idle-countdown="countdown" ng-init="countdown=10" class="modal-body">
+   <uib-progressbar animate="false" class="progress-striped active">Cerrando en: {{countdown}} segundo(s).</uib-progressbar>
+  </div>
+</script>
+<script type = "text/javascript" >
+   function preventBack(){
+	window.history.forward();
+   }
+    setTimeout("preventBack()", 0);
+    window.onunload = function(){
+	 null
+	};
+</script>

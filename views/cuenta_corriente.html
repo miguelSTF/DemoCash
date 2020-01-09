@@ -1,0 +1,143 @@
+<div class="row positionPrincipalDiv" ng-init="cuentaCorrienteCtrl.init()">
+           <div layout="row" style="height:55px" class="apesaFont14">
+             <div flex="15" style="text-align:center">
+               <h5>Divisa</h5>
+               <md-select class="md-selectStyle" ng-model="cuentaCorrienteCtrl.divisa" placeholder="Selecciona divisa">
+                   <md-option ng-value="tipoD.IdDivisa" ng-repeat="tipoD in cuentaCorrienteCtrl.divisas">{{tipoD.NombreCorto}}</md-option>
+               </md-select>
+             </div>
+             <div flex="5"></div>
+             <div flex="15" style="text-align: center">
+               <h5>Cuentas</h5>
+               <md-select class="md-selectStyle" ng-disabled="cuentaCorrienteCtrl.divisa === undefined" ng-model="cuentaCorrienteCtrl.cuentaSelect" placeholder="Selecciona cuenta">
+                   <md-option ng-value="cuenta.IdCuentaCorriente" ng-repeat="cuenta in cuentaCorrienteCtrl.cuentasGeneral | filter:{IdDivisa:cuentaCorrienteCtrl.divisa}">{{cuenta.Alias}} {{cuenta.Cuenta}}</md-option>
+               </md-select>
+             </div>
+               <div flex="5"></div>
+             <div flex="15" style="text-align: center">
+               <h5>Estatus de conciliación</h5>
+               <md-select class="md-selectStyle" ng-model="cuentaCorrienteCtrl.estatus" placeholder="Selecciona estatus">
+                   <md-option ng-repeat="estatus in cuentaCorrienteCtrl.estatusDisponibles" ng-value="estatus">{{estatus}}</md-option>
+               </md-select>
+             </div>
+             <div flex="5"></div>
+             <div flex="15" style="text-align: center">
+               <h5>Fecha</h5>
+               <md-datepicker md-max-date="cuentaCorrienteCtrl.maxDate" md-placeholder="Fecha" ng-model="cuentaCorrienteCtrl.fecha"></md-datepicker>
+             </div>
+             <div flex="5"></div>
+             <div flex="8">
+               <h5></h5>
+               <md-button permisopantalla permiso="10" idpantalla="21" class="md-raised md-warn" ng-click="cuentaCorrienteCtrl.openTraspasos()" ng-disabled="cuentaCorrienteCtrl.cuentaSelect === undefined">Traspasos</md-button>
+             </div>
+             <div flex="5"></div>
+             <div flex="8">
+               <h5></h5>
+               <md-button class="md-raised md-primary" ng-click="cuentaCorrienteCtrl.loadData()" ng-disabled="cuentaCorrienteCtrl.fecha === null">Filtrar</md-button>
+             </div>
+                           <div flex="8" class="dropdown">
+               <h5></h5>
+              <md-button class="md-icon-button" ng-disabled="cuentaCorrienteCtrl.operaciones.length === 0 || cuentaCorrienteCtrl.operaciones === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+               <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+              </md-button>
+               <ul style="position:absolute; margin-top:-48px; top:105px; left:-120px;" class="table-export dropdown-menu excel-list" table-selector="'tablaCuentaCorriente'" export-options="{type: 'excel', escape: true, tableName: 'Monitor de Cuenta Corriente',deleteLastColumn:'false',ignoreColumn: [12] }" aria-labelledby="dropdownMenu1">
+                   <li onclick="export_table_to_excel('tablaCuentaCorriente','Cuenta_Corriente','[1]','[12]')">
+                       <span>Excel</span>
+                   </li>
+                   <li te-option te-value="'csv'" te-param="'type'">
+                       <span style="cursor:pointer">CSV</span>
+                   </li>
+                   <li te-option te-value="'txt'" te-param="'type'">
+                       <span>TXT</span>
+                   </li>
+               </ul>
+             </div>
+             <div flex></div>
+           </div>
+        <div class="saldoInicialFinal">
+            <h4 style="color:#333; font-size:16px;">
+              <strong>
+              {{cuentaCorrienteCtrl.saldoInicial | currency:'$'}} {{ (cuentaCorrienteCtrl.divisas | filter:{IdDivisa:cuentaCorrienteCtrl.divisa})[0].NombreCorto }}
+                <md-tooltip md-direction="top">Saldo Inicial</md-tooltip>
+              </strong>
+            </h4>
+        </div>
+        <div class="saldoInicialFinal">
+            <h4 style="color:#333; font-size:16px;">
+              <strong>
+              {{cuentaCorrienteCtrl.saldoFinal | currency:'$'}} {{ (cuentaCorrienteCtrl.divisas | filter:{IdDivisa:cuentaCorrienteCtrl.divisa})[0].NombreCorto }}
+                <md-tooltip md-direction="top">Saldo Final</md-tooltip>
+              </strong>
+            </h4>
+        </div>
+    <center>
+      <table st-sticky-header st-table="cuentaCorrienteCtrl.dataCollection" st-safe-src="cuentaCorrienteCtrl.operaciones" class="table-bordered table-striped ng-table-monitor apesaFont14" id="tablaCuentaCorriente">
+        <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+          <tr>
+            <th style="text-align:center; width:20px;">N°</th>
+            <th style="text-align:center; width:140px;">Hora</th>
+            <th style="text-align:center; width:100px;">Departamento</th>
+            <th style="text-align:center; width:100px;">Concepto</th>
+            <th style="text-align:center; width:110px;">Id Externo</th>
+            <th style="text-align:center; width:80px;">Ref</th>
+            <th style="text-align:center; width:140px;">Instrucción</th>
+            <th style="text-align:center; width:120px;">Entrada</th>
+            <th style="text-align:center; width:120px;">Salida</th>
+            <th style="text-align:center; width:80px;">Estatus</th>
+            <th style="text-align:center; width:110px;">Saldo Libros</th>
+            <th style="text-align:center; width:120px;">Imp. Conciliado</th>
+            <th style="text-align:center; width:34px;"></th>
+          </tr>
+          <tr>
+            <td colspan="13">
+              <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="registro in cuentaCorrienteCtrl.dataCollection"
+              ng-style="{'background-color': cuentaCorrienteCtrl.retrasoStyle(registro.DiasRetraso)}">
+              <td class="isNumberExcel" style="text-align:center; width:20px;" title="{{$index+1}}">{{$index+1}}</td>
+              <td style="text-align:center; width:140px;" title="{{registro.Hora}}">
+                {{registro.Hora}}
+              </td>
+              <td style="text-align:center; width:100px;" title="{{registro.Departamento}}">
+                  <div class="overflowContainer" style="position:static;">{{registro.Departamento}}</div>
+              </td>
+              <td style="text-align:center; width:100px;"  title="{{registro.Concepto}}">
+                <div class="overflowContainer" style="position:static;">{{registro.Concepto}}</div>
+              </td>
+              <td style="text-align:center; width:110px;"  title="{{registro.IdSistemaExterno}}">
+                <div class="overflowContainer" style="position:static;">{{registro.IdSistemaExterno}}</div>
+              </td>
+              <td style="text-align:center; width:80px;" title="{{registro.Referencia}}">
+                <div class="overflowContainer" style="position:static;">{{registro.Referencia}}</div>
+              </td>
+              <td style="text-align:left; width:140px;" title="{{registro.Instruccion}}">
+                <div class="overflowContainer">{{registro.Instruccion}}</div>
+              </td>
+              <td style="text-align:right; width:120px;padding-right:5px;" class="isNumberExcel" title="{{registro.Entrada}}">
+                {{registro.Entrada | number:2}}
+              </td>
+              <td style="text-align:right; width:120px;padding-right:5px;" class="isNumberExcel" title="{{registro.Salida}}">
+                {{registro.Salida | number:2}}
+              </td>
+              <td style="text-align:center; width:80px;" title="{{registro.Status}}">
+                {{registro.Status}}
+              </td>
+              <td style="text-align:right; width:110px;padding-right:5px;" class="isNumberExcel" title="{{registro.SaldoLibros}}">
+                {{registro.SaldoLibros | number:2}}
+              </td>
+              <td style="text-align:right; width:120px;padding-right:5px;" class="isNumberExcel" title="{{registro.ImporteConciliado}}">
+                {{registro.ImporteConciliado | number:2}}
+              </td>
+              <td style="text-align:center; width:34px;">
+                  <span style="margin: 5px" class="glyphicon glyphicon-list-alt" ng-click="cuentaCorrienteCtrl.Consultar(registro.Payload)"></span>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </center>
+    <br>
+</div>
+<loading-modal class="modal show" loadshow="cuentaCorrienteCtrl.loading" data-backdrop="static" />

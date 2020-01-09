@@ -1,0 +1,21 @@
+<fieldset class="form-group" >
+  <div class ="col-md-6">
+  <label>Topolog&iacute;a</label>
+  <select id="topologia" name="topologia" class="form-control" ng-model="mensajeCtrl.Payload.Topologia"
+    ng-options="t as t for t in ['T', 'V']"/>
+  </div>
+  <div class ="col-md-6">
+  <label>Tipo Pago</label>
+  <select id="tipoPago" name="tipoPago" class="form-control" ng-model ="mensajeCtrl.TipoPago"
+    ng-options="tipoPago.Nombre for tipoPago in mensajeCtrl.TiposPago"/>
+  </div>
+  <div class ="col-md-6">
+  <label>Prioridad</label>
+  <select id="prioridad" name="prioridad" class="form-control" ng-model="mensajeCtrl.Payload.Prioridad"
+    ng-options="p as p for p in ['0', '1']"/>
+  </div>
+  <div class ="col-md-6">
+    <label>Concepto</label>
+    <input type="text" class="form-control" ng-model="mensajeCtrl.Payload.Concepto" autocomplete="off">
+    </div>
+</fieldset>

@@ -1,0 +1,89 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Reclasificación con Operación Existente</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Close" ng-click="CloseShowCuentas()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle" style="width:950px;">
+            <md-content class="md-padding">
+                <div layout="row" layout-align="center">
+                    <div flex="25">
+                        <label>Monto</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon2">$</span>
+                            <input disabled id="Monto" type="text" class="form-control" ng-model="monitorReclaCtrl.infoIngresoNI.Importe" ng-currency required/>
+                        </div>
+                    </div>
+                    <div flex="5"></div>
+                    <div flex="20" style="position:center">
+                        <label>Fecha Mov. Edo. Cta</label>
+                        <md-datepicker ng-disabled="true" ng-model="monitorReclaCtrl.fecha"/>
+                    </div>
+                    <div flex="5"></div>
+                    <div flex="25">
+                        <div layout="row" layout-align="center">
+                            <div flex="90">
+                                <label>Folio</label>
+                                <input disabled type="text" class="form-control" autocomplete="off" ng-model="monitorReclaCtrl.infoIngresoNI.Folio" required/>
+                            </div>
+                            <div flex="5"></div>
+                            <div flex="5" style="padding-top:30px">
+                                <span class="glyphicon glyphicon-list-alt" ng-click="consultaDetalle(monitorReclaCtrl.infoIngresoNI)">
+                                    <md-tooltip md-direction="top">Ver detalle</md-tooltip>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div layout="row" layout-align="center">
+                    <center>
+                        <table st-sticky-header st-table="monitorReclaCtrl.registroCollection" st-safe-src="monitorReclaCtrl.opersToReclasif" class="table-bordered table-striped ng-table-monitor table-hover" id="tablaDetalleFinDia">
+                            <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+                                <tr style="border: 0;">
+                                    <th style="text-align:center; width:40px;"></th>
+                                    <th style="text-align:center; width:120px;" st-sort="IdSolicitud">Folio Cash </th>
+                                    <th style="text-align:center; width:210px;" st-sort="NombreDepartamento">Departamento </th>
+                                    <th style="text-align:center; width:210px;" st-sort="NombreConceptoOriginal">Concepto </th>
+                                    <th style="text-align:center; width:100px;" st-sort="Sentido">Tipo </th>
+                                    <th style="text-align:center; width:130px;" st-sort="NombreContraParte">Contraparte </th>
+                                    <th style="text-align:center; width:130px;" st-sort="Importe">Importe </th>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <input st-search placeholder="Busqueda global" class="input-sm form-control" type="text">
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in monitorReclaCtrl.registroCollection">
+                                    <td style="text-align:center; width:40px;">
+                                        <input type="checkbox" ng-model="data.Check"/>
+                                    </td>
+                                    <td style="text-align:left; width:120px;" title="{{data.IdSolicitud}}"><div class="overflowContainer">{{data.IdSolicitud}}</div></td>
+                                    <td style="text-align:left; width:210px;" title="{{data.NombreDepartamento}}"><div class="overflowContainer">{{data.NombreDepartamento}} </div></td>
+                                    <td style="text-align:left; width:210px;" title="{{data.nNombreConceptoOriginal}}"><div class="overflowContainer">{{data.NombreConceptoOriginal}}</div></td>
+                                    <td style="text-align:left; width:100px;" title="{{data.Cuenta}}"><div class="overflowContainer">{{data.Sentido}}</div></td>
+                                    <td style="text-align:left; width:130px;" title="{{data.NombreContraParte}}"><div class="overflowContainer">{{data.NombreContraParte}}</div></td>
+                                    <td style="text-align:left; width:130px;" format="{{data.Importe}}" tipo="Numerico" title="{{data.Importe}}">{{data.Importe}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </center>
+                </div>
+              <br>
+              <div layout="row" layout-align="center">
+                <div flex="85"></div>
+                <div flex="10">
+                    <md-button class="md-raised md-primary" ng-click="monitorReclaCtrl.ReclasifWithOperExist()">Reclasificar</md-button>
+                </div>
+              </div>
+            </md-content>
+
+        </md-dialog-content>
+    </form>
+</md-dialog>

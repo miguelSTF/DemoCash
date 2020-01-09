@@ -1,0 +1,85 @@
+<div class="row positionPrincipalDiv" ng-init="cuentasInstitucionCtrl.init()">
+  <div layout="row" style="padding-right:20px;" class="apesaFont14">
+    <div flex></div>
+    <div flex="8">
+      <md-button title="Agregar" permisopantalla permiso="2" idpantalla="12" ng-click="cuentasInstitucionCtrl.newEdit()" class="md-raised md-primary">Agregar</md-button>
+    </div>
+    <div flex="8" class="dropdown">
+      <md-button class="md-icon-button" ng-disabled="cuentasInstitucionCtrl.cuentasInstitucion.length === 0 || cuentasInstitucionCtrl.cuentasInstitucion === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+        <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+      </md-button>
+      <ul class="table-export dropdown-menu excel-list" style="left:-50px;"table-selector="'tablaCuentasInstitucion'"export-options="{type: 'excel', escape: true, ignoreColumn:[8], tableName: 'Cuentas_Nostro' }" aria-labelledby="dropdownMenu1">
+          <li  onclick="export_table_to_excel('tablaCuentasInstitucion','Cuentas_Nostro','[1]','[8]')">
+              <span>Excel</span>
+          </li>
+          <li te-option te-value="'csv'" te-param="'type'">
+              <span style="cursor:pointer">CSV</span>
+          </li>
+          <li te-option te-value="'txt'" te-param="'type'">
+              <span style="cursor:pointer">TXT</span>
+          </li>
+      </ul>
+    </div>
+    <div flex="5"></div>
+  </div>
+    <center>
+      <table st-sticky-header style="width:1140px;" st-table="cuentasInstitucionCtrl.cuentasInstitucionCollection" st-safe-src="cuentasInstitucionCtrl.cuentasInstitucion" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaCuentasInstitucion">
+        <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+          <tr style="border: 0;">
+            <th style="text-align:center; width:180px;" st-sort="Cuenta">Número de Cuenta</th>
+            <th style="text-align:center; width:180px;" st-sort="Alias">Alias</th>
+            <th style="text-align:center; width:240px;" st-sort="NombreBanco">Banco</th>
+            <th style="text-align:center; width:80px;" st-sort="NombreDivisa">Divisa</th>
+            <th style="text-align:center; width:80px;" st-sort="NombreViaLiq">Vía</th>
+            <th style="text-align:center; width:200px;" st-sort="CuentaContable">Cuenta Contable</th>
+            <th style="text-align:center; width:80px;" st-sort="Activo">Activo</th>
+            <th style="text-align:center;width:100px;"></th>
+          </tr>
+          <tr>
+            <td colspan="10">
+              <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="cuentaInfo in cuentasInstitucionCtrl.cuentasInstitucionCollection">
+              <td style="width:180px;height:25px;" title="'{{cuentaInfo.Cuenta}}'">
+                <div class="overflowContainer">{{cuentaInfo.Cuenta}}</div>
+              </td>
+              <td style="width:180px;" title="'{{cuentaInfo.Alias}}'">
+                <div class="overflowContainer">{{cuentaInfo.Alias}}</div>
+              </td>
+              <td style="width:240px; position:relative;" title="'{{ cuentaInfo.NombreBanco }}'">
+                <div class="overflowContainer">{{ cuentaInfo.NombreBanco }}</div>
+              </td>
+              <td style="width:80px; position:relative;" title="'{{ cuentaInfo.NombreDivisa }}'">
+                <div class="overflowContainer">{{ cuentaInfo.NombreDivisa}}</div>
+              </td>
+              <td style="width:80px; position:relative;" title="'{{ cuentaInfo.NombreViaLiq }}'">
+                <div class="overflowContainer">{{ cuentaInfo.NombreViaLiq}}</div>
+              </td>
+              <td style="width:200px;position:relative;" title="'{{cuentaInfo.CuentaContable}}'">
+                <div admin-mask mask="{{cuentasInstitucionCtrl.mascara}}" mask-char="-"ng-Model="cuentaInfo.CuentaContable" class="overflowContainer">{{cuentaInfo.CuentaContable}}</div>
+              </td>
+              <td style="text-align:center; width:80px;">
+                <span class="glyphicon"><md-switch ng-model="cuentaInfo.Activo" ng-disabled="true" class="md-primary md-switch" aria-label="Switch 2" ng-true-value="1" ng-false-value="0"></md-switch></span>
+                <span ng-hide="true">{{cuentaInfo.Activo === 1 ? 'Si' : 'No'}}</span>
+              </td>
+              <td style="text-align:center; width:100px; color:#333;">
+                    <span class="glyphicon"></span>
+                    <span class="glyphicon"></span>
+                    <span class="glyphicon glyphicon-eye-open" title="Consultar" ng-click="cuentasInstitucionCtrl.watch(cuentaInfo)"></span>
+                    <span class="glyphicon"></span>
+                    <span class="glyphicon"></span>
+                    <span class="glyphicon glyphicon-pencil" permisopantalla permiso="3" idpantalla="12" title="Editar" ng-click="cuentasInstitucionCtrl.edit(cuentaInfo)"></span>
+                    <span class="glyphicon"></span>
+                    <span class="glyphicon"></span>
+                    <span class="glyphicon glyphicon-trash" permisopantalla permiso="4" idpantalla="12" title="Borrar" ng-click="cuentasInstitucionCtrl.del(cuentaInfo)"></span>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </center>
+    <br>
+</div>
+<loading-modal class="modal show" loadshow="cuentasInstitucionCtrl.loading" data-backdrop="static" />

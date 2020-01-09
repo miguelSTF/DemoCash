@@ -1,0 +1,55 @@
+<md-dialog>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Cancelación de Operación</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Close" ng-click="Close()">
+          <span class="glyphicon glyphicon-remove"></span>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="modalDetalle">
+      <md-content class="md-padding">
+        <div layout="row" class="panel-body">
+          <div flex="5"></div>
+          <div flex="70">
+            <div>
+              <label>Instrucción: </label>
+              <label style="font:100% sans-serif;">{{detailInstruccion}}</label>
+            </div>
+          </div>
+          <div flex="50">
+            <div>
+              <label>Importe: </label>
+              <label style="font:100% sans-serif;" format="{{detailImporte}}" tipo="Numerico"> </label>
+            </div>
+          </div>
+        </div>
+        <div layout="row" class="panel-body">
+          <div flex="5"></div>
+          <div flex="50">
+              <label>Motivo de Cancelación</label>
+              <md-select style="margin-top:10px;" ng-model="motivo" placeholder="Selecciona motivo de cancelación" ng-change="">
+                  <md-option ng-value="item.IdMotivosSitema" ng-repeat="item in motivosCancelacion">{{item.Motivo}}</md-option>
+              </md-select>
+          </div>
+        </div>
+        <div style="padding-top:0px" layout="row" class="panel-body">
+          <div flex="5"></div>
+          <div flex="90">
+            <label for="Comentario" class="control-label">Comentario</label>
+            <textarea style="resize:none;" rows="2" type="text" class="form-control" id="Comentario" name="Comentario" maxlength="130" placeholder="Comentario" ng-model="descripcion" tabindex="1" autocomplete="off" capitalize>
+            </textarea>
+          </div>
+        </div>
+        <div layout="row" class="panel-body">
+          <div flex="100"></div>
+          <div flex="20">
+            <md-button ng-disabled="motivo === 0" ng-click="viewDialog()" title="Aceptar" class="md-raised md-primary" data-toggle="dropdown">Aceptar</md-button>
+          </div>
+        </div>
+      </md-content>
+    </md-dialog-content>
+  </form>
+</md-dialog>

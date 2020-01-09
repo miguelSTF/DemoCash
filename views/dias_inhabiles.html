@@ -1,0 +1,67 @@
+<div class="row positionPrincipalDiv" ng-init="diasInhabilesCtrl.initial()">
+  <div layout="row" class="apesaFont14">
+    <div flex="20"></div>
+    <div>
+      <label style="padding-top: 7px;margin-top:8px;">Año: </label>
+    </div>
+    <br>
+    <div flex="5" style="padding-left: 5px;">
+      <input ng-keypress="diasInhabilesCtrl.filterValue($event)" min="1" ng-change="diasInhabilesCtrl.init()" style="width: 85px;padding: 0px 10px;margin-top: 12px;height: 25px;" type="number" class="form-control" id="Year" name="Year" placeholder="Año" ng-model="diasInhabilesCtrl.year" autocomplete="off" required>
+    </div>
+    <div flex></div>
+    <div flex="15" class="dropdown" style="margin-right:-60px;">
+      <md-button title="Agregar" permisopantalla permiso="2" idpantalla="54" ng-click="diasInhabilesCtrl.newEdit()" class="md-raised md-primary" ng-disabled="diasInhabilesCtrl.disabledAgregar">Agregar</md-button>
+      <md-button class="md-icon-button" ng-disabled="diasInhabilesCtrl.diasInhabilesCollection.length === 0 || diasInhabilesCtrl.diasInhabilesCollection === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+        <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+      </md-button>
+      <ul class="table-export dropdown-menu excel-list" table-selector="'tablaDiasInhabiles'" export-options="{type: 'excel', escape: true, ignoreColumn: [2],tableName: 'Días Festivos' }" aria-labelledby="dropdownMenu1">
+        <li onclick="export_table_to_excel('tablaDiasInhabiles','Días Festivos','[1]','[2]')">
+          <span>Excel</span>
+        </li>
+        <li te-option te-value="'csv'" te-param="'type'">
+          <span>CSV</span>
+        </li>
+        <li te-option te-value="'txt'" te-param="'type'">
+          <span>TXT</span>
+        </li>
+      </ul>
+    </div>
+    <div flex="20"></div>
+  </div>
+  <center>
+    <table st-sticky-header style="width:800px;" st-table="diasInhabilesCtrl.diasInhabilesCollection" st-safe-src="diasInhabilesCtrl.diasInhabiles" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaDiasInhabiles">
+      <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+      <tr style="border: 0;">
+        <th style="text-align:center; width:450px;" st-sort="Descripcion">Descripción</th>
+        <th style="text-align:center; width:130px;" st-sort="Fecha">Fecha</th>
+        <th style="text-align:center; width:140px;"></th>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+        </td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="diaInhabil in diasInhabilesCtrl.diasInhabilesCollection">
+        <td style="text-align:left; width:450px;height:25px;padding-left:10px;">
+          <div class="overflowContainer" title="{{diaInhabil.Descripcion}}">{{diaInhabil.Descripcion}} </div>
+        </td>
+        <td style="text-align:center; width:130px;">
+          <div class="overflowContainer" title="{{diaInhabil.FechaString}}">{{diaInhabil.FechaString}}</div>
+        </td>
+        <td style="text-align:center;width:140px; color:#333;">
+          <span class="glyphicon"></span>
+          <span class="glyphicon"></span>
+          <span class="glyphicon glyphicon-pencil" permisopantalla permiso="3" idpantalla="54" title="Editar" ng-click="diasInhabilesCtrl.edit(diaInhabil)"></span>
+          <span class="glyphicon"></span>
+          <span class="glyphicon"></span>
+          <span class="glyphicon glyphicon-trash" permisopantalla permiso="4" idpantalla="54" title="Borrar" ng-click="diasInhabilesCtrl.del(diaInhabil)"></span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </center>
+  <br>
+</div>
+<loading-modal class="modal show" loadshow="diasInhabilesCtrl.loading" data-backdrop="static"/>

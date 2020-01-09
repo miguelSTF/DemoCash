@@ -1,0 +1,69 @@
+<div class="row positionPrincipalDiv" ng-init="sucursalCtrl.init()">
+	<div layout="row" class="apesaFont14">
+		<div flex></div>
+		<div flex="9">
+			<md-button title="Agregar" permisopantalla permiso="2" idpantalla="41" ng-click="sucursalCtrl.newEdit()" class="md-raised md-primary">Agregar</md-button>
+		</div>
+		<div flex="9" class="dropdown">
+			<md-button class="md-icon-button" ng-disabled="sucursalCtrl.sucursalesCollection.length === 0 || sucursalCtrl.sucursalesCollection === undefined " data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+				<span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+			</md-button>
+			<ul class="table-export dropdown-menu excel-list" table-selector="'tablaSucursal'" export-options="{type: 'excel', escape: true, ignoreColumn: [3],tableName: 'Sucursales' }" aria-labelledby="dropdownMenu1">
+					<li onclick="export_table_to_excel('tablaSucursal','Sucursales','[1]','[3]')">
+							<span>Excel</span>
+					</li>
+					<li te-option te-value="'csv'" te-param="'type'">
+							<span>CSV</span>
+					</li>
+					<li te-option te-value="'txt'" te-param="'type'">
+							<span>TXT</span>
+					</li>
+			</ul>
+		</div>
+		<div flex="20" style="margin-left:-10px;"></div>
+	</div> 
+	<center>
+		<table st-sticky-header style="width:800px;" st-table="sucursalCtrl.sucursalesCollection" st-safe-src="sucursalCtrl.sucursales" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaSucursal">
+			<thead style="border: 0;color: white;background: #22224b;z-index:1;">
+				<tr style="border: 0;">
+					<th style="text-align:center; width:180px;" st-sort="NombreCorto">Número</th>
+                    <th style="text-align:center; width:350px;" st-sort="Nombre">Nombre</th>
+					<th style="text-align:center; width:80px;" st-sort="Activo">Activo</th>
+                    <th style="text-align:center; width:190px;"></th>
+				</tr>
+				<tr>
+          <td colspan="5">
+            <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+          </td>
+        </tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="sucursal in sucursalCtrl.sucursalesCollection">
+					<td style="text-align:center; width:180px;height:25px;">
+						<div class="overflowContainer" title="{{sucursal.Numero}}">{{sucursal.Numero}} </div>
+					</td>
+					<td style="padding-left:30px; width:350px;">
+						<div class="overflowContainer" title="{{sucursal.Nombre}}">{{sucursal.Nombre}} </div>
+                    </td>
+					<td style="text-align:center;width:80px;">
+						<span class="glyphicon"><md-switch ng-model="sucursal.Activo" ng-disabled="true" class="md-primary md-switch" aria-label="Switch 2" ng-true-value="1" ng-false-value="0"></md-switch></span>
+						<span ng-hide="true">{{sucursal.Activo === 1 ? 'Si' : 'No'}}</span>
+					</td>
+					<td style="text-align:center;width:190px; color:#333;">
+							<span class="glyphicon"></span>
+             				 <span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-eye-open" title="Consultar" ng-click="sucursalCtrl.watch(sucursal)"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-pencil" permisopantalla permiso="3" idpantalla="41" title="Editar" ng-click="sucursalCtrl.edit(sucursal)"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-trash" permisopantalla permiso="4" idpantalla="41" title="Borrar" ng-click="sucursalCtrl.del(sucursal)"></span>
+					</td> 
+				</tr>
+			</tbody>
+		</table>
+	</center>
+	<br>
+</div>
+<loading-modal class="modal show" loadshow="sucursalCtrl.loading" data-backdrop="static"/>

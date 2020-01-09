@@ -1,0 +1,108 @@
+<div class="row positionPrincipalDiv" ng-init="bitacoraEmisionCtrl.init()">
+  <div layout="row" style="height:75px;" class="apesaFont14">
+    <div flex="15" style="text-align:center;">
+      <h5>Fecha</h5>
+      <md-datepicker md-max-date="bitacoraEmisionCtrl.maxDate"  ng-model="bitacoraEmisionCtrl.fecha" ng-change="bitacoraEmisionCtrl.GetInfo()"></md-datepicker>
+    </div>
+    <div flex="5"></div>
+    <div flex="10">
+      <br>
+      <md-button title="Filtrar" class="md-raised md-primary" ng-click="bitacoraEmisionCtrl.GetInfo()">Filtrar</md-button>
+    </div>
+    <div flex></div>
+    <div flex="5"></div>
+    <div flex="15" class="dropdown" style="text-align:right;">
+      <br>
+      <md-button class="md-icon-button" ng-disabled="bitacoraEmisionCtrl.bitacora.length === 0 || bitacoraEmisionCtrl.bitacora === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+        <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+      </md-button>
+      <ul class="table-export dropdown-menu excel-list" style="margin-top:5px;" table-selector="'tablaBitacoraEmision'" export-options="{type: 'excel', escape: true, tableName: 'Bitacora Envío de Mensajes',ignoreColumn: [5] }" style="top:60%;" aria-labelledby="dropdownMenu1">
+        <li onclick="export_table_to_excel('tablaBitacoraEmision','Bitacora Envío de Mensajes','[1]','[]')">
+          <span>Excel</span>
+        </li>
+        <li te-option te-value="'csv'" te-param="'type'">
+          <span style="cursor:pointer">CSV</span>
+        </li>
+        <li te-option te-value="'txt'" te-param="'type'">
+          <span style="cursor:pointer">TXT</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <center>
+    <table st-sticky-header st-table="bitacoraEmisionCtrl.bitacoraCollection" st-safe-src="bitacoraEmisionCtrl.bitacora" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14">
+      <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+      <tr style="border: 0;">
+        <th style="text-align:center; width:550px;" st-sort="IdSolicitud">Id(s) de Solicitud</th>
+        <th style="text-align:center; width:140px;" st-sort="FechaOperacion">Fecha Operación</th>
+        <th style="text-align:center; width:210px;" st-sort="FechaRegistro">Fecha Registro</th>
+        <th style="text-align:center; width:200px;">Mensaje Enviado</th>
+        <th style="text-align:center; width:200px;">Mensaje Recibido</th>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+        </td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="bitacoraInfo in bitacoraEmisionCtrl.bitacoraCollection">
+        <td style="width:550px;position:relative;height:25px;" title="'{{bitacoraInfo.IdSolicitud}}'">
+          <div class="overflowContainer">{{bitacoraInfo.IdSolicitud}}</div>
+        </td>
+        <td style="width:140px;text-align:center;" title="'{{bitacoraInfo.FechaOperacionString}}'">
+          {{bitacoraInfo.FechaOperacionString}}
+        </td>
+        <td style="width:210px;text-align:center;" title="'{{bitacoraInfo.FechaRegistroString}}'">
+          {{bitacoraInfo.FechaRegistroString}}
+        </td>
+        <td style="width:200px;text-align:center;" title="Consultar Mensaje">
+          <span class="glyphicon glyphicon-list-alt" ng-click="bitacoraEmisionCtrl.Consultar(bitacoraInfo.MensajeEnviadoString, 'Enviado')"></span>
+        </td>
+        <td style="width:200px;text-align:center;" title="Consultar Mensaje">
+          <span class="glyphicon glyphicon-list-alt" ng-click="bitacoraEmisionCtrl.Consultar(bitacoraInfo.MensajeRecibidoString, 'Recibido')"></span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </center>
+  <div style="height:1px;width:1px;overflow-y:scroll;">
+    <table st-sticky-header st-table="bitacoraEmisionCtrl.bitacoraCollection" st-safe-src="bitacoraEmisionCtrl.bitacora" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaBitacoraEmision">
+      <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+      <tr style="border: 0;">
+        <th style="text-align:center; width:550px;" st-sort="IdSolicitud">Id(s) de Solicitud</th>
+        <th style="text-align:center; width:140px;" st-sort="FechaOperacion">Fecha Operación</th>
+        <th style="text-align:center; width:210px;" st-sort="FechaRegistro">Fecha Registro</th>
+        <th style="text-align:center; width:200px;">Mensaje Enviado</th>
+        <th style="text-align:center; width:200px;">Mensaje Recibido</th>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <input st-search="Desde" placeholder="Búsqueda global" class="input-sm form-control" type="text">
+        </td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="bitacoraInfo in bitacoraEmisionCtrl.bitacoraCollection">
+        <td style="width:550px;position:relative;height:25px;">
+          <div class="overflowContainer">{{bitacoraInfo.IdSolicitud}}</div>
+        </td>
+        <td style="width:140px;text-align:center;">
+          {{bitacoraInfo.FechaOperacionString}}
+        </td>
+        <td style="width:210px;text-align:center;">
+          {{bitacoraInfo.FechaRegistroString}}
+        </td>
+        <td style="width:200px;text-align:center;">
+          {{bitacoraInfo.MensajeEnviadoString}}
+        </td>
+        <td style="width:200px;text-align:center;">
+          {{bitacoraInfo.MensajeRecibidoString}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+</div>
+<loading-modal class="modal show" loadshow="bitacoraEmisionCtrl.loading" data-backdrop="static" />

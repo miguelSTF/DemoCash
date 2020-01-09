@@ -1,0 +1,11 @@
+<md-dialog class="confirm" style="width:520px;heigth:300px;">
+  <h4 style="padding-top:12px;padding-left:25px;font:150% sans-serif;">Atención</h4>
+  <md-content style="padding-left:25px;">Existen operaciones por validar y por confirmar, ¿Cuáles desea seleccionar?
+    <br><br><br>
+    <div style="text-align:right;">
+      <md-button class="md-primary" ng-click="monitorConfirCtrl.selectOpers('')">Cancelar</md-button>
+      <md-button class="md-primary" ng-click="monitorConfirCtrl.selectOpers('C')">Por Validar</md-button>
+      <md-button class="md-primary" ng-click="monitorConfirCtrl.selectOpers('V')">Por Confirmar</md-button>
+    </div>
+  </md-content>
+</md-dialog>

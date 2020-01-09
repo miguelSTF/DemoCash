@@ -1,0 +1,71 @@
+<div class="row positionPrincipalDiv" ng-init="bitacoraEdoCuentaCtrl.init()">
+    <div layout="row" style="height: 80px; color:#333; font-size:14px;">
+        <div flex></div>
+        <div flex="15" style="text-align:center">
+            <h5 style="text-align:center;">Fecha</h5>
+            <md-datepicker style="color:#333;"md-max-date="bitacoraEdoCuentaCtrl.maxDate" ng-change="bitacoraEdoCuentaCtrl.obtenerBitacora()" ng-model="bitacoraEdoCuentaCtrl.fecha"></md-datepicker>
+        </div>
+        <div flex="5"></div>
+        <div flex="15" style="text-align: center">
+            <h5>Vías de Liquidación</h5>
+            <md-select class="md-selectStyle" ng-model="bitacoraEdoCuentaCtrl.via" placeholder="Selecciona una Vía" ng-change="bitacoraEdoCuentaCtrl.obtenerBitacora()" style="margin:0px;">
+                <md-option ng-value="Todos">Todos</md-option>
+                <md-option ng-value="via.IdViaLiquidacion" ng-repeat="via in bitacoraEdoCuentaCtrl.vias">{{via.Descripcion}}</md-option>
+            </md-select>
+        </div>
+        <div flex="5" class="dropdown" style="text-align:right; padding-left:30px;">
+            <br/>
+            <md-button class="md-icon-button" ng-disabled="bitacoraEdoCuentaCtrl.dataCollection.length === 0 || bitacoraEdoCuentaCtrl.dataCollection === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+                    <span class="glyphicon glyphicon-save" style="font-size:30px;"></span>
+            </md-button>
+            <ul style="top:80%; left:-94px" class="table-export dropdown-menu excel-list" table-selector="'tablaBitacoraEdoCuenta'" export-options="{type: 'excel', escape: true, tableName: 'Bitacora_EdoCuenta',ignoreColumn: [0] }" aria-labelledby="dropdownMenu1">
+                <li onclick="export_table_to_excel('tablaBitacoraEdoCuenta','Bitacora_EdoCuenta','[1]','[7]')">
+                    <span>Excel</span>
+                </li>
+                <li te-option te-value="'csv'" te-param="'type'">
+                    <span>CSV</span>
+                </li>
+                <li te-option te-value="'txt'" te-param="'type'">
+                    <span>TXT</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <center>
+        <table style="color:#333; font-size:14px;" st-sticky-header st-table="bitacoraEdoCuentaCtrl.bitacoraCollection" st-safe-src="bitacoraEdoCuentaCtrl.dataCollection" class="table-bordered table-striped ng-table-monitor table-hover" id="tablaBitacoraEdoCuenta">
+            <thead style="border: 0; color: white; background: #22224b; z-index: 1;">
+                <tr style="border: 0;">
+                    <th style="text-align: center;width: 150px" st-sort="ViaLiquidación">Vías de Liquidación</th>
+                    <th style="text-align: center;width: 250px" st-sort="Archivo">Archivo</th>
+                    <th style="text-align: center;width: 200px" st-sort="Cuenta">Núm de Cuenta</th>
+                    <th style="text-align: center;width: 150px" st-sort="FechaInicioS">Hora Inicio</th>
+                    <th style="text-align: center;width: 150px" st-sort="FechaFinS">Hora Fin</th>
+                    <th style="text-align: center;width: 100px" st-sort="Resultado">Resultado</th>
+                    <th style="text-align: center;width: 300px" st-sort="Detalle">Detalle</th>
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="bitacora in bitacoraEdoCuentaCtrl.bitacoraCollection">
+                    <td style="position: relative;width: 150px" title="{{bitacora.NombreVia}}"><div class="overflowContainer">{{bitacora.NombreVia}}</div></td>
+                    <td style="position: relative;width: 250px" title="{{bitacora.Archivo}}"><div class="overflowContainer">{{bitacora.Archivo}}</div></td>
+                    <td style="position: relative;width: 200px" title="{{bitacora.Cuenta}}"><div class="overflowContainer">{{bitacora.Cuenta}}</div></td>
+                    <td style="position: relative;width: 150px" title="{{bitacora.FechaInicioS}}">
+                        <div class="overflowContainer">{{bitacora.FechaInicioS}}</div>
+                    </td>
+                    <td style="position: relative;width: 150px" title="{{bitacora.FechaFinS}}">
+                        <div class="overflowContainer">{{bitacora.FechaFinS}}</div>
+                    </td>
+                    <td style="position: relative;width: 100px" title="{{bitacora.Resultado}}"><div class="overflowContainer">{{bitacora.Resultado}}</div></td>
+                    <td style="position: relative;width: 300px" title="{{bitacora.Detalle}}"><div class="overflowContainer">{{bitacora.Detalle}}</div></td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+    <br>
+</div>
+<loading-modal class="modal show" loadshow="bitacoraEdoCuentaCtrl.loading" data-backdrop="static" />

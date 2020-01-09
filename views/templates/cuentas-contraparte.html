@@ -1,0 +1,51 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Cuentas</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Close" ng-click="Close()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle" style="width:1020px;">
+            <md-content class="md-padding">
+              <center>
+                  <table st-sticky-header st-table="clienteceptodeptoCtrl.cuentasCollection" st-safe-src="clienteceptodeptoCtrl.cuentas" class="table-bordered table-striped ng-table-monitor table-hover" id="tablaMonitorAut">
+                      <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+                          <tr style="border: 0;">
+                              <th style="text-align:center; width:200px;" st-sort="Cuenta">Número de Cuenta </th>
+                              <th style="text-align:center; width:200px;" st-sort="NombreBanco">Banco </th>
+                              <th style="text-align:center; width:60px;" st-sort="ClaveIsoDivisa">Divisa </th>
+                              <th style="text-align:center; width:180px;" st-sort="DescripcionTipoCta">Tipo Cuenta </th>
+                              <th style="text-align:center; width:130px;" st-sort="Sucursal">Sucursal </th>
+                              <th style="text-align:center; width:130px;" st-sort="Plaza">Plaza </th>
+                              <th style="text-align:center; width:70px;" st-sort="Activo">Activo </th>
+                          </tr>
+                          <tr>
+                              <td colspan="7">
+                                  <input st-search placeholder="Busqueda global" class="input-sm form-control" type="text">
+                              </td>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr ng-repeat="data in clienteceptodeptoCtrl.cuentasCollection">
+                              <td style="text-align:left; width:200px;" title="{{data.Cuenta}}"><div class="overflowContainer">{{data.Cuenta}}</div></td>
+                              <td style="text-align:left; width:200px;" title="{{data.NombreBanco}} ({{data.CasfimBanco}})"><div class="overflowContainer">{{data.NombreBanco}} ({{data.CasfimBanco}})</div></td>
+                              <td style="text-align:center; width:60px;" title="{{data.ClaveIsoDivisa}}">{{data.ClaveIsoDivisa}}</td>
+                              <td style="text-align:left; width:180px;" title="{{data.DescripcionTipoCta}}"><div class="overflowContainer">{{data.DescripcionTipoCta}}</div></td>
+                              <td style="text-align:left; width:130px;" title="{{data.Sucursal}}"><div class="overflowContainer">{{data.Sucursal}}</div></td>
+                              <td style="text-align:left; width:130px;" title="{{data.Plaza}}"><div class="overflowContainer">{{data.Plaza}}</div></td>
+                              <td style="text-align:center; width:70px;"></div>
+                                <span class="glyphicon"><md-switch ng-model="data.Activo"  ng-disabled="true" class="md-primary md-switch" aria-label="Switch 2" ng-true-value="1" ng-false-value="0"></md-switch></span>
+                                <span ng-hide="true">{{data.Activo === 1 ? 'Si' : 'No'}}</span>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </center>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>

@@ -1,0 +1,44 @@
+<md-dialog style="overflow-y: auto;overflow-x: hidden;width: 700px;height:200px">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Generar Traspaso</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="Close()" aria-label="Cerrar">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <div class="row positionPrincipalDiv" layout-align="center">
+            <div layout="row" layout="center">
+                <div flex="5"></div>
+                <div flex="45" style="text-align: center">
+                    <md-input-container class="md-block" style="text-align:left">
+                        <label>Cuenta Destino</label>
+                        <md-select ng-model="ctaCteDestino" multiple="false" md-on-close="searchCuentaDestino = ''" data-md-container-class="selectdemoSelectHeader" required>
+                            <md-select-header class="demo-select-header">
+                            <input ng-keydown="handleKeyup($event)" ng-model="searchCuentaDestino" ng-focus="focusInput" type="search" placeholder="Buscar cuenta destino" class="demo-header-searchbox _md-text">
+                            </md-select-header>
+                            <md-optgroup label="Cuenta Destino">
+                            <md-option ng-value="cuentaDestino.IdCuentaCorriente" ng-repeat="cuentaDestino in cuentasDestino | filter:searchCuentaDestino | orderBy : 'Alias'">{{cuentaDestino.Alias}} {{cuentaDestino.Cuenta}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div flex="10"></div>
+                    <div flex="35">
+                        <label>Monto</label>
+                        <div class="input-group">
+                        <span class="input-group-addon" id="sizing-addon2">$</span>
+                        <input id="Monto" type="text" class="form-control" ng-model="monto" ng-blur="monto = monto < 0 ? monto * -1 : monto" ng-currency required/>
+                    </div>
+                </div>
+            </div>
+            <div layout="row" layout="center">
+                <div flex="100"></div>
+                <div flex="40" style="padding-top:20px;padding-left:10px;">
+                    <md-button class="md-raised md-primary" ng-click="GenerarTraspaso()" ng-disabled="monto === null || monto <= 0">Generar Traspaso</md-button>
+                </div>
+            </div>
+
+        </div>
+</md-dialog>

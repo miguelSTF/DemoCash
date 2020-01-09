@@ -1,0 +1,38 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Notificaciones</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Close" ng-click="Close()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle">
+            <md-content class="md-padding">
+              <center>
+                  <table st-sticky-header st-table="messageCollection" st-safe-src="message" class="table-bordered table-striped ng-table-monitor table-hover" id="tablaMonitorAut">
+                      <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+                          <tr style="border: 0;">
+                              <th style="text-align:center; width:150px;" st-sort="Fecha">Hora </th>
+                              <th style="text-align:center; width:480px;" st-sort="Evento">Evento </th>
+                          </tr>
+                          <tr>
+                              <td colspan="3">
+                                  <input st-search placeholder="Busqueda global" class="input-sm form-control" type="text">
+                              </td>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr ng-repeat="evento in messageCollection">
+                              <td style="text-align:center; width:150px;" title="{{evento.Fecha}}" format="{{evento.Fecha}}" tipo="FechaCompleta"><div class="overflowContainer">{{evento.Fecha}}</div></td>
+                              <td style="text-align:left; width:480px;" title="{{evento.Eventos}}"><div class="overflowContainer">{{evento.Eventos}}</div></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </center>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>

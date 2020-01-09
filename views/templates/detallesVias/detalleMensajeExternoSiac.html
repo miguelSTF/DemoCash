@@ -1,0 +1,174 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Detalle de Registro</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="Close()" aria-label="Cerrar">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle">
+            <md-content class="md-padding">
+                  <div layout="row"  style="min-height:25px">
+                      <div flex="25">
+                                <strong>Sucursal</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                          <p>
+                              {{registro.Sucursal}}
+                          </p>
+                      </div>
+                      <div flex="20"></div>
+                      <div flex="25" style="text-align:left;">
+                              <strong>Centro</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                              <p>{{registro.Centro}}</p>
+                      </div>
+                  </div>
+                     <div layout="row"  style="min-height:25px">
+                      <div flex="25">
+                                <strong>Oficina</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                           <p>{{registro.Oficina}}</p>
+                      </div>
+                      <div flex="20"></div>
+                      <div flex="25">
+                              <strong>Tipo Operación</strong>
+                      </div>
+                      <div flex="25" style="text-align:right;">
+                              <p>
+                                  {{registro.TipoOperacion}}
+                              </p>
+                      </div>
+                  </div>
+                    <div layout="row"  style="min-height:25px">
+                            <div flex="25">
+                                    <strong>Folio</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.Folio}}</p>
+                        </div> 
+    
+                      <div flex="20"></div>
+                      <div flex="25">
+                              <strong>Moneda</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                              <p>
+                                  {{registro.Moneda}}
+                              </p>
+                      </div>
+                  </div>
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Cuenta</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.Cuenta}}</p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25">
+                                <strong>Dígito</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>
+                                    {{registro.Digito}}
+                                </p>
+                        </div>
+                    </div>
+                         <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Tipo Movimiento</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.TipoMovimiento }}</p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25">
+                                <strong>Importe</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>
+                                    {{registro.Importe | number:2}}
+                                </p>
+                        </div>
+                    </div>
+
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Institución</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.Institucion }}</p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25">
+                                <strong>Operador</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>
+                                    {{registro.Operador}}
+                                </p>
+                        </div>
+                    </div>
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Autoriza</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.Autoriza }}</p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25">
+                                <strong>Número Siac</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>
+                                    {{registro.NumeroSiac}}
+                                </p>
+                        </div>
+                    </div>
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Estado</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.Estado }}</p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25">
+                                <strong>Hora de Aplicación</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>
+                                    {{registro.HoraAplicacion}}
+                                </p>
+                        </div>
+                    </div>
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Texto</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.Texto }}</p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25">
+                                <strong>FRetroactividad</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>
+                                    {{registro.FRetroactividad}}
+                                </p>
+                        </div>
+                    </div>
+
+                    </div>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>

@@ -1,0 +1,44 @@
+<md-dialog style="overflow-y: auto;overflow-x: hidden;width:670px; height:auto;">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Usuario: {{usuarioCtrl.userEdit.Usuario.Clave}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="usuarioCtrl.CloseInfoSeg()" aria-label="Cerrar">
+          <span class="glyphicon glyphicon-remove"></span>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <div layout="row" class="panel-body">
+        <center>
+            <form name="usuarioCtrl.changePassword" role="form" id="changePassword" style="width: 60%;" novalidate>
+                <div class="form-group input-group" ng:class="{true:'has-success', false:'has-error'}[usuarioCtrl.changePassword.PasswordUser.$valid]">
+                    <span class="input-group-addon"><span style="color: #22224b" class="glyphicon glyphicon-lock"></span></span>
+                    <input placeholder="Contraseña nueva" maxlength="100" type="password" name="PasswordUser" id="PasswordUser" class="form-control" autocomplete="off" ng-model="usuarioCtrl.passwordNewToChange" oncopy="return false" onpaste="return false" required />
+                </div>
+                <div class="form-group input-group" ng:class="{true:'has-success', false:'has-error'}[usuarioCtrl.changePassword.PasswordConfirmUser.$valid]">
+                    <span class="input-group-addon"><span style="color: #22224b" class="glyphicon glyphicon-lock"></span></span>
+                    <input placeholder="Confirmación" maxlength="100" type="password" name="PasswordConfirmUser" id="PasswordConfirmUser" class="form-control" autocomplete="off" ng-model="usuarioCtrl.passwordNewToChangeConfirm" oncopy="return false" onpaste="return false" required />
+                </div>
+                <div align="center" layout="row">
+                    <div flex></div>
+                    <div flex="60">
+                    <md-button type="reset" class="md-raised md-primary">
+                        Cancelar
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="usuarioCtrl.SaveChangePass()" ng-disabled="usuarioCtrl.changePassword.$invalid">
+                        Guardar
+                    </md-button>
+                    </div>
+                    <div flex="5" style="padding-top:6px;">
+                        <md-checkbox style="padding-top:10px;" ng-model="usuarioCtrl.showDataPC" ng-click="usuarioCtrl.showContrasena();" class="md-checkbox md-primary" aria-label="Checkbox 1"></md-checkbox>
+                    </div>
+                    <div flex="5">
+                        <h5 style="display:inline-block; width:130px; font-size:12px; padding-top:6px; margin-left:-9px;">Mostrar constraseña</h5>
+                    </div>
+                    <div flex></div>
+                </div>
+                </form>
+        </center>
+    </div>
+  </md-dialog>
+  

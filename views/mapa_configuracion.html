@@ -1,0 +1,141 @@
+<div class="row positionPrincipalDiv" ng-init="mapaCtrl.init()">
+  <div layout="row" style="color:#333; font-size:12px;">
+    <div flex="10"></div>
+    <div flex="15" style="text-align: center">
+      <h5>Tipo Catálogo</h5>
+        <md-select ng-change="mapaCtrl.filterData()" class="md-selectStyle" ng-model="mapaCtrl.catalogoSelect" placeholder="Selecciona Tipo de Catálogo">
+            <md-option ng-value="tipoCat.name" ng-repeat="tipoCat in mapaCtrl.tipoCatalogo">{{tipoCat.name}}</md-option>
+        </md-select>
+    </div>
+       <div flex="5"></div>
+       <div flex="8" class="dropdown" style=" padding-top:25px;">
+           <md-button title="Filtrar" class="md-raised md-primary" ng-click="mapaCtrl.filterData()" ng-disabled="mapaCtrl.catalogoSelect.length === 0 || mapaCtrl.loading === 'true'">Filtrar</md-button>
+       </div>
+      <div flex="8" class="dropdown" style="padding-right:35px; padding-top:25px;">
+        <md-button class="md-icon-button" ng-disabled="mapaCtrl.dataset.length === 0 || mapaCtrl.dataset === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+            <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+        </md-button>
+        <ul style="min-width:50px; top:75%;" class="table-export dropdown-menu excel-list" table-selector="'tablaPerfil'" export-options="{type: 'excel', escape: true, tableName: 'Mapa Configuración', ignoreColumn: [15]}" aria-labelledby="dropdownMenu1">
+            <li ng-click="mapaCtrl.exportExcel()">
+                <span>Excel</span>
+            </li>
+        </ul>
+      </div>
+   </div>
+  <center>
+      <table ng-hide="mapaCtrl.tablePerfil" style="width:1270px;" st-sticky-header st-table="mapaCtrl.datasetCollection" st-safe-src="mapaCtrl.dataset" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaPerfil">
+        <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+            <tr style="border: 0;">
+                <th style="text-align:center; width:100px;" st-sort="Perfil">Perfil</th>
+                <th style="text-align:center; width:150px;" st-sort="Usuario">Usuario</th>
+                <th style="text-align:center; width:150px;" st-sort="Departamento">Departamento</th>
+                <th style="text-align:center; width:150px;" st-sort="Concepto">Concepto</th>
+                <th style="text-align:center; width:120px;" st-sort="CuentaNostro">Cuenta Nostro</th>
+                <th style="text-align:center; width:150px;" st-sort="NumCuentaNostro">Num Cuenta Nostro</th>
+                <th style="text-align:center; width:150px;" st-sort="CCConcepto">CC Concepto</th>
+                <th style="text-align:center; width:150px;" st-sort="CCDepartamento">CC Departamento</th>
+                <th style="text-align:center; width:150px;" st-sort="CCUsuario">CC Usuario</th>
+            </tr>
+            <tr>
+                <td colspan="12">
+                    <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="dataCat in mapaCtrl.datasetCollection">
+                <td class="tableTabPosLeft" style="width:100px;" title="{{dataCat.Perfil}}">
+                  <div class="overflowContainer"> {{dataCat.Perfil}} </div>
+                </td>
+                <td class="tableTabPosLeft" style="width:150px;" title="{{dataCat.Usuario}}">
+                  <div class="overflowContainer"> {{dataCat.Usuario}} </div>
+                </td>
+                <td class="tableTabPosLeft" style="width:150px;" title="{{dataCat.Departamento}}">
+                  <div class="overflowContainer"> {{dataCat.Departamento}} </div>
+                </td>
+                <td class="tableTabPosLeft" style="width:150px;" title="{{dataCat.Concepto}}">
+                  <div class="overflowContainer"> {{dataCat.Concepto}} </div>
+                </td>
+                <td class="tableTabPosLeft" style="width:120px;" title="{{dataCat.CuentaNostro}}">
+                  <div class="overflowContainer"> {{dataCat.CuentaNostro}} </div>
+                </td>
+                <td class="tableTabPosRight" style="width:150px; padding-right:5px;" title="{{dataCat.NumCuentaNostro}}">
+                  <div class="overflowContainer"> {{dataCat.NumCuentaNostro}} </div>
+                </td>
+                <td class="tableTabPosLeft" style="width:150px;" title="{{dataCat.CCConcepto}}">
+                  <div class="overflowContainer"> {{dataCat.CCConcepto}} </div>
+                </td>
+                <td class="tableTabPosLeft" style="width:150px;" title="{{dataCat.CCDepartamento}}">
+                  <div class="overflowContainer"> {{dataCat.CCDepartamento}} </div>
+                </td>
+                <td class="tableTabPosLeft" style="width:150px;" title="{{dataCat.CCUsuario}}">
+                  <div class="overflowContainer"> {{dataCat.CCUsuario}} </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+      <table ng-hide="mapaCtrl.tableLimite" style="width:1050px;" st-sticky-header st-table="mapaCtrl.datasetCollection" st-safe-src="mapaCtrl.dataset" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaLimite">
+        <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+            <tr style="border: 0;">
+                <th style="text-align:center; width:250px;" st-sort="Tipolimite">Tipo Límite</th>
+                <th style="text-align:center; width:150px;" st-sort="Catalogo">Catálogo</th>
+                <th style="text-align:center; width:200px;" st-sort="Valor">Valor</th>
+                <th style="text-align:center; width:450px;" st-sort="Registro">Registro</th>
+            </tr>
+            <tr>
+                <td colspan="12">
+                    <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="dataCat in mapaCtrl.datasetCollection">
+                <td class="tableTabPosLeft" style="width:250px;" title="{{dataCat.Tipolimite}}">
+                  <div class="overflowContainer"> {{dataCat.Tipolimite}} </div>
+                </td>
+                <td class="tableTabPosLeft" style="width:150px;" title="{{dataCat.Catalogo}}">
+                  <div class="overflowContainer"> {{dataCat.Catalogo}} </div>
+                </td>
+                <td class="tableTabPosRight" style="width:200px; padding-right:5px;" title="{{dataCat.Valor}}">
+                  <div class="overflowContainer"> {{dataCat.Valor}} </div>
+                </td>
+                <td class="tableTabPosLeft" style="width:450px;" title="{{dataCat.Registro}}">
+                  <div class="overflowContainer"> {{dataCat.Registro}} </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+      <table ng-hide="mapaCtrl.tableContraparte" style="width:1200px;" st-sticky-header st-table="mapaCtrl.datasetCollection" st-safe-src="mapaCtrl.dataset" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaContraparte">
+        <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+            <tr style="border: 0;">
+                <th style="text-align:center; width:180px;" st-sort="Contraparte">Contraparte</th>
+                <th style="text-align:center; width:180px;" st-sort="Contrato">Contrato</th>
+                <th style="text-align:center; width:300px;" st-sort="Departamento">Departamento</th>
+                <th style="text-align:center; width:540px;" st-sort="Concepto">Concepto</th>
+            </tr>
+            <tr>
+                <td colspan="12">
+                    <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="dataCat in mapaCtrl.datasetCollection">
+                <td class="tableTabPosLeft" style="width:180px;" title="{{dataCat.Contraparte}}">
+                  <div class="overflowContainer"> {{dataCat.Contraparte}} </div>
+                </td>
+                <td class="tableTabPosLeft" style="width:180px;" title="{{dataCat.Contrato}}">
+                  <div class="overflowContainer"> {{dataCat.Contrato}} </div>
+                </td>
+                <td class="tableTabPosLeft" style="width:300px;" title="{{dataCat.Departamento}}">
+                  <div class="overflowContainer"> {{dataCat.Departamento}} </div>
+                </td>
+                <td class="tableTabPosLeft" style="width:540px;" title="{{dataCat.Concepto}}">
+                  <div class="overflowContainer"> {{dataCat.Concepto}} </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+</center>
+<loading-modal class="modal show" loadshow="mapaCtrl.loading" data-backdrop="static" />

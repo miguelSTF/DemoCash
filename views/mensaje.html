@@ -1,0 +1,248 @@
+<div class="row positionPrincipalDiv apesaFont14" ng-init="mensajeCtrl.init()">
+  <form name="mensajeCtrl.UsuarioForm" ng-submit="mensajeCtrl.Create()" novalidate>
+    <div layout="row" layout-align="center">
+      <div flex="30">
+        <md-input-container class="md-block" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.$invalid && !mensajeCtrl.UsuarioForm.$pristine }">
+          <label>Departamento</label>
+          <md-select ng-change="mensajeCtrl.DepartamentoChange(false)" ng-model="mensajeCtrl.departamento" multiple="false" md-on-close="mensajeCtrl.searchDepa = ''" data-md-container-class="selectdemoSelectHeader" required>
+            <md-select-header class="demo-select-header">
+              <input ng-keydown="mensajeCtrl.handleKeyup($event)" ng-model="mensajeCtrl.searchDepa" ng-focus="mensajeCtrl.focusInput" type="search" placeholder="Buscar departamento" class="demo-header-searchbox _md-text">
+            </md-select-header>
+            <md-optgroup label="Departamento">
+              <md-option ng-value="departamento" ng-repeat="departamento in mensajeCtrl.departamentos | catalogRelation: mensajeCtrl.departamentoPorUsuario:'Departamento' | filter:mensajeCtrl.searchDepa">{{departamento.Nombre}}</md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+      </div>
+      <div flex="5"></div>
+      <div flex="40">
+        <md-input-container class="md-block" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.$invalid && !mensajeCtrl.UsuarioForm.$pristine }">
+          <label>Concepto</label>
+          <md-select ng-change="mensajeCtrl.ConceptoChange()" ng-model="mensajeCtrl.concepto" multiple="false" md-on-close="mensajeCtrl.searchCepto = ''" data-md-container-class="selectdemoSelectHeader" required>
+            <md-select-header class="demo-select-header">
+              <input ng-keydown="mensajeCtrl.handleKeyup($event)" ng-model="mensajeCtrl.searchCepto" ng-focus="mensajeCtrl.focusInput" type="search" placeholder="Buscar concepto" class="demo-header-searchbox _md-text">
+            </md-select-header>
+            <md-optgroup label="Concepto">
+              <md-option ng-value="concepto" ng-repeat="concepto in mensajeCtrl.conceptos | catalogRelation: mensajeCtrl.conceptoPorDepartamento:'Concepto' | catalogRelation: mensajeCtrl.conceptoPorUsuario:'Concepto' | filter:mensajeCtrl.searchCepto">{{concepto.Nombre}}</md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+      </div>
+    </div>
+
+    <div layout="row" layout-align="center" style="padding-top:5px;" ng-hide="mensajeCtrl.Spei1 || mensajeCtrl.Swift202 || mensajeCtrl.Swift210">
+      <div flex="40">
+        <div layout="row" layout-align="center">
+          <div flex="75">
+            <md-input-container class="md-block" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.Contraparte.$invalid && !mensajeCtrl.UsuarioForm.Contraparte.$pristine }">
+              <label>Contraparte de Negocio</label>
+              <md-select name="Contraparte" id="Contraparte" ng-disabled="mensajeCtrl.contraparteNExist" ng-model="mensajeCtrl.cliente" ng-change="mensajeCtrl.limpiarPantalla(3);" md-on-close="mensajeCtrl.clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" multiple="false" ng-required="!mensajeCtrl.contraparteNExist && !mensajeCtrl.Spei1 && !mensajeCtrl.Swift202 && !mensajeCtrl.Swift210">
+                <md-select-header class="demo-select-header">
+                  <input ng-keydown="mensajeCtrl.handleKeyup($event)" ng-model="mensajeCtrl.searchTerm" ng-focus="mensajeCtrl.focusInput" type="search" placeholder="Buscar Contraparte" class="demo-header-searchbox _md-text">
+                </md-select-header>
+                <md-optgroup label="Beneficiarios">
+                  <md-option class="md-option" ng-value="cliente" ng-repeat="cliente in mensajeCtrl.clientes | filter : {show:mensajeCtrl.contraparteNExist} | filter:mensajeCtrl.searchTerm">{{cliente.NombreCorto}} ( {{cliente.IdClaveExterna}} )</md-option>
+                </md-optgroup>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div flex="25" style="padding-top:25px" ng-show="mensajeCtrl.concepto.PermiteContraNoRegistrada === 1">
+            No Registrada
+            <md-checkbox flex="10" ng-model="mensajeCtrl.contraparteNExist" ng-click="mensajeCtrl.limpiarPantalla(5)" class="md-checkbox md-primary"></md-checkbox>
+          </div>
+          <div flex="25" ng-hide="mensajeCtrl.concepto.PermiteContraNoRegistrada === 1"></div>
+        </div>
+      </div>
+      <div flex="5" ng-show="mensajeCtrl.showCuenta"></div>
+      <div flex="30" ng-show="mensajeCtrl.showCuenta">
+        <md-input-container class="md-block" class="md-block" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.$invalid && !mensajeCtrl.UsuarioForm.$pristine }">
+          <label>Cuenta Contraparte</label>
+          <md-select id="contraparte" ng-disabled="mensajeCtrl.contraparteNExist" ng-model="mensajeCtrl.cuenta" ng-change="mensajeCtrl.actualizarInfoCuenta(datos)" data-md-container-class="selectdemoSelectHeader" multiple="false" ng-required="mensajeCtrl.showCuenta && !mensajeCtrl.contraparteNExist">
+            <md-select-header class="demo-select-header">
+              <input ng-keydown="mensajeCtrl.handleKeyup($event)" ng-model="mensajeCtrl.searCuentaContra" ng-focus="mensajeCtrl.focusInput" type="search" placeholder="Buscar Cuenta Contraparte" class="demo-header-searchbox _md-text">
+            </md-select-header>
+            <md-optgroup label="Beneficiarios">
+              <md-option class="md-option" ng-value="datos" ng-repeat="datos in mensajeCtrl.cuentas | filter:{Activo:1} | filter:mensajeCtrl.searCuentaContra">{{datos.NombreBanco}} ( {{datos.Cuenta}} )</md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+      </div>
+      <div flex="35" ng-show="!mensajeCtrl.showCuenta"></div>
+    </div>
+
+    <div layout="row" layout-align="center" style="padding-top:5px;">
+      <div flex="20" ng-show="mensajeCtrl.requiereIva === true" style="padding-right:10px">
+        <label>Monto sin IVA</label>
+        <div class="input-group" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.Monto.$invalid && !mensajeCtrl.UsuarioForm.Monto.$pristine || (mensajeCtrl.UsuarioForm.MontoSinIva.$invalid && !mensajeCtrl.UsuarioForm.MontoSinIva.$pristine) }">
+          <span class="input-group-addon" id="sizing-addon2">$</span>
+          <input name="MontoSinIva" id="MontoSinIva" type="text" class="form-control" ng-model="mensajeCtrl.montoSinIva" ng-blur="mensajeCtrl.montoSinIva = mensajeCtrl.montoSinIva < 0 ? mensajeCtrl.montoSinIva * -1 : mensajeCtrl.montoSinIva" ng-change="mensajeCtrl.CalculaIva()"ng-currency ng-required="mensajeCtrl.requiereIva === true"/>
+        </div>
+      </div>
+      <div flex="20" style="padding-right:10px" ng-show="mensajeCtrl.requiereIva === true" >
+        <label >IVA </label>
+        <div class="input-group" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.Monto.$invalid && !mensajeCtrl.UsuarioForm.Monto.$pristine || (mensajeCtrl.UsuarioForm.MontoSinIva.$invalid && !mensajeCtrl.UsuarioForm.MontoSinIva.$pristine) }">
+          <span class="input-group-addon" id="sizing-addon2">$</span>
+          <input  id="Iva" type="text" class="form-control" ng-model="mensajeCtrl.Payload.Iva" ng-blur="mensajeCtrl.Payload.Iva = mensajeCtrl.Payload.Iva < 0 ? mensajeCtrl.Payload.Iva * -1 : mensajeCtrl.Payload.Iva" ng-currency ng-required="mensajeCtrl.requiereIva === true" readonly/>
+        </div>
+      </div>
+      <div flex="20" style="padding-right:10px">
+        <label ng-show="!mensajeCtrl.requiereIva">Monto</label>
+        <label ng-show="mensajeCtrl.requiereIva">Monto con IVA</label>
+        <div class="input-group" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.Monto.$invalid && !mensajeCtrl.UsuarioForm.Monto.$pristine}">
+          <span class="input-group-addon" id="sizing-addon2">$</span>
+          <input name="Monto" id="Monto" type="text" class="form-control" ng-model="mensajeCtrl.monto" ng-blur="mensajeCtrl.monto = mensajeCtrl.monto < 0 ? mensajeCtrl.monto * -1 : mensajeCtrl.monto" ng-currency ng-change="mensajeCtrl.DesglosaIva()" required/>
+        </div>
+      </div>
+
+      <div flex="5" ng-hide="mensajeCtrl.requiereIva === true"></div>
+      <div flex="15" style="position:center;padding-right:10px;">
+        <label>Fecha</label>
+        <md-datepicker ng-model="mensajeCtrl.fechaValor" md-min-date="mensajeCtrl.minDate" md-date-filter="mensajeCtrl.onlyWeekendsPredicate"/>
+      </div>
+
+      <div flex="5" ng-hide="mensajeCtrl.requiereIva === true"></div>
+      <div flex="15" ng-show="!mensajeCtrl.requiereIva" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.Referencia.$invalid && !mensajeCtrl.UsuarioForm.Referencia.$pristine }">
+        <label>Referencia Numérica</label>
+        <input name="Referencia" id="Referencia" type="text" maxlength="7" class="form-control" ng-model="mensajeCtrl.referenciaNum" autocomplete="off" oninput="javascript: isNaN(this.value) ? this.value = this.value.substring(0, this.value.length - 1) : this.value" required/>
+      </div>
+    </div>
+
+    <div layout="row" layout-align="center" style="padding-top:5px;"  ng-show="mensajeCtrl.requiereIva === true">
+      <div flex="20" style="margin:10px;" class="form-group" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.Referencia.$invalid && !mensajeCtrl.UsuarioForm.Referencia.$pristine }">
+        <label>Referencia Numérica</label>
+        <input name="Referencia" id="Referencia" type="text" maxlength="7" class="form-control" ng-model="mensajeCtrl.referenciaNum" autocomplete="off" oninput="javascript: isNaN(this.value) ? this.value = this.value.substring(0, this.value.length - 1) : this.value" required/>
+      </div>
+      <div flex ="55"></div>
+    </div>
+
+    <div layout="row" layout-align="center" style="padding-top:5px;" ng-show="mensajeCtrl.showCuenta && mensajeCtrl.via === 2">
+      <div flex="25" class="form-group" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.NomBen.$invalid && !mensajeCtrl.UsuarioForm.NomBen.$pristine }">
+        <label>Nombre Beneficiario</label>
+        <input name="NomBen" id="NomBen" onkeypress="evaluateCaracter(event)" maxlength="{{mensajeCtrl.maxLengthContra}}" ng-disabled="!mensajeCtrl.contraparteNExist" type="text" class="form-control" ng-model="mensajeCtrl.Payload.NomBen" ng-required="mensajeCtrl.via === 2 && mensajeCtrl.showCuenta"/>
+      </div>
+      <div flex="5"></div>
+      <div flex="20">
+        <md-input-container class="md-block">
+          <label>Institución Beneficiario</label>
+          <md-select ng-disabled="!mensajeCtrl.contraparteNExist" ng-model="mensajeCtrl.Payload.InstitucionBen" multiple="false" md-on-close="mensajeCtrl.searchInstBen = ''" data-md-container-class="selectdemoSelectHeader" ng-required="mensajeCtrl.via === 2 && mensajeCtrl.showCuenta">
+            <md-select-header class="demo-select-header">
+              <input ng-keydown="mensajeCtrl.handleKeyup($event)" ng-model="mensajeCtrl.searchInstBen" ng-focus="mensajeCtrl.focusInput" type="search" placeholder="Buscar institución" class="demo-header-searchbox _md-text">
+            </md-select-header>
+            <md-optgroup label="Institución">
+              <md-option ng-value="institucion.Id" ng-repeat="institucion in mensajeCtrl.listBancos | filter:mensajeCtrl.searchInstBen">{{institucion.Nombre}}</md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+      </div>
+      <div flex="5"></div>
+      <div flex="20">
+        <md-input-container class="md-block">
+          <label>Tipo Cuenta Beneficiario</label>
+          <md-select ng-disabled="!mensajeCtrl.contraparteNExist" ng-model="mensajeCtrl.Payload.TipoCtaBen" multiple="false" md-on-close="mensajeCtrl.searchTipoCuentaBen = ''" data-md-container-class="selectdemoSelectHeader" ng-required="mensajeCtrl.via === 2 && mensajeCtrl.showCuenta">
+            <md-select-header class="demo-select-header">
+              <input ng-keydown="mensajeCtrl.handleKeyup($event)" ng-model="mensajeCtrl.searchTipoCuentaBen" ng-focus="mensajeCtrl.focusInput" type="search" placeholder="Buscar tipo cuenta" class="demo-header-searchbox _md-text">
+            </md-select-header>
+            <md-optgroup label="Institución">
+              <option></option>
+              <md-option ng-value="tipoCuenBen.Id" ng-repeat="tipoCuenBen in mensajeCtrl.tiposCuentasBen | filter:mensajeCtrl.searchTipoCuentaBen">{{tipoCuenBen.Nombre}}</md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+      </div>
+    </div>
+    <div layout="row" layout-align="center" style="padding-top:5px;" ng-show="mensajeCtrl.showCuenta && mensajeCtrl.via === 2">
+      <div flex="25" class="form-group" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.CtaBen.$invalid && !mensajeCtrl.UsuarioForm.CtaBen.$pristine }">
+        <label>Cuenta Beneficiario</label>
+        <input name="CtaBen" id="CtaBen" maxlength="{{mensajeCtrl.maxLengthCuenta}}" ng-disabled="!mensajeCtrl.contraparteNExist" id="CuentaBeneficiario" type="text" class="form-control" ng-model="mensajeCtrl.Payload.CtaBen" ng-required="mensajeCtrl.via === 2 && mensajeCtrl.showCuenta"/>
+      </div>
+      <div flex="5"></div>
+      <div flex="25" class="form-group" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.RfcBen.$invalid && !mensajeCtrl.UsuarioForm.RfcBen.$pristine }">
+        <label>Rfc Beneficiario</label>
+        <input name="RfcBen" id="RfcBen" ng-disabled="!mensajeCtrl.contraparteNExist" id="RfcBeneficiario" type="text" class="form-control" ng-model="mensajeCtrl.Payload.RfcBen" />
+      </div>
+      <div flex="5"></div>
+      <div flex="15"></div>
+    </div>
+
+    <div layout="row" layout-align="center" style="padding-top:5px;" ng-show="mensajeCtrl.via > 2 && mensajeCtrl.showCuenta">
+      <div flex="25" class="form-group" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.NomBenB.$invalid && !mensajeCtrl.UsuarioForm.NomBenB.$pristine }">
+        <label>Nombre Beneficiario</label>
+        <input name="NomBenB" id="NomBenB" maxlength="{{mensajeCtrl.maxLengthContra}}" ng-disabled="!mensajeCtrl.contraparteNExist" id="NombreBeneficiario" type="text" class="form-control" ng-model="mensajeCtrl.Payload.NomBen" ng-required="mensajeCtrl.via > 2 && mensajeCtrl.showCuenta"/>
+      </div>
+      <div flex="5"></div>
+      <div flex="20">
+        <md-input-container class="md-block">
+          <label>Institución Beneficiario</label>
+          <md-select ng-disabled="!mensajeCtrl.contraparteNExist" ng-model="mensajeCtrl.Payload.InstitucionBen" multiple="false" md-on-close="mensajeCtrl.searchInstBen = ''" data-md-container-class="selectdemoSelectHeader" ng-required="mensajeCtrl.via > 2 && mensajeCtrl.showCuenta">
+            <md-select-header class="demo-select-header">
+              <input ng-keydown="mensajeCtrl.handleKeyup($event)" ng-model="mensajeCtrl.searchInstBen" ng-focus="mensajeCtrl.focusInput" type="search" placeholder="Buscar institución" class="demo-header-searchbox _md-text">
+            </md-select-header>
+            <md-optgroup label="Institución">
+              <md-option ng-value="institucion.Id" ng-repeat="institucion in mensajeCtrl.listBancos | filter:mensajeCtrl.searchInstBen">{{institucion.Nombre}}</md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+      </div>
+      <div flex="5"></div>
+      <div flex="20" class="form-group" ng-class="{ 'has-error' : mensajeCtrl.UsuarioForm.CtaBenB.$invalid && !mensajeCtrl.UsuarioForm.CtaBenB.$pristine }">
+        <label>Cuenta Beneficiario</label>
+        <input name="CtaBenB" id="CtaBenB" maxlength="{{mensajeCtrl.maxLengthCuenta}}" ng-disabled="!mensajeCtrl.contraparteNExist" id="CuentaBeneficiario" type="text" class="form-control" ng-model="mensajeCtrl.Payload.CtaBen" ng-required="mensajeCtrl.via > 2 && mensajeCtrl.showCuenta"/>
+      </div>
+    </div>
+
+    <div layout="row" layout-align="center" style="padding-top:5px;">
+      <div flex="25" ng-show="mensajeCtrl.RequiereSucursal">
+        <md-input-container class="md-block">
+          <label>Sucursal</label>
+          <md-select ng-change="mensajeCtrl.CambioSucursalPlaza()" ng-model="mensajeCtrl.Payload.SucursalBen" multiple="false" md-on-close="mensajeCtrl.searchSucursal = ''" data-md-container-class="selectdemoSelectHeader" ng-required="mensajeCtrl.RequiereSucursal">
+            <md-select-header class="demo-select-header">
+              <input ng-keydown="mensajeCtrl.handleKeyup($event)" ng-model="mensajeCtrl.searchSucursal" ng-focus="mensajeCtrl.focusInput" type="search" placeholder="Buscar Sucursal" class="demo-header-searchbox _md-text">
+            </md-select-header>
+            <md-optgroup label="Sucursal">
+              <md-option ng-value="suc.IdSucursal" ng-repeat="suc in mensajeCtrl.Sucursales | filter:mensajeCtrl.searchSucursal">{{suc.Nombre}}</md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+      </div>
+      <div flex="5" ng-show="mensajeCtrl.RequiereSucursal && mensajeCtrl.RequierePlaza"></div>
+      <div flex="25" ng-show="mensajeCtrl.RequierePlaza">
+        <md-input-container class="md-block">
+          <label>Plaza</label>
+          <md-select ng-change="mensajeCtrl.CambioSucursalPlaza()" ng-model="mensajeCtrl.Payload.PlazaBen" multiple="false" md-on-close="mensajeCtrl.searchPlaza = ''" data-md-container-class="selectdemoSelectHeader" ng-required="mensajeCtrl.RequierePlaza">
+            <md-select-header class="demo-select-header">
+              <input ng-keydown="mensajeCtrl.handleKeyup($event)" ng-model="mensajeCtrl.searchPlaza" ng-focus="mensajeCtrl.focusInput" type="search" placeholder="Buscar Plaza" class="demo-header-searchbox _md-text">
+            </md-select-header>
+            <md-optgroup label="Plaza">
+              <md-option ng-value="pza.IdPlaza" ng-repeat="pza in mensajeCtrl.Plazas | filter:mensajeCtrl.searchPlaza">{{pza.Nombre}}</md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+      </div>
+      <div flex="{{mensajeCtrl.RequiereSucursal && mensajeCtrl.RequierePlaza ? 20 : 50}}"></div>
+    </div>
+
+    <div layout="row" layout-align="center" style="padding-top:5px;">
+      <div flex="75" class="form-group">
+        <div name="PayLoad" id="PayLoad" fill-payload payload={{mensajeCtrl.payloadString}} formelement="mensajeCtrl.PayLoad"></div>
+      </div>
+    </div>
+
+    <div layout="row" layout-align="center">
+      <div flex="70"></div>
+      <div flex="20">
+        <input type="submit" class="btn btn-primary" value="Registrar Operación" ng-disabled="mensajeCtrl.UsuarioForm.$invalid || mensajeCtrl.PayLoad.$invalid || mensajeCtrl.monto === 0.00" />
+      </div>
+    </div>
+    <br><br><br>
+  </form>
+  <script>
+    function evaluateCaracter(event) {
+        if ((event.keyCode >= 32) && (event.keyCode != 60 && event.keyCode != 61 && event.keyCode != 62 && event.keyCode != 91 && event.keyCode != 93 && event.keyCode != 94 && event.keyCode != 96 && event.keyCode != 123 && event.keyCode != 124 && event.keyCode != 125 && event.keyCode != 126 && event.keyCode != 127 && event.keyCode != 128 && event.keyCode != 129 && event.keyCode != 166 && event.keyCode != 167 && event.keyCode != 193 && event.keyCode != 201 && event.keyCode != 205 && event.keyCode != 211 && event.keyCode != 218 && event.keyCode != 252 && event.keyCode != 196 && event.keyCode != 203 && event.keyCode != 207 && event.keyCode != 214 && event.keyCode != 220 && event.keyCode != 228 && event.keyCode != 235 && event.keyCode != 239 && event.keyCode != 246 && event.keyCode != 252 && event.keyCode != 168) || (event.keyCode > 173 && event.keyCode < 32)) {
+            event.returnValue = true;
+        }else {
+            event.returnValue = false;
+        }
+    }
+  </script>
+</div>
+<loading-modal class="modal show" loadshow="mensajeCtrl.loading" data-backdrop="static" />

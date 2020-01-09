@@ -1,0 +1,112 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Detalle de Registro</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="Close()" aria-label="Cerrar">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle">
+            <md-content class="md-padding">
+                  <div layout="row"  style="min-height:25px">
+                      <div flex="25">
+                                <strong>Clave Leyenda</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                          <p>{{registro.ClaveLeyenda}}</p>
+                      </div>
+                      <div flex="20"></div>
+                      <div flex="25" style="text-align:left;">
+                              <strong>Fecha de Operación</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                              <p>{{registro.FechaOperacion.substring(0,10)}}
+                              </p>
+                      </div>
+                  </div>
+                     <div layout="row"  style="min-height:25px">
+                      <div flex="25">
+                                <strong>Fecha Registro</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                           <p>{{registro.FechaRegistro.substring(0,10)}}
+                                {{registro.FechaRegistro.substring(11,20)}}
+                              </p>
+                      </div>
+                      <div flex="20"></div>
+                      <div flex="25">
+                              <strong>Fecha Valor</strong>
+                      </div>
+                      <div flex="25" style="text-align:right;">
+                              <p>
+                                {{registro.FechaValor.substring(0,10)}}
+                              </p>
+                      </div>
+                  </div>
+                    <div layout="row"  style="min-height:25px">
+                            <div flex="25">
+                                    <strong>Referencia</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.Referencia}}</p>
+                        </div>
+
+                      <div flex="20"></div>
+                      <div flex="25">
+                              <strong>Sucursal</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                              <p>
+                                  {{registro.Sucursal}}
+                              </p>
+                      </div>
+                  </div>
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Importe</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.Importe | number:2}}</p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25">
+                                <strong>Saldo</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>
+                                    {{registro.Saldo | number:2}}
+                                </p>
+                        </div>
+                    </div>
+                     <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Sentido</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.Sentido}}</p>
+                        </div>
+                        <div flex="20"></div>
+
+                        <div flex="25">
+                        </div>
+                        <div flex="25">
+                        </div>
+                    </div>
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                <strong>Ref. Ampliada </strong>
+                        </div>
+                        <div flex  style="text-align:left;">
+                                <p>
+                                    {{registro.ReferenciaAmpliada}}
+                                </p>
+                        </div>
+                    </div>
+                    </div>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>

@@ -1,0 +1,72 @@
+<div class="row positionPrincipalDiv" ng-init="viaCtrl.init()">
+	<div layout="row" class="apesaFont14">
+		<div flex="80"></div>
+		<div flex="5" class="dropdown" style="padding-left:20px;">
+		 <md-button class="md-icon-button" ng-disabled="viaCtrl.viasLiquidacion.length === 0 || viaCtrl.viasLiquidacion === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+            <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+          </md-button>
+			<ul class="table-export dropdown-menu excel-list" table-selector="'tablaVia'" export-options="{type: 'excel', escape: true, htmlContent:'true',ignoreColumn:[5], tableName: 'Vias de Liquidación' }" aria-labelledby="dropdownMenu1">
+					<li onclick="export_table_to_excel('tablaVia','Vias de Liquidación','[1]','[5]')">
+							<span>Excel</span>
+					</li>
+					<li te-option te-value="'csv'" te-param="'type'">
+							<span>CSV</span>
+					</li>
+					<li te-option te-value="'txt'" te-param="'type'">
+							<span>TXT</span>
+					</li>
+			</ul>
+		</div>
+		<div flex="10"></div>
+	</div>
+	<center>
+		<table st-sticky-header style="width:900px;" st-table="viaCtrl.viasLiquidacionCollection" st-safe-src="viaCtrl.viasLiquidacion" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaVia">
+			<thead style="border: 0;color: white;background: #22224b;z-index:1;">
+				<tr style="border: 0;">
+					<th style="text-align:center;width:100px;" st-sort="NombreCorto">Clave</th>
+					<th style="text-align:center;width:100px " st-sort="Descripcion">Descripción</th>
+					<th style="text-align: center; width: 250px" st-sort="RutaEdoCta">Ruta EdoCta</th>
+					<th style="text-align: center; width: 250px" st-sort="RutaEmisionPagos">Ruta Emisión Pagos</th>
+					<th style="text-align:center; width:100px;" st-sort="Activo">Activo</th>
+					<th style="text-align:center;width:100px"></th>
+				</tr>
+				<tr>
+					<td colspan="6">
+						<input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="viaInfo in viaCtrl.viasLiquidacionCollection">
+					<td title="'{{viaInfo.Clave}}'" style="width:100px;position:relative;">
+						<div class="overflowContainer">{{viaInfo.Clave}}</div>
+					</td>
+					<td title="'{{viaInfo.Descripcion}}'" style="position:relative;width:100px">
+						<div class="overflowContainer">{{viaInfo.Descripcion}}</div>
+					</td>
+					<td title="{{viaInfo.RutaEdoCta}}" style="position: relative;width: 250px">
+						<div class="overflowContainer">{{viaInfo.RutaEdoCta}}</div>
+					</td>
+					<td title="{{viaInfo.RutaEmisionPagos}}" style="position: relative; width: 250px">
+						<div class="overflowContainer">{{viaInfo.RutaEmisionPagos}}</div>
+					</td>
+					<td title=""
+					<td style="text-align:center;width:100px;">
+						<span class="glyphicon"><md-switch ng-model="viaInfo.Activo" ng-disabled="true" aria-label="Switch 2" class="md-primary md-switch" ng-true-value="1" ng-false-value="0"></md-switch></span>
+						<span ng-hide="true">{{ viaInfo.Activo === 1? "Si" : "No"}}</span>
+					</td>
+					<td style="text-align:center; width:100px; color:#333;">
+						<span class="glyphicon"></span>
+						<span class="glyphicon"></span>
+						<span class="glyphicon glyphicon-eye-open" title="Consultar" ng-click="viaCtrl.watch(viaInfo)"></span>
+						<span class="glyphicon"></span>
+						<span class="glyphicon"></span>
+						<span class="glyphicon glyphicon-pencil" permisopantalla permiso="3" idpantalla="13" title="Editar" ng-click="viaCtrl.edit(viaInfo)"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</center>
+	<br>
+</div>
+<loading-modal class="modal show" loadshow="viaCtrl.loading" data-backdrop="static"/>

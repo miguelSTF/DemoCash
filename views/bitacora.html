@@ -1,0 +1,127 @@
+<div class="row positionPrincipalDiv" ng-init="bitacoraCtrl.init()">
+    <div layout="row" layout-align="center center" class="apesaFont14">
+      <div style="padding-left:18px" flex="15">
+      <fieldset>
+        <legend style="text-align:center;font-size:14px;">Tipo de fecha a filtrar</legend>
+        <div layout="row" layout-wrap="" flex="">
+             <md-radio-group ng-model="bitacoraCtrl.fechaElegida" class='md-primary'>
+               <md-radio-button ng-repeat="fecha in bitacoraCtrl.fechas" ng-value= "fecha.value">{{fecha.name}}
+               </md-radio-button>
+            </md-radio-group>
+         </div>
+       </fieldset>
+     </div>
+        <div style="padding-top:18px" flex="15">
+          <span>Fecha de inicio</span>
+            <md-input-container class="md-input-has-placeholder">
+              <input mdc-datetime-picker="" date="true" time="true" type="text"
+              max-date="dateTimeEnd" format="{{bitacoraCtrl.formatoFecha}}" ng-model="bitacoraCtrl.maxDate" class="md-input"
+              id="input_0" aria-label="star">
+            </md-input-container>
+        </div>
+        <div style="padding-top:18px" flex="15">
+          <span>Fecha de fin</span>
+            <md-input-container class="">
+              <input mdc-datetime-picker="" date="true" time="true" type="text"
+               min-date="dateTimeStart"="dateTimeEnd" format="{{bitacoraCtrl.formatoFecha}}" ng-model="bitacoraCtrl.maxDate1" class="md-input" id="input_1" aria-label="end">
+            </md-input-container>
+        </div>
+        <div flex="20">
+          <span>Categoría</span>
+            <md-select  class="md-selectStyle" ng-model="bitacoraCtrl.cat" placeholder="Selecciona una categoría">
+                <md-option value="Todos">Todos</md-option>
+                <md-option ng-repeat="cat in bitacoraCtrl.categoria" ng-value="cat">{{cat}}</md-option>
+            </md-select>
+        </div>
+        <div flex="20">
+          <span>Acción</span>
+            <md-select  class="md-selectStyle" ng-model="bitacoraCtrl.acc" placeholder="Selecciona una acción">
+                <md-option value="Todos">Todos</md-option>
+                <md-option ng-repeat="acc in bitacoraCtrl.accion" ng-value="acc">{{acc}}</md-option>
+            </md-select>
+        </div>
+        <div flex="20">
+          <span>Origen</span>
+            <md-select  class="md-selectStyle" ng-model="bitacoraCtrl.ori" placeholder="Selecciona un origen">
+                <md-option value="Todos">Todos</md-option>
+                <md-option ng-repeat="ori in bitacoraCtrl.origen" ng-value="ori">{{ori}}</md-option>
+            </md-select>
+        </div>
+        <div flex="8">
+          <md-button class="md-raised md-primary" ng-click="bitacoraCtrl.obtenerBitacora()">Filtrar</md-button>
+        </div>
+    </div>
+    <center>
+      <table st-sticky-header st-table="bitacoraCtrl.bitacoraCollection" st-safe-src="bitacoraCtrl.bitacora" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14">
+        <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+          <tr style="border: 0;">
+            <th style="text-align:center; width:150px;" st-sort="Desde">Origen</th>
+            <th style="text-align:center; width:150px;" st-sort="Accion">Acción</th>
+            <th style="text-align:center; width:250px;" st-sort="Evento">Evento</th>
+            <th style="text-align:center; width:170px;" st-sort="FechaOperS">Fecha Operación</th>
+            <th style="text-align:center; width:200px;" st-sort="FechaRegistroS">Fecha Registro</th>
+            <th style="text-align:center; width:190px;" st-sort="Quien">Usuario/Sistema</th>
+            <th style="text-align:center; width:130px;" st-sort="Red">Network</th>
+            <th style="text-align:center; width:50px;" st-sort=""></th>
+          </tr>
+          <tr>
+            <td style="text-align:center; width:150px;">
+              <input st-search="Desde" placeholder="Búsqueda origen" class="input-sm form-control" type="text">
+            </td>
+            <td style="text-align:center; width:150px;">
+              <input st-search="Accion" placeholder="Búsqueda acción" class="input-sm form-control" type="text">
+            </td>
+            <td style="text-align:center; width:250px;">
+              <input st-search="Evento" placeholder="Búsqueda evento" class="input-sm form-control" type="text">
+            </td>
+            <td style="text-align:center; width:170px;">
+              <input st-search="FechaOperS" placeholder="Búsqueda fecha" class="input-sm form-control" type="text">
+            </td>
+            <td style="text-align:center; width:200px;">
+              <input st-search="FechaRegistroS" placeholder="Búsqueda fecha" class="input-sm form-control" type="text">
+            </td>
+            <td style="text-align:center; width:190px;">
+              <input st-search="Quien" placeholder="Búsqueda usuario/sistema" class="input-sm form-control" type="text">
+            </td>
+            <td style="text-align:center; width:130px;">
+              <input st-search placeholder="Búsqueda network" class="input-sm form-control" type="text">
+            </td>
+            <td style="text-align:center; width:50px;">
+              <input ng-disabled="true" class="input-sm form-control" type="text">
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="bitacoraInfo in bitacoraCtrl.bitacoraCollection">
+              <td style="width:150px;position:relative;height:25px;" title="'{{bitacoraInfo.Desde}}'">
+               <div class="overflowContainer">{{bitacoraInfo.Desde}}</div>
+              </td>
+              <td style="width:150px;position:relative;" title="'{{bitacoraInfo.Accion}}'">
+               <div class="overflowContainer">{{bitacoraInfo.Accion}}</div>
+              </td>
+              <td style="width:250px;position:relative;" title="'{{bitacoraInfo.Evento}}'">
+               <div class="overflowContainer">{{bitacoraInfo.Evento}}</div>
+              </td>
+              <td style="width:170px;position:relative; text-align:center;" title="'{{bitacoraInfo.FechaOperS}}'">
+               <div class="overflowContainer">{{bitacoraInfo.FechaOperS}}</div>
+              </td>
+              <td style="width:200px;position:relative; text-align:center;" title="'{{bitacoraInfo.FechaRegistroS}}'">
+               <div class="overflowContainer">{{bitacoraInfo.FechaRegistroS}}</div>
+              </td>
+              <td style="width:190px;position:relative;" title="'{{bitacoraInfo.Quien}}'">
+               <div class="overflowContainer">{{bitacoraInfo.Quien}}</div>
+              </td>
+              <td style="width:130px;position:relative;" title="'{{bitacoraInfo.Red}}'">
+               <div class="overflowContainer">{{bitacoraInfo.Red}}</div>
+              </td>
+              <td style="text-align:center; width:50px;">
+                  <span style="margin: 5px" class="glyphicon glyphicon-list-alt" ng-click="bitacoraCtrl.Consultar(bitacoraInfo.ObjetoAfectadosString)"></span>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </center>
+    <br>
+    <cuentasedit class="col-xs-offset-2 col-xs-8" ng-show="bitacoraCtrl.showEditDiv" />
+</div>
+<loading-modal class="modal show" loadshow="bitacoraCtrl.loading" data-backdrop="static" />

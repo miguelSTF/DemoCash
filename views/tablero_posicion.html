@@ -1,0 +1,137 @@
+<div class="row positionPrincipalDiv" ng-init="tableroposCtrl.init()">
+  <div layout="row" style="color:#333; font-size:12px;">
+    <div flex="10"></div>
+       <div flex="8" style="text-align:center">
+         <h5 style="text-align:center;">Fecha</h5>
+         <md-datepicker md-max-date="tableroposCtrl.maxDate" ng-change="tableroposCtrl.reloadData()"  ng-model="tableroposCtrl.fecha"></md-datepicker>
+    </div>
+    <div flex="10"></div>
+    <div flex="15" style="text-align: center">
+        <h5>Divisa</h5>
+        <md-select class="md-selectStyle" ng-model="tableroposCtrl.divisaSelect" placeholder="Selecciona divisa" ng-change="tableroposCtrl.BuscarCuentas()">
+            <md-option ng-value="tipoD.IdDivisa" ng-repeat="tipoD in tableroposCtrl.divisas">{{tipoD.NombreCorto}}</md-option>
+        </md-select>
+    </div>
+       <div flex="5"></div>
+       <div flex="8" class="dropdown" style="padding-right:35px; padding-top:25px;">
+           <md-button title="Filtrar" class="md-raised md-primary" ng-click="tableroposCtrl.reloadData()">Filtrar</md-button>
+       </div>
+       <div flex="5"></div>
+       <div flex="8" class="dropdown" style="padding-right:35px; padding-top:25px;">
+           <md-button ng-disabled="tableroposCtrl.divisaSelect === undefined" title="Ver Traspasos" class="md-raised md-primary" ng-click="tableroposCtrl.ConsultarTraspasos()">Ver Traspasos</md-button>
+       </div>
+       <div flex="8"></div>
+   </div>
+  <center>
+      <table st-sticky-header st-table="tableroposCtrl.datasetCollection" st-safe-src="tableroposCtrl.dataset" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaMonitor">
+        <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+            <tr style="border: 0;">
+              <th></th>
+              <th></th>
+              <th></th>
+              <th style="text-align:center;" colspan="4">Movimientos Programados</th>
+              <th></th>
+              <th style="text-align:center;" colspan="4">Mov. No Identificados</th>
+            </tr>
+            <tr style="border: 0;" >
+                <th style="text-align:center; width:120px;" st-sort="Cuenta">Cuenta</th>
+                <th style="text-align:center; width:40px;"></th>
+                <th style="text-align:center; width:140px;" st-sort="SaldoActual">Saldo Actual</th>
+                <th style="text-align:center; width:140px;" st-sort="MpEntradas">Entradas</th>
+                <th style="text-align:center; width:40px;"></th>
+                <th style="text-align:center; width:140px;" st-sort="MpSalidas">Salidas</th>
+                <th style="text-align:center; width:40px;"></th>
+                <th style="text-align:center; width:140px;" st-sort="SaldoFinal">Saldo Final</th>
+                <th style="text-align:center; width:140px;" st-sort="NiEntradas">Entradas</th>
+                <th style="text-align:center; width:40px;"></th>
+                <th style="text-align:center; width:140px;" st-sort="NiSalidas">Salidas</th>
+                <th style="text-align:center; width:40px;"></th>
+            </tr>
+            <tr>
+                <td colspan="12">
+                    <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="ordenpago in tableroposCtrl.datasetCollection" ng-hide="ordenpago.Cuenta === 'Total'">
+                <td class="tableTabPosLeft" style="width:120px;" title="{{ordenpago.Cuenta}}">
+                  <div class="overflowContainer"> {{ordenpago.Cuenta}} </div>
+                </td>
+                <td  style ="width:40px;"class="cuentaCorrienteHora">
+                  <span ng-hide="ordenpago.Cuenta === 'Total'" title="Traspaso" style="margin: 5px" class="glyphicon glyphicon-transfer" ng-click="tableroposCtrl.GeneraTraspaso(ordenpago.Cuenta)"></span>
+                </td>
+                <td style="text-align:center;width:140px;" title="{{ordenpago.SaldoActual | currency:''}}">
+                  <div class="overflowContainer" format="{{ordenpago.SaldoActual}}" tipo="Numerico"></div>
+                </td>
+                <td style="text-align:center;width:140px;" title="{{ordenpago.MpEntradas | currency:''}}">
+                  <div class="overflowContainer" format="{{ordenpago.MpEntradas}}" tipo="Numerico"></div>
+                </td>
+                <td style ="width:40px;"class="cuentaCorrienteHora">
+                  <span ng-hide="ordenpago.Cuenta === 'Total'" title="Detalle" style="margin: 5px" class="glyphicon glyphicon-list-alt" ng-click="tableroposCtrl.Consultar(ordenpago.DetalleMpEntradas, ordenpago.Cuenta)"></span>
+                </td>
+                <td style="text-align:center;width:140px;" title="{{ordenpago.MpSalidas | currency:''}}">
+                  <div class="overflowContainer" format="{{ordenpago.MpSalidas}}" tipo="Numerico"></div>
+                </td>
+                <td style ="width:40px;"class="cuentaCorrienteHora">
+                  <span ng-hide="ordenpago.Cuenta === 'Total'" title="Detalle" style="margin: 5px" class="glyphicon glyphicon-list-alt" ng-click="tableroposCtrl.Consultar(ordenpago.DetalleMpSalidas, ordenpago.Cuenta)"></span>
+                </td>
+                <td style="text-align:center;width:140px;" title="{{ordenpago.SaldoFinal | currency:''}}">
+                  <div class="overflowContainer" format="{{ordenpago.SaldoFinal}}" tipo="Numerico"></div>
+                </td>
+                <td style="text-align:center;width:140px;" title="{{ordenpago.NiEntradas | currency:''}}" >
+                  <div class="overflowContainer" format="{{ordenpago.NiEntradas}}" tipo="Numerico"></div>
+                </td>
+                <td style ="width:40px;"class="cuentaCorrienteHora">
+                  <span ng-hide="ordenpago.Cuenta === 'Total'" title="Detalle" style="margin: 5px" class="glyphicon glyphicon-list-alt" ng-click="tableroposCtrl.Consultar(ordenpago.DetalleNiEntradas, ordenpago.Cuenta)"></span>
+                </td>
+                <td style="text-align:center;width:140px;" title="{{ordenpago.NiSalidas | currency:''}}">
+                  <div class="overflowContainer" format="{{ordenpago.NiSalidas}}" tipo="Numerico"></div>
+                </td>
+                <td style ="width:40px;"class="cuentaCorrienteHora">
+                  <span ng-hide="ordenpago.Cuenta === 'Total'" title="Detalle" style="margin: 5px" class="glyphicon glyphicon-list-alt" ng-click="tableroposCtrl.Consultar(ordenpago.DetalleNiSalidas, ordenpago.Cuenta)"></span>
+                </td>
+            </tr>
+            <tr ng-show="tableroposCtrl.hasInformation === true">
+              <td class= "tableTabPosRight" style="width:120px;" title="{{tableroposCtrl.totalObj.Cuenta}}">
+                <div class="overflowContainer StrongDiv" style="margin-right:8px;"> {{tableroposCtrl.totalObj.Cuenta}}</div>
+              </td>
+              <td style ="width:40px;"class="cuentaCorrienteHora">
+                <span ng-hide="tableroposCtrl.totalObj.Cuenta === 'Total'" title="Traspaso" style="margin: 5px" class="glyphicon glyphicon-transfer" ng-click="tableroposCtrl.GeneraTraspaso(ordenpago.Cuenta)"></span>
+              </td>
+              <td style="text-align:center;width:140px;" title="{{tableroposCtrl.totalObj.SaldoActual | currency:''}}">
+                <div class="overflowContainer StrongDiv" format="{{tableroposCtrl.totalObj.SaldoActual}}" tipo="Numerico"></div>
+              </td>
+              <td style="text-align:center;width:140px;" title="{{tableroposCtrl.totalObj.MpEntradas | currency:''}}">
+                <div class="overflowContainer StrongDiv" format="{{tableroposCtrl.totalObj.MpEntradas}}" tipo="Numerico"></div>
+              </td>
+              <td style ="width:40px;"class="cuentaCorrienteHora">
+                <span ng-hide="tableroposCtrl.totalObj.Cuenta === 'Total'" title="Detalle" style="margin: 5px" class="glyphicon glyphicon-list-alt" ng-click="tableroposCtrl.Consultar(ordenpago.DetalleMpEntradas, ordenpago.Cuenta)"></span>
+              </td>
+              <td style="text-align:center;width:140px;" title="{{tableroposCtrl.totalObj.MpSalidas | currency:''}}">
+                <div class="overflowContainer StrongDiv" format="{{tableroposCtrl.totalObj.MpSalidas}}" tipo="Numerico"></div>
+              </td>
+              <td style ="width:40px;"class="cuentaCorrienteHora">
+                <span ng-hide="tableroposCtrl.totalObj.Cuenta === 'Total'" title="Detalle" style="margin: 5px" class="glyphicon glyphicon-list-alt" ng-click="tableroposCtrl.Consultar(ordenpago.DetalleMpSalidas, ordenpago.Cuenta)"></span>
+              </td>
+              <td style="text-align:center;width:140px;" title="{{tableroposCtrl.totalObj.SaldoFinal | currency:''}}">
+                <div class="overflowContainer StrongDiv" format="{{tableroposCtrl.totalObj.SaldoFinal}}" tipo="Numerico"></div>
+              </td>
+              <td style="text-align:center;width:140px;" title="{{tableroposCtrl.totalObj.NiEntradas | currency:''}}">
+                <div class="overflowContainer StrongDiv" format="{{tableroposCtrl.totalObj.NiEntradas}}" tipo="Numerico"></div>
+              </td>
+              <td style ="width:40px;"class="cuentaCorrienteHora">
+                <span ng-hide="tableroposCtrl.totalObj.Cuenta === 'Total'" title="Detalle" style="margin: 5px" class="glyphicon glyphicon-list-alt" ng-click="tableroposCtrl.Consultar(ordenpago.DetalleNiEntradas, ordenpago.Cuenta)"></span>
+              </td>
+              <td style="text-align:center;width:140px;" title="{{tableroposCtrl.totalObj.NiSalidas | currency:''}}">
+                <div class="overflowContainer StrongDiv" format="{{tableroposCtrl.totalObj.NiSalidas}}" tipo="Numerico"></div>
+              </td>
+              <td style ="width:40px;"class="cuentaCorrienteHora">
+                <span ng-hide="tableroposCtrl.totalObj.Cuenta === 'Total'" title="Detalle" style="margin: 5px" class="glyphicon glyphicon-list-alt" ng-click="tableroposCtrl.Consultar(ordenpago.DetalleNiSalidas, ordenpago.Cuenta)"></span>
+              </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+</center>
+<loading-modal class="modal show" loadshow="tableroposCtrl.loading" data-backdrop="static" />

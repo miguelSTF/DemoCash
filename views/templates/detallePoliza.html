@@ -1,0 +1,41 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Detalle Póliza</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Close" ng-click="Close()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle" style="width:1000px;">
+            <md-content class="md-padding">
+              <center>
+                  <table st-sticky-header st-table="detallePolizaCollection" st-safe-src="message" class="table-bordered table-striped ng-table-monitor table-hover" id="tablaMonitorAut">
+                      <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+                          <tr style="border: 0;">
+                              <th style="text-align:center; width:50px;">Mov. </th>
+                              <th style="text-align:center; width:300px;">Cuenta Contable </th>
+                              <th style="text-align:center; width:150px;">Importe Cargo </th>
+                              <th style="text-align:center; width:250px;">Importe Abono </th>
+                              <th style="text-align:center; width:60px;">Moneda </th>
+                              <th style="text-align:center; width:60px;">Estatus </th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr ng-repeat="detail in generaPolizaCtrl.detallePoliza">
+                              <td style="text-align:left; width:50px;" title="{{detail.TipoMovimiento}}"><div class="overflowContainer">{{detail.TipoMovimiento}}</div></td>
+                              <td style="text-align:left; width:300px; padding-left:5px;" title="{{detail.CuentaContable}}"><div admin-mask mask="{{generaPolizaCtrl.mascara}}" mask-char="-" ng-Model="detail.CuentaContable">{{detail.CuentaContable}}</div></td>
+                              <td style="text-align:right; width:250px; padding-right:5px;" title="{{detail.Cargo | currency:''}}"><div >{{detail.Cargo | currency:''}}</div></td>
+                              <td style="text-align:right; width:250px; padding-right:5px;" title="{{detail.Abono | currency:''}}"><div >{{detail.Abono | currency:''}}</div></td>
+                              <td style="text-align:center; width:60px;" title="{{detail.Moneda}}"><div>{{detail.Moneda}}</div></td>
+                              <td style="text-align:center; width:60px; " title="{{detail.ErrorCtaContable}}"><div>{{detail.Estatus}}</div></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </center>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>

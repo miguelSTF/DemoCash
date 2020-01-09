@@ -1,0 +1,86 @@
+<div class="row positionPrincipalDiv" ng-init="usuarioCtrl.init()">
+  <div layout="row" style="padding-right:38px;" class="apesaFont14">
+    <div flex></div>
+    <div flex="8">
+      <md-button title="Agregar" permisopantalla permiso="2" idpantalla="7" ng-click="usuarioCtrl.newEdit()" class="md-raised md-primary">Agregar</md-button>
+    </div>
+    <div flex="5" class="dropdown">
+      <md-button class="md-icon-button" ng-disabled="usuarioCtrl.usuarios.length === 0 || usuarioCtrl.usuarios === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+        <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+      </md-button>
+      <ul class="table-export dropdown-menu excel-list" style="left:-80px;" table-selector="'tablaUsuarios'" export-options="{type: 'excel', escape: true, tableName: 'Usuarios', ignoreColumn: [6]}" aria-labelledby="dropdownMenu1">
+          <li onclick="export_table_to_excel('tablaUsuarios','Usuarios','[1]','[6]')">
+              <span>Excel</span>
+          </li>
+          <li te-option te-value="'csv'" te-param="'type'">
+              <span>CSV</span>
+          </li>
+          <li te-option te-value="'txt'" te-param="'type'">
+              <span>TXT</span>
+          </li>
+      </ul>
+    </div>
+    <div style="margin-left:-18px;"></div>
+  </div>
+  <center>
+    <table style="width:1240px;" st-sticky-header st-table="usuarioCtrl.usuariosCollection" st-safe-src="usuarioCtrl.usuarios" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaUsuarios">
+      <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+        <tr style="border: 0;">
+          <th style="text-align:center;width:110px; " st-sort="Usuario.Clave">Clave</th>
+          <th style="text-align:center;width:250px; " st-sort="Usuario.Nombre">Nombre</th>
+          <th style="text-align:center;width:250px; " st-sort="Usuario.Correo">Correo</th>
+          <th style="text-align:center;width:150px; " >Departamentos</th>
+          <th style="text-align:center;width:140px" st-sort="Usuario.CuentaContable">Cuenta Contable</th>
+          <th style="text-align:center;width:100px " st-sort="Usuario.Activo">Activo</th>
+          <th style="text-align:center;width:220px "></th>
+        </tr>
+        <tr>
+          <td colspan="7">
+            <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="userInfo in usuarioCtrl.usuariosCollection">
+          <td style="position:relative;width:150px;  " title="{{userInfo.Usuario.Clave}}">
+            <div class="overflowContainer">{{userInfo.Usuario.Clave }}</div>
+          </td>
+          <td style=" position:relative;width:300px " title="{{userInfo.Usuario.Nombre}}">
+            <div class="overflowContainer">{{userInfo.Usuario.Nombre }}</div>
+          </td>
+          <td style=" position:relative;width:300px" title="{{userInfo.Usuario.Correo}}">
+            <div class="overflowContainer">{{userInfo.Usuario.Correo}}</div>
+          </td>
+          <td style=" position:relative;">
+          <div style="height:25px;overflow:auto;width:150px;">
+            <div class="overflowContainerDropDown " ng-repeat="idDeptos in userInfo.IdDepartamentos" title="'{{(usuarioCtrl.departamentos | filter:{IdDepartamento:idDeptos})[0].Nombre }}'">{{(usuarioCtrl.departamentos | filter:{IdDepartamento:idDeptos})[0].Nombre }}</div>
+          </div>
+          </td>
+          <td style="width:140px;" title="'{{userInfo.Usuario.CuentaContable}}'">
+						<div admin-mask mask="{{usuarioCtrl.mascara}}" mask-char="-" ng-Model="userInfo.Usuario.CuentaContable" class="overflowContainer">{{userInfo.CuentaContable}}</div>
+					</td>
+          <td style="text-align:center;width:100px">
+						<span class="glyphicon"><md-switch ng-model="userInfo.Usuario.Activo" ng-disabled="true" class="md-switch md-primary" aria-label="Switch 2" ng-true-value="1" ng-false-value="0"></md-switch></span>
+						<span ng-hide="true">{{userInfo.Usuario.Activo == 1? "Si" :"No"}}</span>
+					</td>
+          <td style="text-align:center;width:240px; color:#333;">
+            <span class="glyphicon"></span>
+            <span class="glyphicon"></span>
+            <span class="glyphicon glyphicon-eye-open" title="Consultar" ng-click="usuarioCtrl.watch(userInfo)"></span>
+            <span class="glyphicon"></span>
+            <span class="glyphicon"></span>
+            <span class="glyphicon glyphicon-pencil" permisopantalla permiso="3" idpantalla="7" title="Editar" ng-click="usuarioCtrl.edit(userInfo)"></span>
+            <span class="glyphicon"></span>
+            <span class="glyphicon" ng-show="usuarioCtrl.modoLogin === '1'"></span>
+            <span class="glyphicon glyphicon-th-list" ng-show="usuarioCtrl.modoLogin === '1'" title="Control sesión usuario" ng-click="usuarioCtrl.ShowInfoSeg(userInfo)"></span>
+            <span class="glyphicon"></span>
+            <span class="glyphicon"></span>
+            <span class="glyphicon glyphicon-trash" permisopantalla permiso="4" idpantalla="7" title="Borrar" ng-click="usuarioCtrl.del(userInfo)"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </center>
+  <br>
+</div>
+<loading-modal class="modal show" loadshow="usuarioCtrl.loading" data-backdrop="static" />

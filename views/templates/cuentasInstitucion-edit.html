@@ -1,0 +1,151 @@
+<md-dialog style="width:800px;">
+  <form style="padding-top:20px;" name="cuentasInstitucionCtrl.CuentasForm" class="form-horizontal" ng-submit="Save()" role="form" novalidate>
+    <div layout="row" class="panel-body" style="height:50px">
+      <div flex="10"></div>
+      <div flex="30">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[cuentasInstitucionCtrl.CuentasForm.IdBanco.$valid]">
+          <md-input-container class="md-block">
+            <label>Vía de liquidación</label>
+            <md-select ng-required="true" ng-disabled="cuentasInstitucionCtrl.readOnlyEditDiv || !cuentasInstitucionCtrl.permisoGeneral" ng-model="cuentasInstitucionCtrl.cuentasEdit.IdViaLiquidacion" md-on-close="cuentasInstitucionCtrl.searchVia = ''" ng-change="cuentasInstitucionCtrl.getMaxLength()" data-md-container-class="selectdemoSelectHeader">
+              <md-select-header class="demo-select-header">
+                <input ng-keydown="cuentasInstitucionCtrl.handleKeyup($event)" ng-model="cuentasInstitucionCtrl.searchVia" ng-focus="cuentasInstitucionCtrl.focusInput" type="search" placeholder="Buscar vía" class="demo-header-searchbox _md-text">
+              </md-select-header>
+              <md-optgroup label="ViaLiquidacion">
+                <md-option ng-value="via.IdViaLiquidacion" ng-repeat="via in cuentasInstitucionCtrl.viasLiquidacion | filter:cuentasInstitucionCtrl.searchVia">{{via.Descripcion}}</md-option>
+              </md-optgroup>
+            </md-select>
+          </md-input-container>
+        </div>
+      </div>
+      <div flex></div>
+      <div flex="30">
+        <center>
+          <button class="btn btn-primary btn-md" title="Guardar" ng-click="cuentasInstitucionCtrl.checkDataReg()" ng-disabled="cuentasInstitucionCtrl.CuentasForm.$invalid || !cuentasInstitucionCtrl.CuentasForm.$dirty || cuentasInstitucionCtrl.disabledSave" tabindex="7" ng-hide="cuentasInstitucionCtrl.readOnlyEditDiv">
+              <span class="glyphicon glyphicon-saved"></span>
+          </button>
+          <label for="IdCuentaCorriente" class="control-label" ng-hide="!cuentasInstitucionCtrl.readOnlyEditDiv" style="margin:15px;">Id Cta Nostro: {{cuentasInstitucionCtrl.cuentasEdit.IdCuentaCorriente}}</label>
+          <button class="btn btn-primary btn-md" title="Cancelar" tabindex="8" ng-click="cuentasInstitucionCtrl.viewDialog()">
+              <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </center>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px">
+      <div flex="10"></div>
+      <div flex="30">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[cuentasInstitucionCtrl.CuentasForm.IdBanco.$valid]">
+          <md-input-container class="md-block">
+            <label>Banco</label>
+            <md-select ng-required="true" ng-disabled="cuentasInstitucionCtrl.readOnlyEditDiv || !cuentasInstitucionCtrl.permisoGeneral" ng-model="cuentasInstitucionCtrl.cuentasEdit.IdBanco" md-on-close="cuentasInstitucionCtrl.searchBanco = ''" data-md-container-class="selectdemoSelectHeader">
+              <md-select-header class="demo-select-header">
+                <input ng-keydown="cuentasInstitucionCtrl.handleKeyup($event)" ng-model="cuentasInstitucionCtrl.searchBanco" ng-focus="cuentasInstitucionCtrl.focusInput" type="search" placeholder="Buscar banco" class="demo-header-searchbox _md-text">
+              </md-select-header>
+              <md-optgroup label="Banco">
+                <md-option ng-value="banco.IdBanco" ng-repeat="banco in cuentasInstitucionCtrl.bancos | filter:cuentasInstitucionCtrl.searchBanco">{{banco.NombreCorto}}</md-option>
+              </md-optgroup>
+            </md-select>
+          </md-input-container>
+        </div>
+      </div>
+      <div flex="15"></div>
+      <div flex="35">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[cuentasInstitucionCtrl.CuentasForm.IdDivisa.$valid]">
+          <md-input-container class="md-block">
+            <label>Divisa</label>
+            <md-select ng-required="true" ng-disabled="cuentasInstitucionCtrl.readOnlyEditDiv || !cuentasInstitucionCtrl.permisoGeneral" ng-model="cuentasInstitucionCtrl.cuentasEdit.IdDivisa" md-on-close="cuentasInstitucionCtrl.searchDivisa = ''" data-md-container-class="selectdemoSelectHeader">
+              <md-select-header class="demo-select-header">
+                <input ng-keydown="cuentasInstitucionCtrl.handleKeyup($event)" ng-model="cuentasInstitucionCtrl.searchDivisa" ng-focus="cuentasInstitucionCtrl.focusInput" type="search" placeholder="Buscar divisa" class="demo-header-searchbox _md-text">
+              </md-select-header>
+              <md-optgroup label="Divisa">
+                <md-option ng-value="divisa.IdDivisa" ng-repeat="divisa in cuentasInstitucionCtrl.divisas | filter:cuentasInstitucionCtrl.searchDivisa">{{divisa.NombreCorto}}</md-option>
+              </md-optgroup>
+            </md-select>
+          </md-input-container>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px">
+      <div flex="10"></div>
+      <div flex="30">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[cuentasInstitucionCtrl.CuentasForm.Cuenta.$valid]">
+          <label for="Cuenta" class="control-label">Número de Cuenta</label>
+          <input type="text" class="form-control" id="Cuenta" tabindex="1" name="Cuenta" maxlength="{{cuentasInstitucionCtrl.viaLongitudMax}}" placeholder="Cuenta" ng-model="cuentasInstitucionCtrl.cuentasEdit.Cuenta"
+              ng-disabled="cuentasInstitucionCtrl.readOnlyEditDiv || !cuentasInstitucionCtrl.permisoGeneral" autocomplete="off" required capitalize>
+          <span ng-show="cuentasInstitucionCtrl.CuentasForm.Cuenta.$dirty && cuentasInstitucionCtrl.CuentasForm.Cuenta.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="cuentasInstitucionCtrl.CuentasForm.Cuenta.$dirty && cuentasInstitucionCtrl.CuentasForm.Cuenta.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+      <div flex="15"></div>
+      <div flex="35">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[cuentasInstitucionCtrl.CuentasForm.Alias.$valid]">
+          <label for="Alias" class="control-label">Alias</label>
+          <input type="text" class="form-control" id="Alias" tabindex="2" name="Alias" maxlength="50" placeholder="Alias" ng-model="cuentasInstitucionCtrl.cuentasEdit.Alias" ng-disabled="cuentasInstitucionCtrl.readOnlyEditDiv || !cuentasInstitucionCtrl.permisoGeneral" autocomplete="off" required capitalize>
+          <span ng-show="cuentasInstitucionCtrl.CuentasForm.Alias.$dirty && cuentasInstitucionCtrl.CuentasForm.Alias.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="cuentasInstitucionCtrl.CuentasForm.Alias.$dirty && cuentasInstitucionCtrl.CuentasForm.Alias.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px">
+      <div flex="10"></div>
+      <div flex="30">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[cuentasInstitucionCtrl.CuentasForm.LineaCredito.$valid]">
+          <label for="LineaCredito" class="control-label">Línea Crédito</label>
+          <input type="text" class="form-control" id="LineaCredito" tabindex="4" name="LineaCredito" maxlength="60" placeholder="Línea crédito" ng-model="cuentasInstitucionCtrl.cuentasEdit.LineaCredito" ng-disabled="cuentasInstitucionCtrl.readOnlyEditDiv || !cuentasInstitucionCtrl.permisoGeneral" autocomplete="off"
+              ng-currency required>
+          <span ng-show="cuentasInstitucionCtrl.CuentasForm.LineaCredito.$dirty && cuentasInstitucionCtrl.CuentasForm.LineaCredito.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="cuentasInstitucionCtrl.CuentasForm.LineaCredito.$dirty && cuentasInstitucionCtrl.CuentasForm.LineaCredito.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+      <div flex="15"></div>
+      <div flex="35">
+          <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[cuentasInstitucionCtrl.CuentasForm.LimiteAjuste.$valid]">
+              <label for="LimiteAjuste" class="control-label">Monto Máximo Ajuste Conciliación</label>
+              <input name="LimiteAjuste" type="text" class="form-control" id="LimiteAjuste" tabindex="5" maxlength="60" placeholder="Monto Ajuste Conciliación" ng-model="cuentasInstitucionCtrl.cuentasEdit.LimiteAjuste"
+                  ng-disabled="cuentasInstitucionCtrl.readOnlyEditDiv || !cuentasInstitucionCtrl.permisoGeneral" autocomplete="off" ng-currency required />
+              <span ng-show="cuentasInstitucionCtrl.CuentasForm.LimiteAjuste.$dirty && cuentasInstitucionCtrl.CuentasForm.LimiteAjuste.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+              <span ng-show="cuentasInstitucionCtrl.CuentasForm.LimiteAjuste.$dirty && cuentasInstitucionCtrl.CuentasForm.LimiteAjuste.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+            </div>
+      </div>
+    </div>
+    <div layout="row" class="panel-body" style="height:50px; padding-top:35px;">
+      <div flex="10"></div>
+      <div flex="30">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[cuentasInstitucionCtrl.CuentasForm.CuentaClave.$valid]">
+          <label for="CuentaClave" class="control-label">Cuenta Clabe</label>
+          <input type="text" class="form-control" id="CuentaClave" tabindex="6" name="CuentaClave" maxlength="18" minlength="18" placeholder="Cuenta Clabe" ng-model="cuentasInstitucionCtrl.cuentasEdit.CuentaClave" ng-disabled="cuentasInstitucionCtrl.readOnlyEditDiv || !cuentasInstitucionCtrl.permisoGeneral" oninput="javascript: isNaN(this.value) ? this.value = this.value.substring(0, this.value.length - 1) : this.value" autocomplete="off">
+          <span ng-show="cuentasInstitucionCtrl.CuentasForm.CuentaClave.$dirty && cuentasInstitucionCtrl.CuentasForm.CuentaClave.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="cuentasInstitucionCtrl.CuentasForm.CuentaClave.$dirty && cuentasInstitucionCtrl.CuentasForm.CuentaClave.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+      <div flex="15"></div>
+      <div flex="30" style="margin-top:-15px; padding-top:20px;">
+          <label for="Activo" class="control-label" style="margin-right:8px;">Activo</label>
+          <md-switch style="display:inline-block; vertical-align:middle;"class="md-primary" tabindex="7" ng-disabled="cuentasInstitucionCtrl.readOnlyEditDiv || !cuentasInstitucionCtrl.permisoGeneral" ng-model="cuentasInstitucionCtrl.cuentasEdit.Activo" aria-label="Switch 2" ng-true-value="1" ng-false-value="0">
+          </md-switch>
+        </div>
+    </div>
+    <div layout="row" class="panel-body" style="height:50px; padding-left:40px;">
+      <div style="width:95%; padding-top: 27px;">
+          <hr class="stlyeHr" style="padding-left:10px;">
+      </div>
+    </div>
+    <div layout="row" class="panel-body" style="height:50px">
+      <div flex="10"></div>
+      <div flex="30">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[cuentasInstitucionCtrl.CuentasForm.CuentaContable.$valid]">
+            <label for="CuentaContable" class="control-label">Cuenta Contable</label>
+            <input admin-mask mask="{{cuentasInstitucionCtrl.mascara}}" name="CuentaContable" mask-char="-" type="text" class="form-control" id="CuentaContable" tabindex="8" maxlength="60" placeholder="{{cuentasInstitucionCtrl.mascara}}" ng-model="cuentasInstitucionCtrl.cuentasEdit.CuentaContable"
+                ng-disabled="cuentasInstitucionCtrl.readOnlyEditDiv || !cuentasInstitucionCtrl.permisoContable" autocomplete="off" capitalize />
+            <span ng-show="cuentasInstitucionCtrl.CuentasForm.CuentaContable.$dirty && cuentasInstitucionCtrl.CuentasForm.CuentaContable.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+            <span ng-show="cuentasInstitucionCtrl.CuentasForm.CuentaContable.$dirty && cuentasInstitucionCtrl.CuentasForm.CuentaContable.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+          </div>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px"></div>
+    <br>
+  </form>
+</md-dialog>

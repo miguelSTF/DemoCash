@@ -1,0 +1,72 @@
+<div class="row positionPrincipalDiv" ng-init="limiteCtrl.init()">
+  <div layout="row" class="apesaFont14">
+    <div flex></div>
+    <div flex="9">
+      <md-button title="Agregar" permisopantalla permiso="2" idpantalla="14" ng-click="limiteCtrl.newEdit()" class="md-raised md-primary">Agregar</md-button>
+    </div>
+    <div flex="9" class="dropdown">
+      <md-button class="md-icon-button" ng-disabled="limiteCtrl.limiteCatalogo.length === 0 || limiteCtrl.limiteCatalogo === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+        <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+      </md-button>
+      <ul class="table-export dropdown-menu excel-list" table-selector="'tablaLimiteCatalogo'" export-options="{type: 'excel', escape: true, tableName: 'Límites', ignoreColumn: [4]}" aria-labelledby="dropdownMenu1">
+            <li onclick="export_table_to_excel('tablaLimiteCatalogo','Límites','[1]','[4]')">
+                <span>Excel</span>
+            </li>
+            <li te-option te-value="'csv'" te-param="'type'">
+                <span style="cursor:pointer">CSV</span>
+            </li>
+            <li te-option te-value="'txt'" te-param="'type'">
+                <span style="cursor:pointer">TXT</span>
+            </li>
+      </ul>
+    </div>
+    <div flex="15" style="margin-left:5px;"></div>
+  </div>
+  <center>
+    <table style="width:900px;" st-sticky-header st-table="limiteCtrl.limiteCatalogoCollection" st-safe-src="limiteCtrl.limiteCatalogo" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaLimiteCatalogo">
+      <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+        <tr style="border: 0;">
+          <th style="text-align:center;width:150px; " st-sort="Catalogo">Catálogo</th>
+          <th style="text-align:center;width:300px; " st-sort="Elemento">Elemento</th>
+          <th style="text-align:center;width:150px; " st-sort="Descripcion">Tipo Límite</th>
+          <th style="text-align:center;width:150px; " st-sort="LimiteMax">Límite</th>
+          <th style="text-align:center;width:150px "></th>
+        </tr>
+        <tr>
+          <td colspan="6">
+            <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="limitInfo in limiteCtrl.limiteCatalogoCollection">
+          <td style="position:relative;width:150px;" title="{{limitInfo.Catalogo}}">
+            <div class="overflowContainer">{{limitInfo.Catalogo}}</div>
+          </td>
+          <td style=" position:relative;width:300px" title="{{limitInfo.Elemento}}">
+            <div class="overflowContainer">{{limitInfo.Elemento}}</div>
+          </td>
+          <td style=" position:relative;width:150px" title="{{limitInfo.Descripcion}}">
+            <div class="overflowContainer">{{limitInfo.Descripcion}}</div>
+          </td>
+          <td style=" position:relative;width:150px" title="{{limitInfo.LimiteMax}}" >
+            <div class="overflowContainer" format="{{limitInfo.LimiteMax}}" tipo="{{limitInfo.Format}}" ></div>
+          </td>
+          <td style="text-align:center;width:150px;height:25px; color:#333;">
+            <span class="glyphicon"></span>
+            <span class="glyphicon"></span>
+            <span class="glyphicon glyphicon-eye-open" title="Consultar" ng-click="limiteCtrl.watch(limitInfo)"></span>
+            <span class="glyphicon"></span>
+            <span class="glyphicon"></span>
+            <span class="glyphicon glyphicon-pencil" permisopantalla permiso="3" idpantalla="14" title="Editar" ng-click="limiteCtrl.edit(limitInfo)"></span>
+            <span class="glyphicon"></span>
+            <span class="glyphicon"></span>
+            <span class="glyphicon glyphicon-trash" permisopantalla permiso="4" idpantalla="14" title="Borrar" ng-click="limiteCtrl.del(limitInfo)"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </center>
+  <br>
+</div>
+<loading-modal class="modal show" loadshow="limiteCtrl.loading" data-backdrop="static"/>

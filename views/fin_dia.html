@@ -1,0 +1,54 @@
+<div class="row positionPrincipalDiv apesaFont14" ng-init="inicioFinDiaCtrl.init(34)">
+    <div layout="row" style="height: 40px"></div>
+        <form ng-submit="inicioFinDiaCtrl.init()" id="finDia" name="inicioFinDiaCtrl.ConfigForm">
+            <div layout="row" layout-align="center">
+                <div flex="30">
+                    <label style="font-weight: 100;"> Fecha actual:</label>
+                    <label> {{inicioFinDiaCtrl.fechaOper}}</label>
+                </div>
+                <div flex="5"></div>
+                <div flex="40">
+                    <label style="font-weight: 100;"> Estatus del día:</label>
+                    <label> {{inicioFinDiaCtrl.statusDia}}</label>
+                </div>
+            </div>
+            <br>
+            <div style="padding-left: 160px;" layout="row" layout-align="left">
+                <div flex="35">
+                    <md-button ng-disabled="inicioFinDiaCtrl.statusDia === 'En espera de apertura'" title="Validaciones Previas" ng-click="inicioFinDiaCtrl.EjecutarFinDia('validaciones');" class="md-raised md-primary">Validaciones Previas</md-button>
+                </div>
+                <div flex="5"></div>
+                <div flex="40">
+                    <md-button title="Cerrar Día" ng-disabled="inicioFinDiaCtrl.statusDia === 'En espera de apertura'" ng-click="inicioFinDiaCtrl.ConfirmAction('findia')" class="md-raised md-warn">Cerrar Día</md-button>
+                </div>
+            </div>
+            <br>
+            <div layout="row" class="panel-body" style="padding-left:165px;">
+                <center>
+                    <table st-sticky-header style="width:900px;" st-table="inicioFinDiaCtrl.procesosCollection" st-safe-src="inicioFinDiaCtrl.procesos" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablafinDia">
+                        <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+                            <tr style="border: 0;">
+                                <th style="text-align:center; width:350px;">Proceso</th>
+                                <th style="text-align:center; width:350px;">Resultado</th>
+                                <th style="text-align:center; width:200px;">Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="proceso in inicioFinDiaCtrl.procesos">
+                                <td style="text-align:left; width:350px;height:25px;">
+                                    <div class="overflowContainer" title="{{proceso.Proceso}}">{{proceso.Proceso}} </div>
+                                </td>
+                                <td style="text-align:center; width:350px;">
+                                    <span title="{{proceso.Status}}" style="margin: 5px" class="glyphicon glyphicon-ok" ng:class="{'Correcto':'glyphicon glyphicon-ok', 'Incorrecto':'glyphicon glyphicon-remove'}[proceso.Status]" ></span>
+                                </td>
+                                <td style="text-align:center;width:200px;">
+                                    <span title="Detalle Proceso" style="margin: 5px" class="glyphicon glyphicon-list-alt" ng-click="inicioFinDiaCtrl.viewDetail(proceso)"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </center>
+            </div>
+        </form>
+</div>
+<loading-modal class="modal show" loadshow="inicioFinDiaCtrl.loading" data-backdrop="static" />

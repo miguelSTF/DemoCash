@@ -1,0 +1,757 @@
+/**
+ * App section
+ */§
+
+body
+  background-color: #ECF0F1
+  height: auto
+
+hr
+  border: 0
+  box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, .5)
+  height: 12px
+
+.navbar-text
+  color: #777
+  font-size: 10px
+  margin-bottom: 0px
+
+/* FIXIT: from this */
+.breadcrum
+  color: gray
+  float: left
+  padding: 15px
+  padding-left: 15px
+  width: 250px
+
+.searchbox
+  width: 300px
+  float: right
+  padding: 10px
+
+.searchtext
+  border-radius: 10px
+  border: 0
+
+.controllsbox
+  color: grayligt
+  float: right
+  font-size: 20px
+  padding: 10px
+  with: auto
+
+.controllsbox .glyphicon
+  color: gray
+  padding: 5px
+
+/* FIXIT: to this */
+.div-table-scroll
+  margin: auto
+  overflow-y: scroll
+  height: 500px
+
+.divScroll
+  font-size: 14px
+  height: 40px
+  overflow: auto
+  width: auto
+
+.row-height
+  display: table
+  height: 100%
+  table-layout: fixed
+
+.positionPrincipalDiv
+  margin-top:20px
+
+.navbar-brand
+  font-size: 14px
+
+.loadingDiv
+  overflow-y:visible
+  padding-top:250px
+  width: 100%
+
+.rowTableDiv
+  padding-top:10px
+
+.progress-bar
+    width: 100%
+
+.progress span
+  color: white
+  display: block
+  font-size:15px
+  font-weight: bold
+  position: absolute
+  width: 100%
+
+.modal
+  top: 50px
+
+.glyphicon-removeChip
+    font-size: 12px
+    color: gray
+
+.drop
+  background: #fff
+  border: 3px dashed #1a75ff
+  height: 100%
+  margin-bottom: -105px
+  padding: 10px
+
+.drop .info
+  color: #1a75ff
+  text-align: center
+
+.closebtn
+  color: #888
+  cursor: pointer
+  float: right
+  font-size: 20px
+  font-weight: bold
+  margin-top: -9px
+  padding-left: 5px
+  padding-right: 5px
+
+.thumbnail-area-drop-list
+  border: 0px
+  height: 70px
+
+
+.thumbnail-area-drop
+  width:80%
+  height: 350px
+  overflow-y:auto
+  overflow-x:hidden
+  margin: 0px 0px 0px 75px
+
+.row-header
+  display: table
+  min-height: 150px
+
+.row-col-bottom
+  display: table-cell
+  float: none
+  vertical-align: bottom
+
+.btn-drop-area
+  background-color: #CED8F6
+  border-radius: 5px
+  font-size: 10px
+  font-weight: bold
+  height: 21px
+  margin: 3px
+  padding: 0
+  width: 285px
+  display:block
+  white-space:nowrap
+  overflow:hidden
+  text-overflow: ellipsis
+  vertical-align:middle
+  text-align:left
+
+.btn-drag-area
+  background-color: #CED8F6
+  border-radius: 5px
+  font-size: 10px
+  font-weight: bold
+  height: 20px
+  margin: 3px 0px 0px 40px
+  padding: 0
+  width: 85%
+  display:block
+  white-space:nowrap
+  overflow:hidden
+  text-overflow: ellipsis
+  vertical-align:middle
+  text-align:left
+
+.listConceptosAsignar
+  width:300px
+  height:350px
+  margin: 0px 0px 0px 5px
+  overflow-y:auto
+  list-style:none
+  border: 1px solid #ddd
+
+
+/* Please note: All these selectors are only applied to children of elements with the 'selectdemoSelectHeader' class */
+.selectdemoSelectHeader
+    margin-top: 50px
+
+.selectdemoSelectHeader .demo-header-searchbox
+    border: 0
+    height: 100%
+    outline: 0
+    padding: 0
+    width: 100%
+
+.selectdemoSelectHeader .demo-select-header
+    align-items: center
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12)
+    cursor: pointer
+    display: flex
+    height: 48px
+    padding-left: 10.667px
+    position: relative
+    width: auto
+
+.selectdemoSelectHeader md-content._md
+    max-height: 240px
+
+/**
+ * Sidebar section
+ */
+
+.sidebar
+  left: -250px
+  position: absolute
+  top: 0
+  transition: 100ms left
+
+#navigation-toggle
+  background: rgba(3,159,244,.95)
+  color: black
+  left: 250px
+  padding: 15px
+  position: absolute
+  text-decoration: none
+
+.show
+  left: 0
+
+.navigation
+  list-style: none
+  margin: 0
+  padding: 0
+
+.navigation-items a
+  background-color: #444
+  color: white
+  display: block
+  line-height: 2em
+  padding: 5px 30px
+  text-decoration: none
+  width: 250px
+
+.navigation-items a:hover
+  background-color: #222
+
+/**
+ * Sidebar section
+ */
+
+.show-menu-right-left
+  background-color: lightblue
+  float:right
+  height: 100px
+  margin-bottom: 50px
+  position: relative
+  text-align: right
+  transition: all linear .5s
+  width: 200px
+
+.show-menu-right-left.ng-hide
+  background-color: transparent
+  width: 1px
+
+.td-clave
+  width: 150px
+
+.td-width
+  width: 300px
+
+.md-switch
+  height: 10px
+
+.td-height
+  height: 20px
+
+.table-width
+  width: 800px
+
+.table-width-depto
+  width: 950px
+
+.table-width-institucion
+  width: 1050px
+
+.inputDatos
+  text-align: center
+
+.td-MCuentaCorriente
+  width: auto
+  text-align: center
+
+.td-SaldoLibros
+  background-color:yellow
+
+.li-Menu
+  margin-top: -14px
+  height: 48px
+  width: 50px
+
+.li-M
+  padding-top: 15px
+  padding-left: 11px
+  padding-fight: 30px
+  padding-botton: 15px
+
+.cuentaCorrienteHora
+    width: auto
+    text-align: center
+
+.td-null
+    width:5px
+
+.td-Saldo
+  text-align: right
+
+.modalDetalle
+    width: 800px
+    height: auto
+
+.modalDetalleTrasp
+    width: 900px
+    height: auto
+
+.headerMonitor
+    background-color: #E0ECFF
+
+.saldoInicialFinal
+  text-align:right;
+  height:20px;
+
+.cuentaCorrienteHeader
+  height:65px;
+
+.ng-table-monitor
+  font-size: 14px;
+  width: 100%
+
+.conciliacion-manual
+  background: rgba(255, 255, 255, 255);
+  position: fixed;
+
+.md-checkbox.md-checkbox {
+     margin-bottom:0px;
+    .md-icon {
+      transform: scale(0.9);
+    }
+}
+.md-scroll-mask
+  z-index:-1
+
+.div-two-table-scroll
+  margin: auto
+  overflow-y: scroll
+  height: 300px
+
+.div-two-table-scroll-expand
+  overflow: auto
+  max-height: 500px
+
+.div-two-table-scroll-bottom
+  overflow: auto
+  max-height: 190px
+
+.div-table-scroll-expand-bides
+  overflow: auto
+  max-height: 475px
+
+.md-toolbar
+  color: white;
+  height: 10px;
+
+.monitorTesoMXN
+  padding-top:25px;
+
+.monitorTeso
+  text-align:right;
+  padding-top:25px;
+  padding-left: 2cm;
+
+.md-tab
+{
+  text-transform: capitalize;
+}
+
+md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
+  background: rgb(255,87,34);
+}
+
+md-tabs.md-default-theme .md-tab.md-active, md-tabs .md-tab.md-active, md-tabs.md-default-theme .md-tab.md-active md-icon, md-tabs .md-tab.md-active md-icon, md-tabs.md-default-theme .md-tab.md-focused, md-tabs .md-tab.md-focused, md-tabs.md-default-theme .md-tab.md-focused md-icon, md-tabs .md-tab.md-focused md-icon {
+  color: #22224b;
+}
+
+.st-sort-ascent:after {
+    content: '\25B2';
+}
+
+.st-sort-descent:after {
+    content: '\25BC';
+}
+
+.seguridadLocalInputs{
+  display:inline-block
+  height: 25px 
+  width:150px
+  padding: 0px 1px;
+}
+
+.md-switch.md-switch {
+    margin: 4px;
+    transform: scale(0.8);
+}
+
+.md-option.md-option {
+    height: 25px;
+}
+
+/*
+* ToolBar
+*/
+md-toolbar
+  background-color: #22224B !important
+  min-height: 35px !important;
+.md-toolbar-tools
+  height: 35px
+
+
+/*
+* SideNav
+*/
+md-divider
+  border-top: 0
+  border-left: 1px solid
+  border-left-color: white
+
+md-sidenav
+  background-color: #222222 !important
+
+.glyphicon-menu-hamburger
+    font-size: 25px
+.glyphicon-user
+    font-size: 25px
+.glyphicon-inbox
+    font-size: 25px
+.glyphicon-cog
+    font-size: 25px
+
+div ul
+  width: 100%
+  padding: 0px
+
+div ul li
+  width: 100%
+
+div ul li .md-button
+  width: 100%
+  height: 50px
+  padding: 0
+  margin: 0
+  border-radius: 0px
+  background-color: #222222 !important
+
+div ul li .md-button a
+  color: #E1E3F3
+  text-decoration: none
+  float:left
+
+div ul li .md-button a span
+  text-align:left
+
+.menu-align
+  text-align:left
+  margin-left: 10px
+
+.submenu-align
+  margin-left: 50px
+
+div ul li .md-button div span.rotate
+  transform: rotate(180deg)
+
+div ul li .md-button div span.rotate-add, md-sidenav ul li .md-button a span.rotate-remove
+  transition: all linear 1.5s
+
+.animate-show.show-add, .animate-show.show-remove
+  animation:0.5s lightSpeedOut ease
+
+.animate-show.show
+  height: 35px
+  visibility: visible
+
+.animate-show
+  height: 0px
+  visibility: hidden
+
+.li-border-bottom
+  border-bottom: 1px solid #B4B6B8
+
+table thead tr
+  cursor: pointer
+
+.overflow-dots
+  width: 0
+  min-width: 100%
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+
+.overflowContainer
+  display:inline-block
+  color:#333
+  width:inherit
+  height:inherit
+  white-space:nowrap
+  overflow:hidden
+  text-overflow: ellipsis
+  font-size:14px
+  vertical-align:middle
+  padding-left:4px
+
+.overflowContainerDropDown
+  color:#333
+  white-space:nowrap
+  overflow:hidden
+  text-overflow: ellipsis
+  font-size:14px
+  padding-top:3px
+  padding-left:8px
+
+.md-selectStyle
+  color:#333
+  font-size:12px
+
+.apesaFont14
+  color:#333
+  font-size:14px
+
+.exportButton
+  margin-left:150px
+  margin-right:2px
+  background-color:#f0ad4e
+  color:#fff
+  font-size:12px
+  display:inline-block
+  font-weight:400
+  line-height:1.5
+  text-align: center
+  white-space:nowrap
+  vertical-align:middle
+  cursor:pointer
+  border: 1px solid transparent
+  padding:.5rem 1rem
+  font-size:1rem
+  border-radius:.25rem
+
+#quickAccessList
+  display:inline-block
+  width:auto
+  height:40px
+  max-width:1100px
+  text-align:center
+  overflow:hidden
+  padding:3px 0px 0px 0px
+  list-style-type:none
+
+ul#quickAccessList li
+  display:inline-block
+  width:auto
+  height:auto
+
+.quickAccessButton
+  display:inline-block
+  width:110px !important
+  height: 35px  !important
+  padding:3px !important
+  border:1px solid white
+  border-radius: 8px !important
+  line-height: 10px !important
+
+.quickAccessButton span
+  font-size:11px
+  color:white
+  line-height:0%
+  overflow:hidden
+  text-overflow:ellipsis
+  white-space: pre-line !important
+  vertical-align:-webkit-baseline-middle
+  text-transform: none
+
+
+ul#quickAccessList li .md-button.quickAccessButton:hover
+  color:#d5e1df
+
+ul#quickAccessList li .md-button.quickAccessButton:focus
+  color:#d5e1df
+
+.quickAccessArrows
+  display:inline-block
+  min-width:15px
+  margin:-50px 0px 0px 0px
+
+.numberButtonArrows
+  display:inline-block 
+  min-width:0px 
+  min-height:0px
+  line-height:1px 
+  font-size:10px
+  margin:0px
+  padding:0px
+  vertical-align:-4px
+
+
+.dtp div.dtp-date
+  background:#22224B
+
+.dtp > .dtp-content > .dtp-date-view > header.dtp-header
+  background:#22224B
+
+.dtp table.dtp-picker-days tr > td > a.selected
+  background:#22224B
+
+.dtp .dtp-actual-meridien a.selected
+  background:#22224B
+
+.dtp .dtp-picker-time > a.dtp-select-hour.selected
+  background:#22224B
+
+.dtp .dtp-hand.on
+  background:#22224B
+
+.dtp div.dtp-actual-year
+  color:white
+
+.td-tree-level-zero
+  padding-left: 15px
+
+.td-tree-level-one
+  padding-left: 30px
+
+.td-tree-level-two
+  padding-left: 45px
+
+.td-tree-level-three
+  padding-left: 60px
+
+.show-tree.expand
+  display:table-row
+
+.show-tree
+  display: none
+
+.font-tree-title
+  font-weight: bold
+  font-size: 15px
+
+.image-tree-rotate
+  transform: rotate(90deg)
+
+.table-th-blue
+  border: 0
+  color: white
+  background: #22224b
+
+.excel-list span
+  color: #333;
+  font-size:13px
+  padding: 3px 20px
+  font-weight: 400
+  line-height: 1.42857143
+  cursor: pointer
+
+.excel-list li
+  height:27px
+  cursor: pointer
+
+.excel-list li:hover
+  background-color:  #e0e0eb
+
+#toast-container {
+  position: fixed
+  top: 600px
+  height: 60px
+  left: 0
+  width: 100%
+  z-index: 10000
+}
+
+md-icon{
+  fill: gray
+}
+
+md-toolbar:not(.md-menu-toolbar).md-default-theme.md-hue-2 md-icon, md-toolbar:not(.md-menu-toolbar).md-hue-2 md-icon {
+  fill: gray
+}
+
+.tableTabPosLeft{
+  text-align:left
+}
+
+.tableTabPosRight{
+    text-align:right
+}
+
+.StrongDiv{
+  font-weight: bold
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.buttonsBitacoras{
+  border-radius: 8px
+  text-transform: none
+
+}
+
+#coreBitacora{
+  background-color: royalblue;
+}
+
+hr.stlyeHr {
+  height: 30px
+  border-style: solid
+  border-color: #8c8b8b
+  border-width: 1px 0 0 0
+  border-radius: 20px
+}
+hr.stlyeHr:before { /* Not really supposed to work, but does */
+  display: block
+  content: ""
+  height: 30px;
+  margin-top: -31px
+  border-style: solid
+  border-color: #8c8b8b
+  border-width: 0 0 1px 0
+  border-radius: 20px
+}
+
+.hiddenToolBar {
+    display: none;
+}
+
+.md-virtual-repeat-container .md-virtual-repeat-scroller {
+    bottom: 0px;
+    box-sizing: border-box;
+    left: 0px;
+    margin: 0;
+    overflow-x: hidden;
+    padding: 0;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 340px;
+    -webkit-overflow-scrolling: touch;
+
+}

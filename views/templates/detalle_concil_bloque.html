@@ -1,0 +1,74 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{envioNoIdentCtrl.message}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Close" ng-click="envioNoIdentCtrl.CloseDeleteConcilGroup()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle" style="width:950px;">
+            <md-content class="md-padding">
+                <div layout="row" layout-align="center">
+                    <div flex>
+                        <div>
+                            <table style="width:100%;" st-table="listConcil.GrupoA" st-safe-src="listConcil.GrupoA" class="table-bordered table-striped apesaFont14" id="tablaConciliacionManual1">
+                                <thead style="border: 0;color: white;background: #22224b;" fix-head>
+                                    <tr>
+                                    <th style="text-align:center;" st-sort="Origen">Origen</th>
+                                    <th style="text-align:center;" st-sort="Descripcion">Instrucción</th>
+                                    <th style="text-align:center;" st-sort="Importe">Importe</th>
+                                    <th style="text-align:center;" st-sort="Sentido">Mov.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="registro in envioNoIdentCtrl.listConcil.GrupoA" ng-style="{'background-color': registro.Check ? '#345BE9' : '','color': registro.Check ? 'white' : ''}">
+                                    <td style="text-align: center;width:40px;" title="'{{registro.Origen}}'"><div class="overflow-dots">{{registro.Origen}}</div></td>
+                                    <td style="text-align: left;width:200px;" title="'{{registro.Descripcion}}'"><div class="overflow-dots">{{registro.Descripcion}}</div></td>
+                                    <td style="text-align: right;width:70px;" title="'{{registro.Importe}}'">{{registro.Importe | currency:''}}</td>
+                                    <td style="text-align: center;width:20px;" title="'{{registro.Sentido}}'" >{{registro.Sentido.substring(0,1)}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div flex style="margin-left:15px;">
+                        <div>
+                            <table style="width: 100%;" st-table="listConcil.GrupoB" st-safe-src="listConcil.GrupoB" class="table-bordered table-striped apesaFont14" id="tablaConciliacionManual2">
+                                <thead style="border: 0;color: white;background: #22224b;" fix-head>
+                                    <tr>
+                                    <th style="text-align:center;" st-sort="Origen">Origen</th>
+                                    <th style="text-align:center;" st-sort="Descripcion">Instrucción</th>
+                                    <th style="text-align:center;" st-sort="Importe">Importe</th>
+                                    <th style="text-align:center;" st-sort="Sentido">Mov.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="registro in envioNoIdentCtrl.listConcil.GrupoB" ng-style="{'background-color': registro.Check ? '#345BE9' : '','color': registro.Check ? 'white' : ''}">
+                                    <td style="text-align: center;width:40px;" title="'{{registro.Origen}}'"><div class="overflow-dots">{{registro.Origen}}</div></td>
+                                    <td style="text-align: left;width:200px;" title="'{{registro.Descripcion}}'" ><div class="overflow-dots">{{registro.Descripcion}}</div></td>
+                                    <td style="text-align: right;width:70px;" title="'{{registro.Importe}}'">{{registro.Importe | currency:''}}</td>
+                                    <td style="text-align: center;width:20px;" title="'{{registro.Sentido}}'" >{{registro.Sentido.substring(0,1)}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div layout="row" layout-align="center" ng-show="envioNoIdentCtrl.showButtons">
+                    <div flex="80"></div>
+                    <div flex="10">
+                        <md-button class="md-raised md-primary" ng-click="envioNoIdentCtrl.CloseDeleteConcilGroup()">Cancelar</md-button>
+                    </div>
+                    <div flex="5"></div>
+                    <div flex="10">
+                        <md-button class="md-raised md-warn" ng-click="envioNoIdentCtrl.DeleteConcil()">Aceptar</md-button>
+                    </div>
+                </div>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>

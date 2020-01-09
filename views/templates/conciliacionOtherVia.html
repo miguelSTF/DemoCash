@@ -1,0 +1,45 @@
+<md-dialog>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Conciliación otra Via de Liquidación</h2>
+        <span flex></span>
+        <h4>Monto requerido: {{conciliacionManCtrl.maxAjusteConcil | number:2}}</h4>
+        <md-button class="md-icon-button" aria-label="Close" ng-click="Close()">
+          <span class="glyphicon glyphicon-remove"></span>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="width: 600px;height: auto">
+      <md-content class="md-padding">
+        <center>
+            <table st-sticky-header st-table="messageCollection" st-safe-src="message" class="table-bordered table-striped ng-table-monitor table-hover" id="tablaMonitorAut">
+                <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+                    <tr style="border: 0;">
+                        <th style="text-align:center;">Via de Liquidación </th>
+                        <th style="text-align:center;">Importe </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in conciliacionManCtrl.viasToConciliation">
+                        <td>{{item.Nombre}}</td>
+                        <td>
+                          <input ng-change="conciliacionManCtrl.calcularSuma()" type="text" class="form-control" placeholder="0.00" ng-model="item.Importe" oninput="javascript: isNaN(this.value) ? this.value = this.value.substring(0, this.value.length - 1) : this.value" ng-currency autocomplete="off">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </center>
+        <div layout="row">
+          <div flex="80">
+          </div>
+          <div flex="10" style="padding-left: 17px;">
+            <md-button class="md-raised md-primary" ng-disabled="conciliacionManCtrl.sumaImportes !== conciliacionManCtrl.maxAjusteConcil" ng-click="conciliacionManCtrl.CheckFunction('Conciliar',false);">
+              Conciliar
+            </md-button>
+          </div>
+        </div>
+      </md-content>
+    </md-dialog-content>
+  </form>
+</md-dialog>

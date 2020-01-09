@@ -1,0 +1,41 @@
+<div class="row positionPrincipalDiv" ng-init="CapturaMasivaCtrl.init()">
+    <br>
+    <div layout="row" class="apesaFont14" layout-align="center">
+        <div flex="30">
+            <md-input-container class="md-block" ng-class="{ 'has-error' : CapturaMasivaCtrl.UsuarioForm.$invalid && !CapturaMasivaCtrl.UsuarioForm.$pristine }">
+                <label>Departamento</label>
+                <md-select ng-change="CapturaMasivaCtrl.DepartamentoChange(false)" ng-model="CapturaMasivaCtrl.departamento" multiple="false" md-on-close="CapturaMasivaCtrl.searchDepa = ''" data-md-container-class="selectdemoSelectHeader" required>
+                <md-select-header class="demo-select-header">
+                    <input ng-keydown="CapturaMasivaCtrl.handleKeyup($event)" ng-model="CapturaMasivaCtrl.searchDepa" ng-focus="CapturaMasivaCtrl.focusInput" type="search" placeholder="Buscar departamento" class="demo-header-searchbox _md-text">
+                </md-select-header>
+                <md-optgroup label="Departamento">
+                    <md-option ng-value="departamento" ng-repeat="departamento in CapturaMasivaCtrl.departamentos | catalogRelation: CapturaMasivaCtrl.departamentoPorUsuario:'Departamento' | filter:CapturaMasivaCtrl.searchDepa">{{departamento.Nombre}}</md-option>
+                </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div flex="5"></div>
+        <div flex="35">
+            <md-input-container class="md-block" ng-class="{ 'has-error' : CapturaMasivaCtrl.UsuarioForm.$invalid && !CapturaMasivaCtrl.UsuarioForm.$pristine }">
+                <label>Concepto</label>
+                <md-select ng-change="CapturaMasivaCtrl.ConceptoChange()" ng-model="CapturaMasivaCtrl.concepto" multiple="false" md-on-close="CapturaMasivaCtrl.searchCepto = ''" data-md-container-class="selectdemoSelectHeader" required>
+                <md-select-header class="demo-select-header">
+                    <input ng-keydown="CapturaMasivaCtrl.handleKeyup($event)" ng-model="CapturaMasivaCtrl.searchCepto" ng-focus="CapturaMasivaCtrl.focusInput" type="search" placeholder="Buscar concepto" class="demo-header-searchbox _md-text">
+                </md-select-header>
+                <md-optgroup label="Concepto">
+                    <md-option ng-value="concepto" ng-repeat="concepto in CapturaMasivaCtrl.conceptos | catalogRelation: CapturaMasivaCtrl.conceptoPorDepartamento:'Concepto' | catalogRelation: CapturaMasivaCtrl.conceptoPorUsuario:'Concepto' | filter:{IdTipoMensaje:5} | filter:{PermiteCargaMasiva:1} | filter:CapturaMasivaCtrl.searchCepto">{{concepto.Nombre}}</md-option>
+                </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div flex="5"></div>
+        <div flex="20" style="padding-top:18px" id="dvImportSegments" >
+            <label for="file-upload" class="custom-file-upload">
+                <i class="glyphicon glyphicon-import"></i> Seleccione Archivo
+            </label>
+            <input ng-disabled="CapturaMasivaCtrl.concepto === undefined" id="file-upload" type="file" ng-model="xlsFile" onchange="angular.element(this).scope().ExcelExport(event)"/>
+        </div>
+    </div>
+    <br>
+</div>
+<loading-modal class="modal show" loadshow="CapturaMasivaCtrl.loading" data-backdrop="static" />

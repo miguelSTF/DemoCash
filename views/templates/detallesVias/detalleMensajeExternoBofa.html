@@ -1,0 +1,155 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Detalle de Registro</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="Close()" aria-label="Cerrar">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle">
+            <md-content class="md-padding">
+                  <div layout="row"  style="min-height:25px">
+                      <div flex="25">
+                                <strong>Account Number</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                          <p>
+                              {{registro.AccountNumber}}
+                          </p>
+                      </div>
+                      <div flex="20"></div>
+                      <div flex="25" style="text-align:left;">
+                              <strong>Account Name</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                              <p>{{registro.AccountName}}</p>
+                      </div>
+                  </div>
+                     <div layout="row"  style="min-height:25px">
+                      <div flex="25">
+                                <strong>Currency</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                           <p>{{registro.Currency}}</p>
+                      </div>
+                      <div flex="20"></div>
+                      <div flex="25">
+                              <strong>Amount</strong>
+                      </div>
+                      <div flex="25" style="text-align:right;">
+                              <p>
+                                  {{registro.Amount | number:2}}
+                              </p>
+                      </div>
+                  </div>
+                    <div layout="row"  style="min-height:25px">
+                            <div flex="25">
+                                    <strong>Row Type</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.RowType}}</p>
+                        </div>
+
+                      <div flex="20"></div>
+                      <div flex="25">
+                              <strong>Data Type</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                              <p>
+                                  {{registro.DataType}}
+                              </p>
+                      </div>
+                  </div>
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>As of Date</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.AsOfDate}}</p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25">
+                                <strong>Value Date</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>
+                                    {{registro.ValueDate}}
+                                </p>
+                        </div>
+                    </div>
+                         <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>BankIdType</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.BankIdType }}</p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25">
+                                <strong>Bank Id</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>
+                                    {{registro.BankId}}
+                                </p>
+                        </div>
+                    </div>
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>BAI Code</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.BaiCode }}</p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25">
+                                <strong>Customer Reference</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>
+                                    {{registro.CustomerReference}}
+                                </p>
+                        </div>
+                    </div>
+                     <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Bai Code Description</strong>
+                        </div>
+                        <div flex style="text-align:left;">
+                            <p>{{registro.BaiCodeDescription}}</p>
+                        </div>
+                    </div>
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                <strong>Bank Id Description </strong>
+                        </div>
+                        <div flex  style="text-align:left;">
+                                <p>
+                                    {{registro.BankIdDescription}}
+                                </p>
+                        </div>
+                    </div>
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Bank Reference</strong>
+                        </div>
+                        <div flex  style="text-align:left;">
+                            <p>{{registro.BankReference}}</p>
+                        </div>
+                    </div>
+                               <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Text</strong>
+                        </div>
+                        <div flex  style="text-align:left;">
+                            <p>{{registro.Text}}</p>
+                        </div>
+                    </div>
+                    </div>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>

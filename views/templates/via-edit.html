@@ -1,0 +1,55 @@
+<md-dialog style="width:700px;">
+  <form style="padding-top:20px;" name="viaCtrl.ViaForm" class="form-horizontal"  role="form" novalidate>
+    <div class="row-fluid">
+      <div class="col-xs-offset-1 col-xs-5">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[viaCtrl.ViaForm.Clave.$valid]">
+          <label for="Clave" class="control-label">Clave</label>
+          <input type="text" class="form-control" id="Clave" name="Clave" maxlength="50" placeholder="Clave Liquidacion" ng-change="viaCtrl.validaClave()" ng-model="viaCtrl.viaEdit.Clave" ng-disabled="true" autocomplete="off" tabindex="1" capitalize>
+        </div>
+      </div>
+      <div class="col-xs-offset-3 col-xs-3">
+        <button class="btn btn-primary btn-md" title="Guardar" ng-click="viaCtrl.saveEdit()" ng-disabled="viaCtrl.ViaForm.$invalid || !viaCtrl.ViaForm.$dirty || viaCtrl.disabledSave" tabindex="5" ng-hide="viaCtrl.readOnlyEditDiv">
+          <span class="glyphicon glyphicon-saved"></span>
+        </button>
+        <button class="btn btn-primary btn-md" title="Cancelar" tabindex="6" ng-click="viaCtrl.viewDialog()">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="col-xs-offset-1 col-xs-8">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[viaCtrl.ViaForm.Descripcion.$valid]">
+          <label for="Descripcion" class="control-label">Descripción</label>
+          <input type="text" class="form-control" id="Descripcion" name="Descripcion" maxlength="50" placeholder="Descripción" ng-model="viaCtrl.viaEdit.Descripcion" ng-disabled="true" tabindex="2" autocomplete="off" capitalize>
+        </div>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="col-xs-offset-1 col-xs-8">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[viaCtrl.ViaForm.RutaEdoCta.$valid]">
+          <label for="RutaEdoCta" class="control-label">Ruta EdoCta</label>
+          <input type="text" class="form-control" id="RutaEdoCta" name="RutaEdoCta" maxlength="300" placeholder="Ruta EdoCta" ng-model="viaCtrl.viaEdit.RutaEdoCta" ng-disabled="viaCtrl.readOnlyEditDiv" tabindex="2" autocomplete="off">
+          <span ng-show="viaCtrl.ViaForm.RutaEdoCta.$dirty && viaCtrl.ViaForm.RutaEdoCta.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="viaCtrl.ViaForm.RutaEdoCta.$dirty && viaCtrl.ViaForm.RutaEdoCta.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="col-xs-offset-1 col-xs-8">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[viaCtrl.ViaForm.RutaEdoCta.$valid]">
+          <label for="RutaEmisionPagos" class="control-label">Ruta Emisión Pagos</label>
+          <input type="text" class="form-control" id="RutaEmisionPagos" name="RutaEmisionPagos" maxlength="300" placeholder="Ruta Emisión Pagos" ng-model="viaCtrl.viaEdit.RutaEmisionPagos" ng-disabled="viaCtrl.readOnlyEditDiv" tabindex="3" autocomplete="off">
+          <span ng-show="viaCtrl.ViaForm.RutaEmisionPagos.$dirty && viaCtrl.ViaForm.RutaEmisionPagos.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="viaCtrl.ViaForm.RutaEmisionPagos.$dirty && viaCtrl.ViaForm.RutaEmisionPagos.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="col-xs-offset-1 col-xs-8">
+        <label for="Activo" class="control-label">Activo</label>
+        <md-switch class="md-primary" ng-disabled="true" tabindex="3" ng-model="viaCtrl.viaEdit.Activo" aria-label="Switch 2" ng-true-value="1" ng-false-value="0">
+			  </md-switch>
+      </div>
+    </div>
+  </form>
+</md-dialog>

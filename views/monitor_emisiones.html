@@ -1,0 +1,95 @@
+<div class="row positionPrincipalDiv" ng-init="monitorEmiCtrl.init()">
+  <div layout="row" style="color:#333; font-size:12px;">
+    <div flex="15" style="text-align: center">
+        <h5>Divisa</h5>
+        <md-select class="md-selectStyle" ng-model="monitorEmiCtrl.divisa" placeholder="Selecciona divisa" ng-change="monitorEmiCtrl.BuscarCuentas()" style="margin:0px;">
+            <md-option ng-value="tipoD.IdDivisa" ng-repeat="tipoD in monitorEmiCtrl.divisas">{{tipoD.NombreCorto}}</md-option>
+        </md-select>
+    </div>
+    <div flex="10"></div>
+    <div flex="15" style="text-align: center">
+        <h5>Cuentas</h5>
+        <md-select class="md-selectStyle" ng-model="monitorEmiCtrl.cuentaSelect" placeholder="Selecciona cuenta" ng-change="monitorEmiCtrl.reloadData()" style="margin:0px;">
+            <md-option ng-value="cuenta.IdCuentaCorriente"  ng-repeat="cuenta in monitorEmiCtrl.cuentas">{{cuenta.Alias}} {{cuenta.Cuenta}}</md-option>
+        </md-select>
+    </div>
+    <div flex="10"></div>
+       <div flex="8" style="text-align:center">
+         <h5 style="text-align:center;">Fecha</h5>
+         <md-datepicker md-min-date="monitorEmiCtrl.maxDate" ng-change="monitorEmiCtrl.reloadData()"  ng-model="monitorEmiCtrl.fecha"></md-datepicker>
+       </div>
+       <div flex="40" class="dropdown" style="text-align:right;">
+       </br>
+            <md-button class="md-icon-button" ng-click="monitorEmiCtrl.loadGeneralData()" style="margin:0px; padding:0px; top:4px;">
+                    <md-tooltip md-direction="top">Búsqueda General</md-tooltip>
+                    <span class="glyphicon glyphicon-th-list" style="font-size: 30px;"></span>
+            </md-button>
+           <md-button title="Filtrar" class="md-raised md-primary" ng-click="monitorEmiCtrl.reloadData()">Filtrar</md-button>
+           <md-button ng-disabled="monitorEmiCtrl.dataset.length === 0" title="Emitir" class="md-raised md-warn dropdown-toggle" ng-click="monitorEmiCtrl.Send()">Emitir</md-button>
+            <md-button class="md-icon-button" ng-disabled="monitorEmiCtrl.dataset.length === 0 || monitorEmiCtrl.dataset === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+                <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+            </md-button>
+			<ul style="min-width:100px; width:120px; top:45px; margin-left:460px; top:61px;" class="table-export dropdown-menu excel-list" table-selector="'tablaMonitor'" export-options="{type: 'excel', escape: true, ignoreColumn: [0,9,10],tableName: 'MonitorEmisiones' }" aria-labelledby="dropdownMenu1">
+					<li onclick="export_table_to_excel('tablaMonitor','dataset','[1]','[0,9,10]')">
+							<span>Excel</span>
+					</li>
+					<li te-option te-value="'csv'" te-param="'type'">
+							<span>CSV</span>
+					</li>
+					<li te-option te-value="'txt'" te-param="'type'">
+							<span>TXT</span>
+					</li>
+			</ul>
+       </div>
+       <div flex="8" style="margin-left:-5px;"></div>
+   </div>
+  <center>
+      <table st-sticky-header st-table="monitorEmiCtrl.datasetCollection" st-safe-src="monitorEmiCtrl.dataset" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaMonitor">
+        <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+            <tr style="border: 0;" >
+                <th style="text-align:center; width:40px;" st-sort="sended"></th>
+                <th style="text-align:center; width:120px;" st-sort="IdSolicitud">Folio Cash</th>
+                <th style="text-align:center; width:130px;" st-sort="NombreDepartamento">Departamento</th>
+                <th style="text-align:center; width:180px;" st-sort="NombreConceptoOriginal">Concepto</th>
+                <th style="text-align:center; width:180px;" st-sort="IdSistemaExterno">Id Externo</th>
+                <th style="text-align:center; width:100px;" st-sort="Referencia">Referencia</th>
+                <th style="text-align:center; width:180px;" st-sort="Instruccion">Instrucción</th>
+                <th style="text-align:center; width:150px;" st-sort="Importe">Importe</th>
+                <th style="text-align:center; width:200px;" st-sort="FechaValor">Fecha</th>
+                <th style="text-align:center; width:40px;"></th>
+                <th style="text-align:center; width:40px;"></th>
+            </tr>
+            <tr>
+                <td colspan="12">
+                    <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="ordenpago in monitorEmiCtrl.datasetCollection"
+                ng-style="{'background-color': monitorEmiCtrl.retrasoStyle(ordenpago.IdMotivosEmision)}">
+              <td style="width:40px;text-align:center;">
+                  <input type="checkbox" value="{{ordenpago.idSolicitud}}" ng-change="monitorEmiCtrl.ChangeSelection(ordenpago)" ng-model="ordenpago.sended" ng-disabled="{{ordenpago.IdMotivosEmision === 15}}" />
+              </td>
+                <td style="width:120px;text-align:center;" title="{{ordenpago.IdSolicitud}}">
+                    <div class="overflowContainer"> {{ordenpago.IdSolicitud}} </div>
+                </td>
+                <td style="text-align:left;width:130px;padding-left:10px;" title="{{ordenpago.NombreDepartamento}}">
+                    <div class="overflowContainer"> {{ordenpago.NombreDepartamento}} </div>
+                </td>
+                <td style="text-align:left;width:180px;padding-left:5px;" title="{{ordenpago.NombreConceptoOriginal  }}">
+                    <div class="overflowContainer">{{ordenpago.NombreConceptoOriginal}} </div>
+                </td>
+                <td style="text-align:center;width:180px;padding-left:10px;" title="{{ordenpago.IdSistemaExterno}}"> <div class="overflowContainer">{{ordenpago.IdSistemaExterno}} </div></td>
+                <td style="text-align:center;width:100px;padding-left:10px;" title="{{ordenpago.Referencia}}"> <div class="overflowContainer">{{ordenpago.Referencia}} </div></td>
+                <td style="text-align:center;width:180px;padding-left:5px;" title="{{ordenpago.Instruccion}}"><div class="overflowContainer"> {{ordenpago.Instruccion}} </div></td>
+                <td style="text-align:center;width:150px;" title="{{ordenpago.Importe}}"><div class="overflowContainer" format="{{ordenpago.Importe}}" tipo="Numerico"></div> </td>
+                <td style="text-align:center;width:200px;padding-left:10px;" format="{{ordenpago.FechaValor}}" tipo="Fecha" title="{{ordenpago.FechaValor}}"><div class="overflowContainer">{{ordenpago.FechaValor}}</div></td>
+                <td style ="width:40px;"class="cuentaCorrienteHora"><span title="Detalle Emision" style="margin: 5px" class="glyphicon glyphicon-globe" ng-click="monitorEmiCtrl.Consultar(ordenpago.Descripcion, ordenpago.IdMotivosEmision)"></span></td>
+                <td style ="width:40px;"class="cuentaCorrienteHora"><span title="Detalle Pago" style="margin: 5px" class="glyphicon glyphicon-list-alt" ng-click="monitorEmiCtrl.ConsultarDetalle(ordenpago.PayloadString)"></span>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+</center>
+<loading-modal class="modal show" loadshow="monitorEmiCtrl.loading" data-backdrop="static" />

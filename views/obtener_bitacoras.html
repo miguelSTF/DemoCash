@@ -1,0 +1,64 @@
+<div class="row positionPrincipalDiv" ng-init="obBitCtrl.init()">
+  <div layout="row" style="color:#333; font-size:12px;">
+    <md-toolbar ng-click="obBitCtrl.ShowListCore()" style="z-index:0">
+        <div class="md-toolbar-tools">
+            <h2>Core</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+  </div>
+  <div layout="row" style="color:#333; font-size:12px;" ng-show="obBitCtrl.ShowCore">
+    <md-dialog-content>
+      <div layout="row" layout-wrap="" flex="">
+        <div style="padding-left:8px; width:900px;">
+          <md-button ng-repeat="services in obBitCtrl.ListCore" id="coreBitacora" class="buttonsBitacoras md-raised" ng-click="obBitCtrl.GetBitacoraCore(services.ServiceName)">
+            <span style="width:290px;color:white;" class="overflowContainer" title="{{services.Nombre}}">{{ services.Nombre }}</span>
+          </md-button>
+        </div>
+      </div>
+    </md-dialog-content>
+  </div>
+  <br><br>
+
+  <div layout="row" style="color:#333; font-size:12px;">
+    <md-toolbar ng-click="obBitCtrl.ShowListPlugIn()" style="z-index:0">
+        <div class="md-toolbar-tools">
+            <h2>Plug In</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+  </div>
+  <div layout="row" style="color:#333; font-size:12px;" ng-show="obBitCtrl.ShowPlugIn">
+    <md-dialog-content>
+      <div layout="row" layout-wrap="" flex="">
+        <div style="padding-left:8px; width:900px;">
+          <md-button ng-repeat="services in obBitCtrl.ListPlugIn" id="coreBitacora" class="buttonsBitacoras md-raised"  ng-click="obBitCtrl.GetBitacoraPlug(services.ServiceName)">
+            <span style="width:290px;color:white;" class="overflowContainer" title="{{services.Nombre}}">{{ services.Nombre }}</span>
+          </md-button>
+        </div>
+      </div>
+    </md-dialog-content>
+  </div>
+  <br><br>
+
+  <div layout="row" style="color:#333; font-size:12px;">
+    <md-toolbar ng-click="obBitCtrl.ShowListVias()" style="z-index:0">
+        <div class="md-toolbar-tools">
+            <h2>Vías de Liquidación</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+  </div>
+  <div layout="row" style="color:#333; font-size:12px;" ng-show="obBitCtrl.ShowVias">
+    <md-dialog-content>
+      <div layout="row" layout-wrap="" flex="">
+        <div style="padding-left:8px; width:900px;">
+          <md-button ng-repeat="services in obBitCtrl.ListVias" id="coreBitacora" class="buttonsBitacoras md-raised " ng-click="obBitCtrl.GetBitacoraVia(services.ServiceName)">
+            <span style="width:290px;color:white;" class="overflowContainer" title="{{services.Nombre}}">{{ services.Nombre }}</span>
+          </md-button>
+        </div>
+      </div>
+    </md-dialog-content>
+  </div>
+  <br><br>
+<loading-modal class="modal show" loadshow="obBitCtrl.loading" data-backdrop="static" />

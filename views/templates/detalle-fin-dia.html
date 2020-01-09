@@ -1,0 +1,46 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{inicioFinDiaCtrl.nameDetalle}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Close" ng-click="Close()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle" style="width:950px;">
+            <md-content class="md-padding">
+              <center>
+                  <table st-sticky-header st-table="inicioFinDiaCtrl.registroCollection" st-safe-src="inicioFinDiaCtrl.registro" class="table-bordered table-striped ng-table-monitor table-hover" id="tablaDetalleFinDia">
+                      <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+                          <tr style="border: 0;">
+                              <th style="text-align:center; width:120px;" st-sort="IdSolicitud">Folio Cash </th>
+                              <th style="text-align:center; width:210px;" st-sort="NombreDepartamento">Departamento </th>
+                              <th style="text-align:center; width:210px;" st-sort="NombreConceptoOriginal">Concepto </th>
+                              <th style="text-align:center; width:100px;" st-sort="Sentido">Tipo </th>
+                              <th style="text-align:center; width:130px;" st-sort="NombreContraParte">Contraparte </th>
+                              <th style="text-align:center; width:130px;" st-sort="Importe">Importe </th>
+                          </tr>
+                          <tr>
+                              <td colspan="7">
+                                  <input st-search placeholder="Busqueda global" class="input-sm form-control" type="text">
+                              </td>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr ng-repeat="data in inicioFinDiaCtrl.registroCollection">
+                              <td style="text-align:left; width:120px;" title="{{data.IdSolicitud}}"><div class="overflowContainer">{{data.IdSolicitud}}</div></td>
+                              <td style="text-align:left; width:210px;" title="{{data.NombreDepartamento}}"><div class="overflowContainer">{{data.NombreDepartamento}} </div></td>
+                              <td style="text-align:left; width:210px;" title="{{data.nNombreConceptoOriginal}}"><div class="overflowContainer">{{data.NombreConceptoOriginal}}</div></td>
+                              <td style="text-align:left; width:100px;" title="{{data.Cuenta}}"><div class="overflowContainer">{{data.Sentido}}</div></td>
+                              <td style="text-align:left; width:130px;" title="{{data.NombreContraParte}}"><div class="overflowContainer">{{data.NombreContraParte}}</div></td>
+                              <td style="text-align:left; width:130px;" format="{{data.Importe}}" tipo="Numerico" title="{{data.Importe}}">{{data.Importe}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </center>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>

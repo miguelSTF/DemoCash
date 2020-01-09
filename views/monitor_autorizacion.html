@@ -1,0 +1,88 @@
+<div class="row positionPrincipalDiv" ng-init="monitorAutCtrl.init()">
+    <div layout="row" style="height:75px;" class="apesaFont14">
+        <div flex="15" style="text-align: center">
+            <h5>Divisa</h5>
+            <md-select class="md-selectStyle" ng-model="monitorAutCtrl.divisa" placeholder="Selecciona divisa" ng-change="monitorAutCtrl.BuscarCuentas()" style="margin:0px;">
+                <md-option ng-value="tipoD.IdDivisa" ng-repeat="tipoD in monitorAutCtrl.divisas">{{tipoD.NombreCorto}}</md-option>
+            </md-select>
+        </div>
+        <div flex="10"></div>
+        <div flex="15" style="text-align: center">
+            <h5>Cuentas</h5>
+            <md-select class="md-selectStyle" ng-model="monitorAutCtrl.cuentaSelect" placeholder="Selecciona cuenta" ng-change="monitorAutCtrl.reloadData()" style="margin:0px;">
+                <md-option ng-value="cuenta.IdCuentaCorriente" ng-repeat="cuenta in monitorAutCtrl.cuentas">{{cuenta.Alias}} {{cuenta.Cuenta}}</md-option>
+            </md-select>
+        </div>
+        <div flex="10"></div>
+        <div flex="8" style="text-align:center">
+            <h5 style="text-align:center;" >Fecha</h5>
+            <md-datepicker md-min-date="monitorAutCtrl.maxDate" ng-change="monitorAutCtrl.reloadData()"  ng-model="monitorAutCtrl.fecha"></md-datepicker>
+        </div>
+        <div flex="30">
+        </div>
+        <div flex="10" style="padding-left:25px;">
+            </br>
+            <md-button title="Filtrar" class="md-raised md-primary" ng-click="monitorAutCtrl.reloadData()">Filtrar</md-button>
+        </div>
+        <div flex="8">
+            </br>
+            <md-button ng-disabled="monitorAutCtrl.dataset.length === 0" title="Autorizar" class="md-raised md-warn" ng-click="monitorAutCtrl.Send()">Autorizar</md-button>
+        </div>
+        <div flex="8" class="dropdown">
+            </br>
+            <md-button class="md-icon-button" ng-disabled="monitorAutCtrl.dataset.length === 0 || monitorAutCtrl.dataset === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; margin-right:-5px; padding:0px; top:5px;">
+                <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+            </md-button>
+            <ul style="top:50%" class="table-export dropdown-menu excel-list" table-selector="'tablaMonitorAut'" export-options="{type: 'excel', escape: true, tableName: 'Monitor_Autorizacion',ignoreColumn: [0] }" aria-labelledby="dropdownMenu1">
+                <li onclick="export_table_to_excel('tablaMonitorAut','Monitor_Autorizacion','[1]','[0]')">
+                    <span>Excel</span>
+                </li>
+                <li te-option te-value="'csv'" te-param="'type'">
+                    <span>CSV</span>
+                </li>
+                <li te-option te-value="'txt'" te-param="'type'">
+                    <span>TXT</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <center>
+        <table style="font-size:14px; color:#333;"st-sticky-header st-table="monitorAutCtrl.datasetCollection" st-safe-src="monitorAutCtrl.dataset" class="table-bordered table-striped ng-table-monitor table-hover" id="tablaMonitorAut">
+            <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+                <tr style="border: 0;">
+                    <th style="text-align:center; width:40px;" st-sort="sended"></th>
+                    <th style="text-align:center; width:120px;" st-sort="IdSolicitud">Sistema</th>
+                    <th style="text-align:center; width:130px;" st-sort="NombreDepartamento">Departamento </th>
+                    <th style="text-align:center; width:180px;" st-sort="NombreConceptoOriginal">Concepto </th>
+                    <th style="text-align:center; width:180px;" st-sort="IdSistemaExterno">Id Externo </th>
+                    <th style="text-align:center; width:100px;" st-sort="Referencia">Referencia</th>
+                    <th style="text-align:center; width:180px;" st-sort="Instruccion">Instrucción </th>
+                    <th style="text-align:center; width:150px;" st-sort="Importe">Importe</th>
+                    <th style="text-align:center; width:200px;" st-sort="FechaValor">Fecha</th>
+                    <th style="text-align:center; width:70px;"></th>
+                </tr>
+                <tr>
+                    <td colspan="10">
+                        <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="ordenpago in monitorAutCtrl.datasetCollection">
+                    <td style="text-align:center; width:40px;"><input type="checkbox" value="{{ordenpago.idSolicitud}}" ng-change="monitorAutCtrl.ChangeSelection(ordenpago)" ng-model="ordenpago.sended" /></td>
+                    <td style="text-align:center; width:120px;" title="{{ordenpago.IdSolicitud}}"><div class="overflowContainer">{{ordenpago.IdSolicitud}}</div></td>
+                    <td style="text-align:center; width:130px;" title="{{ordenpago.NombreDepartamento}}"><div class="overflowContainer">{{ordenpago.NombreDepartamento}}</div></td>
+                    <td style="text-align:center; width:180px;" title="{{ordenpago.NombreConceptoOriginal}}"><div class="overflowContainer">{{ordenpago.NombreConceptoOriginal}}</div></td>
+                    <td style="text-align:center; width:120px;" title="{{ordenpago.IdSistemaExterno}}"><div class="overflowContainer">{{ordenpago.IdSistemaExterno}}</div></td>
+                    <td style="text-align:center; width:100px;" title="{{ordenpago.Referencia}}"><div class="overflowContainer">{{ordenpago.Referencia}}</div></td>
+                    <td style="text-align:center; width:180px;" title="{{ordenpago.Instruccion}}"><div class="overflowContainer">{{ordenpago.Instruccion}}</div></td>
+                    <td class="isNumberExcel" style="text-align:left;width:150px;" title="{{ordenpago.Importe}}"><div class="overflowContainer" format="{{ordenpago.Importe}}" tipo="Numerico"></div></td>
+                    <td style="text-align:left;width:200px;padding-left:10px;" format="{{ordenpago.FechaRegistro}}" tipo="FechaCompleta" title="{{ordenpago.FechaRegistro}}"></td>
+                    <td style ="width:70px;"class="cuentaCorrienteHora"><span title="Detalle" style="margin:5px; color:#333;" class="glyphicon glyphicon-list-alt" ng-click="monitorAutCtrl.Consultar(ordenpago.PayloadString)"></span></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+    </center>
+</div>
+<loading-modal class="modal show" loadshow="monitorAutCtrl.loading" data-backdrop="static" />

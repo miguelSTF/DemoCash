@@ -1,0 +1,149 @@
+<div class="row positionPrincipalDiv" ng-init="generaPolizaCtrl.init()">
+  <div layout="row" style="height:90px;" class="apesaFont14">
+    <div flex="15" style="text-align:center">
+      <h5 style="text-align:center;">Fecha</h5>
+      <md-datepicker md-max-date="generaPolizaCtrl.maxDate" ng-change="generaPolizaCtrl.onDateChange()" ng-model="generaPolizaCtrl.fecha"></md-datepicker>
+    </div>
+    <div flex="5"></div>
+    <div flex="15" style="text-align: center">
+      <h5 style="text-align:center;">Cuenta Corriente</h5>
+      <md-select class="md-selectStyle" ng-model="generaPolizaCtrl.cuentaSelect" placeholder="Selecciona cuenta">
+        <md-option ng-value="-1" ng-selected="true">Todos</md-option>
+        <md-option ng-value="cuenta.IdCuentaCorriente" ng-repeat="cuenta in generaPolizaCtrl.cuentas">{{cuenta.Alias}} {{cuenta.Cuenta}}</md-option>
+      </md-select>
+    </div>
+    <div flex="15" style="text-align:center; padding-top:30px;">
+      <md-button class="md-raised md-primary" ng-model="generaPolizaCtrl.filtroData" ng-click="generaPolizaCtrl.loadData()" ng-disabled="generaPolizaCtrl.cuentaSelect === undefined">Filtrar</md-button>
+    </div>
+    <div flex></div>
+    <div flex="8">
+      <h5 style="padding-bottom:10px;"></h5>
+      <md-button permisopantalla permiso="15" idpantalla="32" ng-disabled="generaPolizaCtrl.cuentaSelect === undefined" class="md-raised md-warn" ng-click="generaPolizaCtrl.consultarPolizas()" style=" text-align:center; margin-bottom:10px;">Generar Pólizas</md-button>
+    </div>
+    <div flex="8">
+      <h5 style="padding-bottom:10px;"></h5>
+      <md-button permisopantalla permiso="16" idpantalla="32" class="md-raised md-warn" ng-click="generaPolizaCtrl.exportContable()" style=" text-align:center;">Exportar a Sistema Contable</md-button>
+    </div>
+    <div flex="8" class="dropdown">
+      <h5 style="padding-bottom:10px;"></h5>
+      <md-button class="md-icon-button" ng-disabled="generaPolizaCtrl.polizasCollection.length === 0 || generaPolizaCtrl.polizasCollection === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+          <span class="glyphicon glyphicon-save" style="font-size:30px;"></span>
+        </md-button>
+      <ul style="min-width:100px; top:85%; left:-60px;" class="table-export dropdown-menu excel-list" table-selector="'tablaPolizasExport'" export-options="{type: 'excel', escape: true, tableName: 'Pólizas Contables', ignoreColumn: [10]}" aria-labelledby="dropdownMenu1">
+        <li onclick="export_table_to_excel('tablaPolizasExport','Pólizas Contables','[1]','[10]')">
+          <span>Excel</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <center>
+    <table st-sticky-header st-table="generaPolizaCtrl.polizasCollectionD" st-safe-src="generaPolizaCtrl.polizasCollection" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaPolizas">
+      <thead style="border: 0; color: white; background: #22224b; z-index: 1;">
+        <tr style="border: 0;">
+          <th style="text-align: center;width: 170px" st-sort="Poliza.FechaOperacion">Fecha de Operación</th>
+          <th style="text-align: center;width: 200px" st-sort="Poliza.IdSolicitud">Id Solicitud</th>
+          <th style="text-align: center;width: 250px" st-sort="Poliza.Cargo">Monto</th>
+          <th style="text-align: center;width: 130px" st-sort="Poliza.Moneda">Moneda</th>
+          <th style="text-align: center;width: 150px" st-sort="Poliza.Estatus">Estatus</th>
+          <th style="text-align: center;width: 300px" st-sort="Poliza.NombreUsuario">Usuario</th>
+          <th style="text-align: center;width: 80px">Detalle</th>
+        </tr>
+        <tr>
+          <td colspan="7">
+            <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="obj in generaPolizaCtrl.polizasCollectionD">
+          <td style="position: relative;width: 170px" format="{{obj.Poliza.FechaOperacion}}" tipo="Fecha" title="{{obj.Poliza.FechaOperacion}}">
+            <div class="overflowContainer">{{obj.Poliza.FechaOperacion}}</div>
+          </td>
+          <td style="position: relative;width: 200px" title="{{obj.Poliza.IdSolicitud}}">
+            <div class="overflowContainer">{{obj.Poliza.IdSolicitud}}</div>
+          </td>
+          <td style="position: relative;width: 250px; text-align:right;" title="{{obj.Poliza.Cargo | currency:''}}">
+            <div class="overflowContainer">{{obj.Poliza.Importe | currency:''}}</div>
+          </td>
+          <td style="position: relative;width: 130px; text-align:center;" format="{{obj.Poliza.Moneda}}" title="{{obj.Poliza.Moneda}}">
+            <div>{{obj.Poliza.Moneda}}</div>
+          </td>
+          <td style="position: relative;width: 150px; text-align:center;" format="{{obj.Poliza.Estatus}}" title="{{obj.Poliza.Estatus == 'C' ? 'Correcto' : obj.Poliza.Estatus == 'E' ? 'Error' : obj.Poliza.Estatus == 'X' ? 'Exportado' : '' }}">
+            <div class="overflowContainer">{{obj.Poliza.Estatus == 'C' ? 'Correcto' : obj.Poliza.Estatus == 'E' ? 'Error' : obj.Poliza.Estatus == 'X' ? 'Exportado' : '' }}</div>
+          </td>
+          <td style="position: relative;width: 300px; text-align:center;" title="{{obj.Poliza.NombreUsuario}}">
+            <div class="overflowContainer">{{obj.Poliza.NombreUsuario}}</div>
+          </td>
+          <td style="position: relative;width: 80px" title="{{obj.Poliza.Detalle}}">
+            <center>
+              <span class="glyphicon glyphicon-list-alt" ng-click="generaPolizaCtrl.Consultar(obj.Poliza.IdSolicitud)"></span>
+            </center>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </center>
+  <br>
+  <div style="height:1px;width:1px;overflow-y:scroll;">
+    <table st-table="generaPolizaCtrl.polizasCollectionD" st-safe-src="generaPolizaCtrl.polizasCollection" class="table-bordered table-striped ng-table-monitor table-hover" id="tablaPolizasExport">
+      <thead style="border: 0; color: white; background: #22224b; z-index: 1;">
+        <tr style="border: 0;">
+          <th style="text-align: center;width: 100px">Fecha de Operación</th>
+          <th style="text-align: center;width: 100px">Id Solicitud</th>
+          <th style="text-align: center;width: 100px">Movimiento</th>
+          <th style="text-align: center;width: 200px">Cuenta Contable</th>
+          <th style="text-align: center;width: 100px">Cargo</th>
+          <th style="text-align: center;width: 100px">Abono</th>
+          <th style="text-align: center;width: 50px">Moneda</th>
+          <th style="text-align: center;width: 100px">Estatus</th>
+          <th style="text-align: center;width: 100px">Concepto</th>
+          <th style="text-align: center;width: 100px">Departamento</th>
+          <th style="text-align: center;width: 100px"></th>
+        </tr>
+        <tr>
+          <td colspan="9">
+            <input st-search placeholder="Busqueda global" class="input-sm form-control" type="text">
+          </td>
+        </tr>
+      </thead>
+      <tbody style="height: 50px">
+        <tr ng-repeat="obj in generaPolizaCtrl.polizaExport">
+          <td style="position: relative;width: 100px" format="{{obj.FechaOperacion}}" tipo="Fecha" title="{{obj.FechaOperacion}}">
+            <div class="overflowContainer">{{obj.FechaOperacion}}</div>
+          </td>
+          <td style="text-align: left;width: 100px" title="{{obj.IdSolicitud}}">
+            <div class="overflowContainer">{{obj.IdSolicitud}}</div>
+          </td>
+          <td style="position: relative;width: 100px" title="{{obj.TipoMovimiento}}">
+            <div class="overflowContainer">{{obj.TipoMovimiento}}</div>
+          </td>
+          <td style="position: relative;width: 200px" title="{{obj.CuentaContable}}">
+            <div class="overflowContainer" admin-mask mask="{{generaPolizaCtrl.mascara}}" mask-char="-" ng-Model="obj.CuentaContable">{{obj.CuentaContable}}</div>
+          </td>
+          <td class="isNumberExcel" tipo="Numerico" style="position: relative;width: 100px; text-align:right;" title="{{obj.Cargo | currency:''}}">
+            <div class="overflowContainer">{{obj.Cargo | currency:''}}</div>
+          </td>
+          <td class="isNumberExcel" tipo="Numerico" style="position: relative;width: 100px; text-align:right;" title="{{obj.Abono | currency:''}}">
+            <div class="overflowContainer">{{obj.Abono | currency:''}}</div>
+          </td>
+          <td style="width:50px;text-align:left;" title="{{obj.Moneda}}">
+            <div class="overflowContainer">{{obj.Moneda}}</div>
+          </td>
+          <td style="position: relative;width: 100px; text-align:center;" title="{{obj.Estatus}}">
+            <div class="overflowContainer">{{obj.Estatus}}</div>
+          </td>
+          <td style="position: relative;width: 100px; text-align:center;" title="{{obj.NombreConcepto}}">
+            <div class="overflowContainer">{{obj.NombreConcepto}}</div>
+          </td>
+          <td style="position: relative;width: 100px; text-align:center;" title="{{obj.NombreDepartamento}}">
+            <div class="overflowContainer">{{obj.NombreDepartamento}}</div>
+          </td>
+          <td style="position: relative;width: 100px; text-align:center;">
+            <div class="overflowContainer"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<loading-modal class="modal show" loadshow="generaPolizaCtrl.loading" data-backdrop="static" />

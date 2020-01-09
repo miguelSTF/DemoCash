@@ -1,0 +1,230 @@
+<style>
+ md-select-menu {
+  margin-bottom: 110px;
+  }
+</style>
+
+<md-dialog style="width:800px;">
+  <form style="padding-top:20px;height:800px; " name="conceptoCtrl.ConceptoForm" class="form-horizontal" ng-submit="Save()" role="form" novalidate>
+    <div layout="row" class="panel-body" style="height:50px;">
+      <div flex="10"></div>
+      <div flex="50">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[conceptoCtrl.ConceptoForm.Tipo.$valid]">
+          <md-input-container class="md-block">
+            <label>Departamento</label>
+            <md-select tabindex="1" ng-required="true" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.hasOperaciones === true || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" ng-model="conceptoCtrl.departamentoRelacion" md-on-close="conceptoCtrl.searchDepto = ''" data-md-container-class="selectdemoSelectHeader">
+              <md-select-header class="demo-select-header">
+                <input ng-keydown="conceptoCtrl.handleKeyup($event)" ng-model="conceptoCtrl.searchDepto" ng-focus="conceptoCtrl.focusInput" type="search" placeholder="Buscar Departamento" class="demo-header-searchbox _md-text">
+              </md-select-header>
+              <md-optgroup label="Departamento">
+                <md-option ng-value="depto.Departamento.IdDepartamento" ng-repeat="depto in conceptoCtrl.departamentos | filter : conceptoCtrl.searchDepto">{{depto.Departamento.Nombre}}</md-option>
+              </md-optgroup>
+            </md-select>
+          </md-input-container>
+        </div>
+      </div>
+      <div flex="10"></div>
+      <div flex="30" style="padding-left:25px;">
+        <button class="btn btn-primary btn-md" title="Guardar" ng-click="conceptoCtrl.checkDataReg()" ng-disabled="conceptoCtrl.ConceptoForm.$invalid || !conceptoCtrl.ConceptoForm.$dirty || conceptoCtrl.disabledSave" tabindex="7" ng-hide="conceptoCtrl.readOnlyEditDiv">
+          <span class="glyphicon glyphicon-saved"></span>
+        </button>
+        <label for="IdConcepto" class="control-label" ng-hide="!conceptoCtrl.readOnlyEditDiv" style="margin:15px;">Id Concepto: {{conceptoCtrl.conceptoEdit.IdConcepto}}</label>
+        <button class="btn btn-primary btn-md" title="Cancelar" tabindex="8" ng-click="conceptoCtrl.viewDialog()">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </div>
+    </div>
+    <br><br>
+    <div layout="row" class="panel-body" style="height:50px;">
+      <div flex="10"></div>
+      <div flex="35">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[conceptoCtrl.ConceptoForm.Tipo.$valid]">
+          <md-input-container class="md-block">
+            <label>Tipo de concepto</label>
+            <md-select style="width: 402px;" tabindex="2" ng-required="true" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.hasOperaciones === true || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" ng-model="conceptoCtrl.conceptoEdit.Tipo" md-on-close="conceptoCtrl.searchTipo = ''" data-md-container-class="selectdemoSelectHeader">
+              <md-select-header class="demo-select-header">
+                <input ng-keydown="conceptoCtrl.handleKeyup($event)" ng-model="conceptoCtrl.searchTipo" ng-focus="conceptoCtrl.focusInput" type="search" placeholder="Buscar tipo concepto" class="demo-header-searchbox _md-text">
+              </md-select-header>
+              <md-optgroup label="Departamento">
+                <md-option ng-value="tipo.value" ng-repeat="tipo in conceptoCtrl.tipos | filter:conceptoCtrl.searchTipo">{{tipo.label}}</md-option>
+              </md-optgroup>
+            </md-select>
+          </md-input-container>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px;">
+      <div flex="10"></div>
+      <div flex="30">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[conceptoCtrl.ConceptoForm.Clave.$valid]">
+          <label for="Clave" class="control-label">Clave</label>
+          <input type="text" class="form-control" id="Clave" name="Clave" maxlength="40" placeholder="Clave concepto" tabindex="3" ng-model="conceptoCtrl.conceptoEdit.Clave" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.conceptoEdit.Categoria === 2 || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" autocomplete="off" required capitalize>
+          <span ng-show="conceptoCtrl.ConceptoForm.Clave.$dirty && conceptoCtrl.ConceptoForm.Clave.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="conceptoCtrl.ConceptoForm.Clave.$dirty && conceptoCtrl.ConceptoForm.Clave.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+      <div flex="10"></div>
+      <div flex="40">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[conceptoCtrl.ConceptoForm.Nombre.$valid]">
+          <label for="Nombre" class="control-label">Nombre Corto</label>
+          <input type="text" class="form-control" id="Nombre" name="Nombre" maxlength="40" placeholder="Nombre Corto" ng-change="conceptoCtrl.formDirty=true;" ng-model="conceptoCtrl.conceptoEdit.Nombre" tabindex="4" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" autocomplete="off" required capitalize>
+          <span ng-show="conceptoCtrl.ConceptoForm.Nombre.$dirty && conceptoCtrl.ConceptoForm.Nombre.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="conceptoCtrl.ConceptoForm.Nombre.$dirty && conceptoCtrl.ConceptoForm.Nombre.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <div layout="row" class="panel-body" style="height:50px;">
+      <div flex="10"></div>
+      <div flex="80">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[conceptoCtrl.ConceptoForm.Descripcion.$valid]">
+          <label for="Descripcion" class="control-label">Descripción</label>
+          <input type="text" class="form-control" id="Descripcion" name="Descripcion" maxlength="100" placeholder="Descripción" ng-model="conceptoCtrl.conceptoEdit.Descripcion" tabindex="5" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" autocomplete="off" required capitalize>
+          <span ng-show="conceptoCtrl.ConceptoForm.Descripcion.$dirty && conceptoCtrl.ConceptoForm.Descripcion.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="conceptoCtrl.ConceptoForm.Descripcion.$dirty && conceptoCtrl.ConceptoForm.Descripcion.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+    </div>
+    <br><br><br>
+
+    <div layout="row" class="panel-body" style="height:80px; margin-top:-15px">
+      <div flex="10"></div>
+      <div flex="35">
+        <md-input-container class="md-block">
+          <label>Cuenta Corriente</label>
+          <md-select tabindex="6" ng-required="true" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" ng-model="conceptoCtrl.listCuentaInstitucion"  md-on-close="conceptoCtrl.BuscaTipoMensaje()" data-md-container-class="selectdemoSelectHeader">
+            <md-select-header class="demo-select-header">
+              <input ng-keydown="conceptoCtrl.handleKeyup($event)" ng-model="conceptoCtrl.searchMensajeCuentaCorr" ng-focus="conceptoCtrl.focusInput3" type="search" placeholder="Buscar cuenta Corriente" class="demo-header-searchbox _md-text">
+            </md-select-header>
+            <md-optgroup label="CuentaCorriente">
+              <md-option ng-value="cuenta.IdCuentaCorriente" ng-repeat="cuenta in conceptoCtrl.cuentas | filter:conceptoCtrl.searchMensajeCuentaCorr">{{cuenta.Alias}}</md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+    </div>
+    <div flex="10"></div>
+      <div ng-show="conceptoCtrl.tiposmensajesFilter.length > 1" flex="35">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[conceptoCtrl.ConceptoForm.IdTipoMensaje.$valid]">
+          <md-input-container class="md-block">
+            <label>Tipo de mensaje</label>
+            <md-select tabindex="7" ng-required="true" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" ng-model="conceptoCtrl.conceptoEdit.IdTipoMensaje" md-on-close="conceptoCtrl.tipoMensajeOnClose()" data-md-container-class="selectdemoSelectHeader">
+              <md-select-header class="demo-select-header">
+                <input ng-keydown="conceptoCtrl.handleKeyup($event)" ng-model="conceptoCtrl.searchMensaje" ng-focus="conceptoCtrl.focusInput" type="search" placeholder="Buscar tipo mensaje" class="demo-header-searchbox _md-text">
+              </md-select-header>
+              <md-optgroup label="TipoMensaje">
+                <md-option ng-value="tipoMensaje.Tipo" ng-repeat="tipoMensaje in conceptoCtrl.tiposmensajesFilter | filter:conceptoCtrl.searchMensaje">{{tipoMensaje.Descripcion}}</md-option>
+              </md-optgroup>
+            </md-select>
+          </md-input-container>
+        </div>
+    </div>
+      <div flex="10"></div>
+      <div flex="35">
+        <div ng-hide="!conceptoCtrl.showSelectOperacionBanxico">
+         <md-input-container class="md-block">
+            <label>Tipo de Operación</label>
+            <md-select tabindex="8" ng-required="conceptoCtrl.showSelectOperacionBanxico" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" ng-model="conceptoCtrl.conceptoEdit.selectOperacionBanxico" md-on-close="conceptoCtrl.searchMensajeOper = ''" data-md-container-class="selectdemoSelectHeader">
+              <md-select-header class="demo-select-header">
+                <input ng-keydown="conceptoCtrl.handleKeyup($event)" ng-model="conceptoCtrl.searchMensajeOper" ng-focus="conceptoCtrl.focusInput2" type="search" placeholder="Buscar tipo Operacion" class="demo-header-searchbox _md-text">
+              </md-select-header>
+              <md-optgroup label="TipoMensaje">
+                <md-option ng-value="tipoOper" ng-repeat="tipoOper in conceptoCtrl.operacionesBanxico | filter:conceptoCtrl.searchMensajeOper">{{tipoOper.Descripcion}}</md-option>
+              </md-optgroup>
+            </md-select>
+          </md-input-container>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px;">
+      <div flex="20"></div>
+      <div flex="50">
+        <label style="padding-left: 11px;" for="ReqSucursal" class="control-label">Requiere Sucursal</label>
+        <md-switch ng-value="conceptoCtrl.conceptoEdit.RequiereSucursal === 0 ? conceptoCtrl.conceptoEdit.RequiereSucursal = 0 : 1" class="md-primary" tabindex="12" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" ng-model="conceptoCtrl.conceptoEdit.RequiereSucursal" aria-label="Switch 2" ng-true-value="1" ng-false-value="0" style="margin-top:-2px;padding-left:53px;"></md-switch>
+      </div>
+      <div flex="5"></div>
+      <div flex="80" style="">
+          <label for="Contraparte no Registrada" class="control-label">Permite Contrapartes no Registradas</label>
+          <md-switch class="md-primary" tabindex="10" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" ng-model="conceptoCtrl.conceptoEdit.PermiteContraNoRegistrada" aria-label="Switch 2" ng-true-value="1" ng-false-value="0" style="margin-top:-2px;padding-left:100px;"></md-switch>
+      </div>
+      <div flex="5"></div>
+      <div flex="80" style="padding-left:10px;">
+          <label for="Emite" class="control-label" style="text-align:center;">Emite Instruccion de Pago</label>
+          <md-switch class="md-primary" tabindex="11" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" ng-model="conceptoCtrl.conceptoEdit.Emite" aria-label="Switch 2" ng-true-value="1" ng-false-value="0" style="margin-top:-2px;padding-left:55px;"></md-switch>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px;">
+      <div flex="60" style="padding-left:72px;">
+        <label for="PermiteCaptura" class="control-label">Permite Captura Mismo Día</label>
+        <md-switch ng-value="conceptoCtrl.conceptoEdit.CapturaMismoDia === 0 ? conceptoCtrl.conceptoEdit.CapturaMismoDia = 0 : 1" class="md-primary" tabindex="13" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" ng-model="conceptoCtrl.conceptoEdit.CapturaMismoDia" aria-label="Switch 2" ng-true-value="1" ng-false-value="0" style="margin-top:-2px;padding-left:62px;"></md-switch>
+      </div>
+      <div flex="5"></div>
+      <div flex="40">
+        <label style="padding-left: 22px;" for="ReqPlaza" class="control-label">Requiere Plaza</label>
+        <md-switch ng-value="conceptoCtrl.conceptoEdit.RequierePlaza === 0 ? conceptoCtrl.conceptoEdit.RequierePlaza = 0 : 1" class="md-primary" tabindex="12" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2" ng-model="conceptoCtrl.conceptoEdit.RequierePlaza" aria-label="Switch 2" ng-true-value="1" ng-false-value="0" style="margin-top:-2px;padding-left:53px;"></md-switch>
+      </div>
+      <div flex="5"></div>
+      <div flex="80">
+          <label for="Emite" class="control-label" style="text-align:center;">Permite Carga Masiva</label>
+          <md-switch class="md-primary" tabindex="14" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoGeneral || conceptoCtrl.estatusAutorizado === 2 || conceptoCtrl.conceptoEdit.IdTipoMensaje !== 5" ng-model="conceptoCtrl.conceptoEdit.PermiteCargaMasiva" aria-label="Switch 2" ng-true-value="1" ng-false-value="0" style="margin-top:-2px;padding-left:55px;"></md-switch>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px; padding-left:40px;">
+      <div style="width:95%">
+          <hr class="stlyeHr" style="padding-left:10px;">
+      </div>
+    </div>
+    <div layout="row" class="panel-body" style="height:50px; padding-left:40px;">
+      <div flex="10"></div>
+      <div flex="35">
+        <div style="width:230px;" class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[conceptoCtrl.ConceptoForm.CuentaContable.$valid]">
+          <label for="CuentaContable" class="control-label">Cuenta Contable</label>
+          <input  admin-mask mask="{{conceptoCtrl.mascara}}" mask-char="-" type="text" class="form-control" id="CuentaContable" maxlength="60" placeholder="{{conceptoCtrl.mascara}}" ng-model="conceptoCtrl.conceptoEdit.CuentaContable" tabindex="14" ng-disabled="conceptoCtrl.readOnlyEditDiv  || conceptoCtrl.permisoContable || conceptoCtrl.estatusAutorizado === 2" autocomplete="off" capitalize>
+          <span ng-show="conceptoCtrl.ConceptoForm.CuentaContable.$dirty && conceptoCtrl.ConceptoForm.CuentaContable.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="conceptoCtrl.ConceptoForm.CuentaContable.$dirty && conceptoCtrl.ConceptoForm.CuentaContable.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+      <div style="width:50px;"></div>
+      <div flex="35">
+        <div style="width:244px; padding-left:15px;" class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[conceptoCtrl.ConceptoForm.CuentaContableAjuste.$valid]">
+          <label for="CuentaContableAjuste" class="control-label">Cuenta Contable Ajuste</label>
+          <input  admin-mask mask="{{conceptoCtrl.mascara}}" mask-char="-" type="text" class="form-control" id="CuentaContableAjuste" maxlength="60" placeholder="{{conceptoCtrl.mascara}}" ng-model="conceptoCtrl.conceptoEdit.CuentaContableAjuste" tabindex="15" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoContable || conceptoCtrl.estatusAutorizado === 2" autocomplete="off" capitalize>
+          <span ng-show="conceptoCtrl.ConceptoForm.CuentaContableAjuste.$dirty && conceptoCtrl.ConceptoForm.CuentaContableAjuste.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="conceptoCtrl.ConceptoForm.CuentaContableAjuste.$dirty && conceptoCtrl.ConceptoForm.CuentaContableAjuste.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+      <div flex="35">
+        <label style="padding-left:60px;" for="EmiteIva" class="control-label">Desglosa Iva</label>
+        <md-switch ng-value="conceptoCtrl.conceptoEdit.DesglosaIva === 0 ? conceptoCtrl.conceptoEdit.DesglosaIva = 0 : 1" class="md-primary" tabindex="16" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoContable || conceptoCtrl.estatusAutorizado === 2" ng-model="conceptoCtrl.conceptoEdit.DesglosaIva" aria-label="Switch 2" ng-true-value="1" ng-false-value="0" style="margin-top:-2px;padding-left:82px;"></md-switch>
+      </div>
+    </div>
+    <br><br>
+    <div layout="row" class="panel-body" style="height:50px; padding-left:40px;">
+      <div style="width:95%">
+          <hr class="stlyeHr" style="padding-left:10px;">
+      </div>
+    </div>
+    <div layout="row" class="panel-body" style="height:50px;">
+      <div flex="10"></div>
+      <div flex="50">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[conceptoCtrl.ConceptoForm.Tipo.$valid]">
+          <md-input-container class="md-block">
+            <label>Estatus</label>
+            <md-select tabindex="17" ng-required="true" ng-disabled="conceptoCtrl.readOnlyEditDiv || conceptoCtrl.permisoEstatus" ng-model="conceptoCtrl.conceptoEdit.Activo" md-on-close="conceptoCtrl.searchTipo = ''" data-md-container-class="selectdemoSelectHeader">
+              <md-select-header class="demo-select-header">
+                <input ng-keydown="conceptoCtrl.handleKeyup($event)" ng-model="conceptoCtrl.searchTipo" ng-focus="conceptoCtrl.focusInput" type="search" placeholder="Buscar Estatus" class="demo-header-searchbox _md-text">
+              </md-select-header>
+              <md-optgroup label="Estatus">
+                <md-option ng-value="aut.value" ng-repeat="aut in conceptoCtrl.autorizacion">{{aut.label}}</md-option>
+              </md-optgroup>
+            </md-select>
+          </md-input-container>
+        </div>
+      </div>
+    </div>
+    <br>
+  </form>
+</md-dialog>

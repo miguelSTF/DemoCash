@@ -1,0 +1,21 @@
+<md-dialog>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Detalle del mensaje {{bitacoraEmisionCtrl.tipoMensaje}}</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="Close" ng-click="Close()">
+        <span class="glyphicon glyphicon-remove"></span>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="modalDetalle">
+    <md-content class="md-padding">
+      <div layout="row" class="panel-body">
+        <div flex="5"></div>
+        <div flex="90">
+          <textarea style="resize:none;" rows=20 class="form-control" readonly>{{bitacoraEmisionCtrl.textError}}</textarea>
+        </div>
+      </div>
+    </md-content>
+  </md-dialog-content>
+</md-dialog>

@@ -1,0 +1,27 @@
+
+<div class="row positionPrincipalDiv" ng-init="parametrosCtrl.init()" style="padding-left:200px;">
+    <div layout="row" style="height: 80px">
+    </div>
+        <form ng-submit="parametrosCtrl.guardarConfig()" id="mascara" name="parametrosCtrl.ConfigForm">
+            <div layout="row" class="apesaFont14">
+                    <div flex="40">
+                        <label>Ruta para descarga de archivo de eventos</label>
+                        <input id="rutaDescarga" type="text" class="form-control" ng-model="parametrosCtrl.rutaDescarga" tabindex="1" min="0" style="width:400px;" required/>
+                    </div>
+                    <div flex="20">
+                    </div>
+                    <div flex="10"></div>
+                    <div flex="20">
+                    </div>
+            </div>
+            <div layout="row" style="height: 30px"></div>
+            <div layout="row"  >
+                    <div flex="50"></div>
+                    <div flex="5"></div>
+                    <div flex="25" style="text-align:center; padding-left:20px;">
+                     <md-button class="md-raised md-primary" type="submit"  ng-disabled="parametrosCtrl.ConfigForm.$invalid || !parametrosCtrl.ConfigForm.$dirty">Guardar Configuración</md-button>
+                    </div>
+            </div>
+        </form>
+</div>
+<loading-modal class="modal show" loadshow="parametrosCtrl.loading" data-backdrop="static" />

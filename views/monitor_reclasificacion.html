@@ -1,0 +1,107 @@
+<div layout="column" class="positionPrincipalDiv" ng-init="monitorReclaCtrl.init()">
+    <div layout="row" style="color:#333; font-size:14px;">
+          <div flex="15" style="text-align: center">
+           <h5>Fecha</h5>
+           <md-datepicker ng-disabled="monitorReclaCtrl.filterFor === 2" md-placeholder="Fecha" md-max-date="monitorReclaCtrl.maxDate" ng-model="monitorReclaCtrl.fechaHasta" ng-change="monitorReclaCtrl.getIngresosNI()"></md-datepicker>
+         </div>
+         <div flex="5"></div>
+         <div flex="15">
+             <h5>Consultar Ingresos</h5>
+             <md-select class="md-selectStyle" ng-model="monitorReclaCtrl.filterFor" placeholder="Selecciona un elemento" ng-change="monitorReclaCtrl.getIngresosNI()">
+                 <md-option ng-value="filtro.Id" ng-repeat="filtro in monitorReclaCtrl.statusToMonitorReclasif">{{filtro.Nombre}}</md-option>
+             </md-select>
+         </div>
+         <div flex="50"></div>
+         <div flex="20" class="dropdown" style="margin-left:44px; padding-left:71px;">
+            </br>
+           <md-button class="md-raised md-primary" ng-click="monitorReclaCtrl.getIngresosNI()">Filtrar</md-button>
+            <md-button class="md-icon-button" ng-disabled="monitorReclaCtrl.ingresosNI.length === 0 || monitorReclaCtrl.ingresosNI === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+             <span class="glyphicon glyphicon-save" style="font-size:30px;"></span>
+           </md-button>
+            <ul style="position:absolute; margin-top:-48px; "class="table-export dropdown-menu excel-list" table-selector="'tablaMonitorReclasificacion'" export-options="{type: 'excel', escape: true, tableName: 'Monitor de Reclasificacion',deleteLastColumn:'false',ignoreColumn: [6,7] }" aria-labelledby="dropdownMenu1">
+                <li onclick="export_table_to_excel('tablaMonitorReclasificacion','Monitor_Reclasificacion','[1]','[6,7,8]')">
+                    <span>Excel</span>
+                </li>
+                <li te-option te-value="'csv'" te-param="'type'">
+                    <span style="cursor:pointer">CSV</span>
+                </li>
+                <li te-option te-value="'txt'" te-param="'type'">
+                    <span>TXT</span>
+                </li>
+            </ul>
+          </div>
+          <div flex style="margin-left:-15px;"></div>
+       </div>
+      <center>
+        <table style="color:#333; font-size:14px;" st-sticky-header st-table="monitorReclaCtrl.datasetCollection" st-safe-src="monitorReclaCtrl.ingresosNI" class="table-bordered table-striped ng-table-monitor table-hover" id="tablaMonitorReclasificacion">
+          <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+              <tr style="border: 0;" >
+                  <th style="text-align:center; width:130px;" st-sort="FechaStrMovEdoCta">
+                    <md-tooltip md-direction="top">Fecha del Estado de Cuenta</md-tooltip>
+                    Fecha Edo. Cta.
+                  </th>
+                  <th ng-hide="monitorReclaCtrl.filterFor !== 2" style="text-align:center; width:130px;" st-sort="FechaReclasificacion">
+                    <md-tooltip md-direction="top">Fecha de Reclasificación</md-tooltip>
+                    Fecha Reclasif.
+                  </th>
+                  <th style="text-align:center;" ng-style="{'width': monitorReclaCtrl.filterFor !== 2 ? '220px' : '150px'}" st-sort="CuentaCorriente">Cuenta Corriente</th>
+                  <th style="text-align:center;" ng-style="{'width': monitorReclaCtrl.filterFor !== 2 ? '440px' : '370px'}" st-sort="Instruccion">Instrucción</th>
+                  <th style="text-align:center; width:180px;" st-sort="Importe">Importe</th>
+                  <th style="text-align:center; width:115px;" st-sort="Estatus">Estatus</th>
+                  <th style="text-align:center;width:40px;"></th>
+                  <th style="text-align:center;width:40px;"></th>
+                  <th style="text-align:center;width:40px;"></th>
+              </tr>
+              <tr>
+                  <td colspan="{{monitorReclaCtrl.filterFor === 2 ? '9' : '8'}}">
+                      <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+                  </td>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="ordenpago in monitorReclaCtrl.datasetCollection">
+                  <td style="width:130px;text-align:center;" title="{{ordenpago.FechaStrMovEdoCta}}">
+                      <div class="overflowContainer"> {{ordenpago.FechaStrMovEdoCta}} </div>
+                  </td>
+                  <td ng-show="monitorReclaCtrl.filterFor === 2" style="text-align:center; width:130px;">
+                    {{ordenpago.FechaReclasificacion}}
+                  </td>
+                  <td style="text-align:left;padding-left:10px;" ng-style="{'width': monitorReclaCtrl.filterFor !== 2 ? '220px' : '150px'}" title="{{ordenpago.CuentaCorriente}}">
+                      <div class="overflowContainer"> {{ordenpago.CuentaCorriente}} </div>
+                  </td>
+                  <td style="text-align:left;padding-left:10px;" ng-style="{'width': monitorReclaCtrl.filterFor !== 2 ? '440px' : '370px'}"  title="{{ordenpago.Instruccion}}">
+                      <div class="overflowContainer"> {{ordenpago.Instruccion}} </div>
+                  </td>
+                  <td class="isNumberExcel" style="text-align:right;width:180px;padding-right:20px;" title="{{ordenpago.Importe | currency:''}}">
+                      <div class="overflowContainer">{{ordenpago.Importe | currency:''}} </div>
+                  </td>
+                  <td style="text-align: left;width:115px;padding-left:5px;" title="{{ordenpago.Estatus === 'R' ? 'Reclasificado' : 'Por Reclasificar'}}" >
+                       <div class="overflowContainer"> {{ordenpago.Estatus === 'R' ? 'Reclasificado' : 'Por Reclasificar'}}</div>
+                  </td>
+                  <td style="text-align: center;width:40px;">
+                      <span ng-show="ordenpago.Payload !== null" class="glyphicon glyphicon-list-alt" ng-click="monitorReclaCtrl.consultar(ordenpago.Payload,ordenpago.Via)">
+                          <md-tooltip md-direction="top">Ver detalle</md-tooltip>
+                      </span>
+                  </td>
+                  <td style="text-align: center;width:40px;">
+                      <span permisopantalla permiso="28" idpantalla="33" ng-show="ordenpago.Historico === false && ordenpago.Estatus === 'C' && ordenpago.IdMotivosSistema !== 19 && ordenpago.BornOfConcil === false" class="glyphicon glyphicon-random" ng-click="monitorReclaCtrl.openDetail(ordenpago)">
+                          <md-tooltip md-direction="top">Reclasificar</md-tooltip>
+                      </span>
+                      <span permisopantalla permiso="28" idpantalla="33" ng-show="ordenpago.Historico === true && ordenpago.Estatus === 'C' && ordenpago.IdMotivosSistema !== 19" class="glyphicon glyphicon-random" ng-click="monitorReclaCtrl.openDetail(ordenpago)">
+                          <md-tooltip md-direction="top">Reclasificar</md-tooltip>
+                      </span>
+                  </td>
+                  <td style="text-align: center;width:40px;">
+                      <span permisopantalla permiso="29" idpantalla="33" ng-show="ordenpago.Estatus === 'C' && ordenpago.Historico === false" class="glyphicon glyphicon-arrow-left" ng-click="monitorReclaCtrl.confirmDesEnvioINI(ordenpago)">
+                           <md-tooltip md-direction="top">Deshacer envío a No Identificado</md-tooltip>
+                      </span>
+                      <span permisopantalla permiso="30" idpantalla="33" ng-show="ordenpago.Estatus === 'R' && ordenpago.Historico === false && ordenpago.BornOfReclasificado === false" class="glyphicon glyphicon-arrow-left" ng-click="monitorReclaCtrl.confirmDesRecla(ordenpago)">
+                           <md-tooltip md-direction="top">Deshacer Reclasificación</md-tooltip>
+                      </span>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+    </center>
+</div>
+<loading-modal class="modal show" loadshow="monitorReclaCtrl.loading" data-backdrop="static" />

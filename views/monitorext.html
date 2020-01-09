@@ -1,0 +1,115 @@
+<div class="row positionPrincipalDiv" ng-init="monitorExtCtrl.init()">
+    <div layout="row" style="height:75px; color:#333; font-size:12px;">
+      <div flex="15" style="text-align:center">
+        <h5>Vía de Liquidación</h5>
+        <md-select class="md-selectStyle" ng-model="monitorExtCtrl.via" placeholder="Selecciona vía" ng-change="monitorExtCtrl.BuscarCuentas()" style="margin:0px;">
+            <md-option ng-repeat="via in monitorExtCtrl.vias " ng-value="via.IdViaLiquidacion">{{via.Descripcion}}</md-option>
+        </md-select>
+      </div>
+      <div flex="10"></div>
+      <div flex="15" style="text-align:center">
+        <h5>Cuenta Corriente</h5>
+        <md-select class="md-selectStyle" ng-model="monitorExtCtrl.cuentaselect" placeholder="Selecciona Cuenta" style="margin:0px;">
+            <md-option  ng-value="cuenta.IdCuentaCorriente" ng-repeat="cuenta in monitorExtCtrl.cuentas">{{cuenta.Alias}} {{cuenta.Cuenta}}</md-option>
+        </md-select>
+      </div>
+      <div flex="10"></div>
+      <div flex="15" style="text-align:center">
+        <h5>Estatus de Conciliación</h5>
+        <md-select class="md-selectStyle" ng-model="monitorExtCtrl.estatus" placeholder="Selecciona estatus" style="margin:0px;">
+            <md-option ng-repeat="estatus in monitorExtCtrl.estatusDisponibles" ng-value="estatus">{{estatus}}</md-option>
+        </md-select>
+      </div>
+      <div flex="10"></div>
+      <div flex="15" style="text-align:center;">
+        <h5>Fecha</h5>
+        <md-datepicker md-max-date="monitorExtCtrl.maxDate"  ng-model="monitorExtCtrl.fecha"></md-datepicker>
+      </div>
+      <div flex></div>
+      <div flex="20" class="dropdown" style="text-align:right;">
+      </br>
+      <md-button class="md-raised md-primary" ng-click="monitorExtCtrl.reloadData()">Filtrar</md-button>
+       <md-button class="md-icon-button" ng-disabled="monitorExtCtrl.operaciones.length === 0 || monitorExtCtrl.operaciones === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; margin-right:-5px; padding:0px; top:5px;">
+          <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+        </md-button>
+        <ul style="top:50%; top:50px;" class="table-export dropdown-menu excel-list" table-selector="'tablaMonitorExt'" export-options="{type: 'excel', escape: true, tableName: 'Estados de Cuenta Bancos',ignoreColumn: [7] }" aria-labelledby="dropdownMenu1">
+            <li onclick="export_table_to_excel('tablaMonitorExt','Estados de Cuenta Bancos','[1,2]','[7]')">
+                <span>Excel</span>
+            </li>
+            <li te-option te-value="'csv'" te-param="'type'">
+                <span>CSV</span>
+            </li>
+            <li te-option te-value="'txt'" te-param="'type'">
+                <span>TXT</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      <table st-sticky-header st-table="monitorExtCtrl.operacionesCollection" st-safe-src="monitorExtCtrl.operaciones" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaMonitorExt">
+        <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+          <tr>
+            <th style="text-align:center; width:40px;">N°</th>
+            <th style="text-align:center; width:150px;" st-sort="FechaRegistro">Fecha Registro</th>
+            <th style="text-align:center; width:120px;" st-sort="FechaOperacionF">Fecha Operación</th>
+            <th style="text-align:center; width:70px;" st-sort="Sentido">Sentido</th>
+            <th style="text-align:center;" st-sort="TipoPago" ng-style="{'width': monitorExtCtrl.via === 2 ? '100px' : '230px'}" >Instrucción</th>
+            <th ng-hide="monitorExtCtrl.via !== 2" style="text-align:center; width:130px;" st-sort="PayloadString.CuentaBen">Cuenta Ben</th>
+            <th style="text-align:center; width:120px;" st-sort="Importe">Importe</th>
+            <th style="text-align:center; width:150px;" st-sort="Folio">Folio</th>
+            <th style="text-align:center; width:70px;" st-sort="Status">Estatus</th>
+            <th style="text-align:center; width:180px;" st-sort="Origen">Origen</th>
+            <th style="text-align:center; width:40px;"></th>
+            <th style="text-align:center; width:40px;"></th>
+          </tr>
+          <tr>
+            <td colspan="11" ng-hide="monitorExtCtrl.via === 2">
+              <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+            </td>
+          </tr>
+          <tr>
+          <td colspan="12" ng-show="monitorExtCtrl.via === 2">
+              <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="ordenpago in monitorExtCtrl.operacionesCollection">
+              <td style="text-align:center; width:40px;" class="isNumberExcel" title="{{$index+1}}">
+                <div class="overflowContainer"> {{$index+1}} </div>
+              </td>
+              <td style="text-align:center; width:150px;">
+                  <div class="overflowContainer" title="{{ordenpago.FechaF}}"> {{ordenpago.FechaF}} </div>
+              </td>
+              <td style="text-align:center; width:120px;">
+                  <div class="overflowContainer" title="{{ordenpago.FechaOperacionF}}"> {{ordenpago.FechaOperacionF}} </div>
+              </td>
+              <td style="text-align:center; width:70px;">{{ordenpago.Sentido}}</td>
+              <td style="text-align:left; width:230px;" ng-style="{'width': monitorExtCtrl.via === 2 ? '100px' : '230px'}">
+                  <div class="overflowContainer" title="{{ordenpago.TipoPago}}"> {{ordenpago.TipoPago}} </div>
+              </td>
+              <td ng-hide="monitorExtCtrl.via !== 2" style="text-align:center; width:130px;">{{ordenpago.PayloadString.CuentaBen}}</td>
+              <td style="text-align:right; width:120px;padding-right:10px;"  class="isNumberExcel">
+                  <div class="overflowContainer" title="{{ordenpago.Importe | number:2}}"> {{ordenpago.Importe | number:2}} </div>
+              </td>
+              <td style="text-align:right; width:150px;padding-right:10px;">
+                  <div class="overflowContainer" title="{{ordenpago.Folio}}"> {{ordenpago.Folio}} </div>
+              </td>
+              <td style="text-align:center; width:70px;">
+                  <div class="overflowContainer" title="{{ordenpago.Status}}"> {{ordenpago.Status}} </div>
+              </td>
+              <td style="text-align:center; width:180px;">
+                  <div class="overflowContainer" title="{{ordenpago.Origen}}"> {{ordenpago.Origen}} </div>
+              </td>
+              <td style="text-align:center;width:40px;">
+                  <span style="margin: 5px" title="Detalle del Registro" class="glyphicon glyphicon-list-alt" ng-click="monitorExtCtrl.Consultar(ordenpago)"></span>
+              </td>
+              <td style ="text-align:center;width:40px;">
+                <span permisopantalla permiso="35" idpantalla="20" title="Eliminación de Registro" ng-hide="ordenpago.Status !== 'N'" class="glyphicon glyphicon-remove-circle" ng-click="monitorExtCtrl.cancelEdoCta(ordenpago.IdSolicitud)"></span>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+  </div>
+  <loading-modal class="modal show" loadshow="monitorExtCtrl.loading" data-backdrop="static" />

@@ -1,0 +1,138 @@
+<div layout="column" class="sidenavdemoCustomSidenav positionPrincipalDiv" ng-cloak ng-init="conciliacionManCtrl.init()">
+  <div layout="row" style="height:52px;" class="apesaFont14">
+  <div flex="8" style="text-align:center; margin-right:8px; ">
+      <h5 style="text-align:center; margin:0px;">Fecha</h5>
+      <md-datepicker ng-change="conciliacionManCtrl.refreshAll()" md-max-date="conciliacionManCtrl.maxDate" ng-model="conciliacionManCtrl.fecha"></md-datepicker>
+    </div>
+    <div flex="20" class="td-MCuentaCorriente" title="'Divisa'">
+      <md-input-container class="md-block">
+          <label>Divisa</label>
+          <md-select class="md-selectStyle" ng-model="conciliacionManCtrl.divisa" ng-change="conciliacionManCtrl.buscarCuentas()">
+            <md-option ng-value="tipo.IdDivisa" ng-repeat="tipo in conciliacionManCtrl.divisas">{{tipo.NombreCorto}}</md-option>
+          </md-select>
+      </md-input-container>
+    </div>
+    <div flex="5" class="td-MCuentaCorriente"></div>
+    <div flex="35" style="width:50px; text-align:center;" title="'Cuenta'">
+      <md-input-container class="md-block">
+          <label>Cuenta</label>
+          <md-select class="md-selectStyle" ng-model="conciliacionManCtrl.cuentaCorriente" ng-change="conciliacionManCtrl.buscaViaLiq()">
+            <md-option ng-value="cuenta.IdCuentaCorriente" ng-repeat="cuenta in conciliacionManCtrl.cuentas">{{cuenta.Alias}} {{cuenta.Cuenta}}</md-option>
+          </md-select>
+      </md-input-container>
+    </div>
+    <div flex="5" class="td-MCuentaCorriente"></div>
+    <div flex="45" class="td-MCuentaCorriente">
+      <span style="display:block; margin-bottom:-18px;">Estatus:</span>
+      <md-input-container>
+          N <md-checkbox ng-checked="conciliacionManCtrl.checkFiltro('N')" ng-click="conciliacionManCtrl.addStatus('N');" class="md-checkbox md-primary" aria-label="Checkbox 1"></md-checkbox>
+      </md-input-container>
+       <md-input-container>
+          T,P <md-checkbox ng-checked="conciliacionManCtrl.checkFiltro('T')" ng-click="conciliacionManCtrl.addStatus('T');" class="md-checkbox md-primary" aria-label="Checkbox 1"></md-checkbox>
+      </md-input-container>
+      <md-input-container>
+          C <md-checkbox ng-checked="conciliacionManCtrl.checkFiltro('C')" ng-click="conciliacionManCtrl.addStatus('C');" class="md-checkbox md-primary" aria-label="Checkbox 1"></md-checkbox>
+      </md-input-container>
+    </div>
+    <div flex="35" class="td-MCuentaCorriente" permisopantalla permiso="11" idpantalla="23">
+      <md-input-container ng-hide="conciliacionManCtrl.fechaHistorico">
+        <span style="display:block; margin-top:-18px; text-align:center;">Correcciones Internas</span>
+        <md-checkbox  ng-click="conciliacionManCtrl.checkCorreccionesInternas();" class="md-checkbox md-primary" aria-label="Checkbox 2" ng-model="conciliacionManCtrl.internCorrectionCheck"></md-checkbox>
+      </md-input-container>
+    </div>
+    <div flex="20" class="td-MCuentaCorriente">
+      <md-input-container ng-hide="conciliacionManCtrl.fechaHistorico">
+          <md-tooltip md-direction="top">Aplicar filtro por Concepto y Emision</md-tooltip>
+          <span style="display:block; margin-top:-18px; text-align:center;">Ayuda</span>
+           <md-checkbox ng-disabled="conciliacionManCtrl.internCorrectionCheck" ng-model="conciliacionManCtrl.checkAyuda" ng-click="conciliacionManCtrl.getAyuda()" class="md-checkbox md-primary" aria-label="Checkbox 1">
+          </md-checkbox>
+      </md-input-container>
+    </div>
+    <div flex="8" class="td-MCuentaCorriente">
+        <h8></h8>
+        <md-button class="md-raised md-primary" ng-click="conciliacionManCtrl.refreshAll()" ng-disabled="conciliacionManCtrl.fecha === null">Filtrar</md-button>
+    </div>
+    <div flex="8" class="dropdown">
+        <h8></h8>
+        <md-button permisopantalla permiso="8" idpantalla="23" class="md-raised md-warn" ng-click="conciliacionManCtrl.ConfirmAction('conciliate')" ng-hide="conciliacionManCtrl.fechaHistorico" ng-disabled="conciliacionManCtrl.cuentaCorriente === ''">Conciliación</md-button>
+    </div>
+    <div flex="8" >
+        <h8></h8>
+        <md-button permisopantalla permiso="5" idpantalla="23" class="md-raised md-warn" ng-click="conciliacionManCtrl.ConfirmAction('desconciliate')" ng-hide="conciliacionManCtrl.fechaHistorico" ng-disabled="conciliacionManCtrl.cuentaCorriente === ''">Desconciliación</md-button>
+    </div>
+  </div>
+
+  <div flex>
+    <div layout="row">
+      <div flex>
+        <div ng-class="conciliacionManCtrl.tablesHeight">
+        <table id="tSearchA" style="width:100%;" st-table="conciliacionManCtrl.displayedCollectionA" st-safe-src="conciliacionManCtrl.informacionA" class="table-bordered table-striped apesaFont14" id="tablaConciliacionManual1">
+          <thead style="border: 0;color: white;background: #22224b;" fix-head>
+            <tr>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseA === false ? conciliacionManCtrl.sortDataA('', $event) : conciliacionManCtrl.sortDataA('Check', $event)"></th>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseA === false ? conciliacionManCtrl.sortDataA('', $event) : conciliacionManCtrl.sortDataA('Origen', $event)">Origen</th>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseA === false ? conciliacionManCtrl.sortDataA('', $event) : conciliacionManCtrl.sortDataA('TipoPago', $event)">Oper.</th>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseA === false ? conciliacionManCtrl.sortDataA('', $event) : conciliacionManCtrl.sortDataA('Descripcion', $event)">Instrucción</th>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseA === false ? conciliacionManCtrl.sortDataA('', $event) : conciliacionManCtrl.sortDataA('Importe', $event)">Importe</th>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseA === false ? conciliacionManCtrl.sortDataA('', $event) : conciliacionManCtrl.sortDataA('Sentido', $event)">Mov.</th>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseA === false ? conciliacionManCtrl.sortDataA('', $event) : conciliacionManCtrl.sortDataA('Status', $event)">Est.</th>
+            </tr>
+            <tr>
+              <td colspan="7">
+                <input ng-model="conciliacionManCtrl.filtroGlobA" st-search placeholder="Búsqueda global" class="input-sm form-control" type="text"/>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="registro in conciliacionManCtrl.displayedCollectionA | filter : {Origen:conciliacionManCtrl.origenA,ClaveCepto:conciliacionManCtrl.ayudaCeptoA,FiltroConcilManual:conciliacionManCtrl.ayudaFiltroConcilManual,Importe:conciliacionManCtrl.ayudaImporteConcilManual} | filter: conciliacionManCtrl.filtroGlobA | orderBy:conciliacionManCtrl.SortbyA: conciliacionManCtrl.reverseA" ng-style="{'background-color': registro.Check ? '#345BE9' : '','color': registro.Check ? 'white' : ''}">
+              <td style="text-align: center;width:20px;"><input type="checkbox" ng-model="registro.Check" ng-click="conciliacionManCtrl.AddDetail('sideA', registro);"/></td>
+              <td style="text-align: center;width:55px;" title="'{{registro.Origen}}'"><div class="overflow-dots">{{registro.Origen}}</div></td>
+              <td style="text-align: center;width:160px;" title="'{{registro.TipoPago}}'"><div class="overflow-dots">{{registro.TipoPago}}</div></td>
+              <td style="text-align: left;width:160px;" title="'{{registro.Descripcion}}'"><div class="overflow-dots">{{registro.Descripcion}}</div></td>
+              <td style="text-align: right;width:70px;" title="'{{registro.Importe}}'">{{registro.Importe | currency:''}}</td>
+              <td style="text-align: center;width:40px;" title="'{{registro.Sentido}}'" >{{registro.Sentido.substring(0,1)}}</td>
+              <td style="text-align: center;width:40px;" title="'{{registro.IdMotivoSistema === 24 ? 'Pre-Conciliada' : registro.Status}}'">{{registro.IdMotivoSistema === 24 ? registro.Status + '*' : registro.Status}}</td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div flex style="margin-left:15px;">
+        <div ng-class="conciliacionManCtrl.tablesHeight">
+        <table id="tSearchB" style="width: 100%;" st-table="conciliacionManCtrl.displayedCollectionB" stSearch  st-safe-src="conciliacionManCtrl.informacionB" class="table-bordered table-striped apesaFont14" id="tablaConciliacionManual2">
+          <thead style="border: 0;color: white;background: #22224b;" fix-head>
+            <tr>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseB === false ? conciliacionManCtrl.sortDataB('', $event) : conciliacionManCtrl.sortDataB('Check', $event)"></th>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseB === false ? conciliacionManCtrl.sortDataB('', $event) : conciliacionManCtrl.sortDataB('Origen', $event)">Origen</th>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseB === false ? conciliacionManCtrl.sortDataB('', $event) : conciliacionManCtrl.sortDataB('TipoPago', $event)" >Oper.</th>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseB === false ? conciliacionManCtrl.sortDataB('', $event) : conciliacionManCtrl.sortDataB('Descripcion', $event)">Instrucción</th>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseB === false ? conciliacionManCtrl.sortDataB('', $event) : conciliacionManCtrl.sortDataB('Importe', $event)" >Importe</th>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseB === false ? conciliacionManCtrl.sortDataB('', $event) : conciliacionManCtrl.sortDataB('Sentido', $event)" >Mov.</th>
+              <th style="text-align:center;" ng-click="conciliacionManCtrl.reverseB === false ? conciliacionManCtrl.sortDataB('', $event) : conciliacionManCtrl.sortDataB('Status', $event)" >Est.</th>
+            </tr>
+            <tr>
+              <td colspan="7">
+                <input ng-model="conciliacionManCtrl.filtroGlobB" st-search placeholder="Búsqueda global" class="input-sm form-control" type="text"/>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="registro in conciliacionManCtrl.displayedCollectionB | filter : {Origen:conciliacionManCtrl.origenB,ClaveCepto:conciliacionManCtrl.ayudaCeptoB,FiltroConcilManual:conciliacionManCtrl.ayudaFiltroConcilManual,Importe:conciliacionManCtrl.ayudaImporteConcilManual} | filter: conciliacionManCtrl.filtroGlobB | orderBy:conciliacionManCtrl.SortbyB: conciliacionManCtrl.reverseB" ng-style="{'background-color': registro.Check ? '#345BE9' : '','color': registro.Check ? 'white' : ''}">
+              <td style="text-align: center;width:20px;"><input type="checkbox" ng-model="registro.Check" ng-click="conciliacionManCtrl.AddDetail('sideB', registro);"/></td>
+              <td style="text-align: center;width:55px;" title="'{{registro.Origen}}'"><div class="overflow-dots">{{registro.Origen}}</div></td>
+              <td style="text-align: center;width:160px;" title="'{{registro.TipoPago}}'" ><div class="overflow-dots">{{registro.TipoPago}}</div></td>
+              <td style="text-align: left;width:160px;" title="'{{registro.Descripcion}}'" ><div class="overflow-dots">{{registro.Descripcion}}</div></td>
+              <td style="text-align: right;width:70px;" title="'{{registro.Importe}}'">{{registro.Importe | currency:''}}</td>
+              <td style="text-align: center;width:40px;" title="'{{registro.Sentido}}'" >{{registro.Sentido.substring(0,1)}}</td>
+              <td style="text-align: center;width:40px;" title="'{{registro.IdMotivoSistema === 24 ? 'Pre-Conciliada' : registro.Status}}'">{{registro.IdMotivoSistema === 24 ? registro.Status + '*' : registro.Status}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </div>
+  <br>
+</div>
+<loading-modal class="modal show" loadshow="conciliacionManCtrl.loading" data-backdrop="static"/>

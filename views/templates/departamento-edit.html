@@ -1,0 +1,98 @@
+<md-dialog style="width:670px;">
+  <form style="padding-top:20px; margin-left:10px;" name="departamentoCtrl.DepartamentoForm" class="form-horizontal" ng-submit="Save()" role="form" novalidate>
+    <div layout="row" class="panel-body" style="height:50px;">
+      <div flex="10"></div>
+      <div flex="50">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[departamentoCtrl.DepartamentoForm.ClaveDepto.$valid]">
+          <label for="ClaveDepto" class="control-label">Clave</label>
+          <input type="text" class="form-control" id="ClaveDepto" name="ClaveDepto" maxlength="40" placeholder="Clave departamento" ng-model="departamentoCtrl.deptoEdit.Departamento.Clave" tabindex="1" ng-disabled="departamentoCtrl.readOnlyEditDiv || departamentoCtrl.deptoEdit.Departamento.editable === false || !departamentoCtrl.permisoGeneral" autocomplete="off" required capitalize>
+          <span ng-show="departamentoCtrl.DepartamentoForm.ClaveDepto.$dirty && departamentoCtrl.DepartamentoForm.ClaveDepto.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="departamentoCtrl.DepartamentoForm.ClaveDepto.$dirty && departamentoCtrl.DepartamentoForm.ClaveDepto.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+      <div flex="10"></div>
+      <div flex="30">
+        <center>
+          <button class="btn btn-primary btn-md" title="Guardar" ng-click="departamentoCtrl.checkDataReg()" ng-disabled="departamentoCtrl.DepartamentoForm.$invalid || !departamentoCtrl.DepartamentoForm.$dirty || departamentoCtrl.disabledSave" tabindex="6" ng-hide="departamentoCtrl.readOnlyEditDiv">
+            <span class="glyphicon glyphicon-saved"></span>
+          </button>
+          <label for="IdDepartamento" class="control-label" ng-hide="!departamentoCtrl.readOnlyEditDiv" style="margin:15px;">Id Depto: {{departamentoCtrl.deptoEdit.Departamento.IdDepartamento}}</label>
+          <button class="btn btn-primary btn-md" title="Cancelar" tabindex="7" ng-click="departamentoCtrl.viewDialog()">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </center>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px; margin-bottom:10px;">
+      <div flex="10"></div>
+      <div flex="80">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[departamentoCtrl.DepartamentoForm.Nombre.$valid]">
+          <label for="Nombre" class="control-label">Nombre Corto</label>
+          <input type="text" class="form-control" id="Nombre" name="Nombre" tabindex="2" maxlength="40" placeholder="Nombre corto" ng-model="departamentoCtrl.deptoEdit.Departamento.Nombre" ng-disabled="departamentoCtrl.readOnlyEditDiv || !departamentoCtrl.permisoGeneral" autocomplete="off" required capitalize>
+          <span ng-show="departamentoCtrl.DepartamentoForm.Nombre.$dirty && departamentoCtrl.DepartamentoForm.Nombre.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="departamentoCtrl.DepartamentoForm.Nombre.$dirty && departamentoCtrl.DepartamentoForm.Nombre.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px; margin-bottom:10px;">
+      <div flex="10"></div>
+      <div flex="80">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[departamentoCtrl.DepartamentoForm.Descripcion.$valid]">
+          <label for="Descripcion" class="control-label">Descripción</label>
+          <input type="text" class="form-control" id="Descripcion" name="Descripcion" tabindex="3" maxlength="40" placeholder="Descripción" ng-model="departamentoCtrl.deptoEdit.Departamento.Descripcion" ng-disabled="departamentoCtrl.readOnlyEditDiv || !departamentoCtrl.permisoGeneral" autocomplete="off" required capitalize>
+          <span ng-show="departamentoCtrl.DepartamentoForm.Descripcion.$dirty && departamentoCtrl.DepartamentoForm.Descripcion.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="departamentoCtrl.DepartamentoForm.Descripcion.$dirty && departamentoCtrl.DepartamentoForm.Descripcion.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+    </div>
+  </br>
+    <div layout="row" class="panel-body" style="height:50px; margin-bottom:10px;">
+        <div flex="10"></div>
+        <div flex="30">
+          <label for="Activo" style="margin-top:5px;" class="control-label" >Activo</label>
+          <md-switch class="md-primary" style="margin-top:-2px;" ng-disabled="departamentoCtrl.readOnlyEditDiv || !departamentoCtrl.permisoGeneral" ng-model="departamentoCtrl.deptoEdit.Departamento.Activo" aria-label="Switch 2" tabindex="4" ng-true-value="1" ng-false-value="0">
+          </md-switch>
+        </div>
+        <div flex="30"></div>
+        <div flex="20" style="padding-top:20px; margin-left:50px;">
+            <button class="btn btn-primary btn-md" title="Conceptos" ng-click="departamentoCtrl.viewConceptos()">
+              Conceptos
+            </button>
+        </div>
+      </div>
+      <br>
+      <div layout="row" class="panel-body" style="height:50px; padding-left:40px;">
+        <div style="width:95%">
+            <hr class="stlyeHr" style="padding-left:10px;">
+        </div>
+      </div>
+    <div layout="row" class="panel-body" style="height:50px; margin-bottom:10px;">
+      <div flex="10"></div>
+      <div flex="80">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[departamentoCtrl.DepartamentoForm.CuentaContable.$valid]">
+          <label for="CuentaContable" class="control-label">Cuenta Contable</label>
+          <input admin-mask mask="{{departamentoCtrl.mascara}}" mask-char="-" type="text" class="form-control" id="CuentaContable" tabindex="3" maxlength="60" placeholder="{{departamentoCtrl.mascara}}" ng-model="departamentoCtrl.deptoEdit.Departamento.CuentaContable" ng-disabled="departamentoCtrl.readOnlyEditDiv  || !departamentoCtrl.permisoContable " autocomplete="off" capitalize>
+          <span ng-show="departamentoCtrl.DepartamentoForm.CuentaContable.$dirty && departamentoCtrl.DepartamentoForm.CuentaContable.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="departamentoCtrl.DepartamentoForm.CuentaContable.$dirty && departamentoCtrl.DepartamentoForm.CuentaContable.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px; margin-bottom:10px;">
+      <div flex="10"></div>
+      <div flex="80">
+        <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[departamentoCtrl.DepartamentoForm.CuentaContableAjuste.$valid]">
+          <label for="CuentaContableAjuste" class="control-label">Cuenta Contable Ajuste</label>
+          <input admin-mask mask="{{departamentoCtrl.mascara}}" mask-char="-" type="text" class="form-control" id="CuentaContableAjuste" tabindex="3" maxlength="60" placeholder="{{departamentoCtrl.mascara}}" ng-model="departamentoCtrl.deptoEdit.Departamento.CuentaContableAjuste" ng-disabled="departamentoCtrl.readOnlyEditDiv || !departamentoCtrl.permisoContable" autocomplete="off" capitalize>
+          <span ng-show="departamentoCtrl.DepartamentoForm.CuentaContableAjuste.$dirty && departamentoCtrl.DepartamentoForm.CuentaContableAjuste.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+          <span ng-show="departamentoCtrl.DepartamentoForm.CuentaContableAjuste.$dirty && departamentoCtrl.DepartamentoForm.CuentaContableAjuste.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div layout="row" class="panel-body" style="height:50px"></div>
+  </form>
+</md-dialog>

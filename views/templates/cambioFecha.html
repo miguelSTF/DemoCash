@@ -1,0 +1,107 @@
+<md-dialog>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Cambio de Fecha</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="Close" ng-click="monitorCtrl.CloseChangeDate()">
+        <span class="glyphicon glyphicon-remove"></span>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content layout-align="center" style="padding-top:10px; height:100%; width:1100px;">
+    <div class="panel-body">
+      <form name="monitorCtrl.ChangeDateForm" ng-submit="monitorCtrl.ConfirmChangeDate()" novalidate>
+
+        <div layout="row" layout-align="center">
+            <div flex="50">
+                <md-input-container class="md-block">
+                <label>Departamento</label>
+                <md-select ng-disabled="true" ng-model="monitorCtrl.OperChangeDate.IdDepartamento" multiple="false" data-md-container-class="selectdemoSelectHeader" required>
+                    <md-optgroup label="Departamento">
+                        <md-option ng-value="departamento.IdDepartamento" ng-repeat="departamento in monitorCtrl.departamentos">{{departamento.Nombre}}</md-option>
+                    </md-optgroup>
+                </md-select>
+                </md-input-container>
+            </div>
+            <div flex="5"></div>
+            <div flex="45">
+                <md-input-container class="md-block">
+                <label>Concepto</label>
+                <md-select ng-disabled="true" ng-model="monitorCtrl.OperChangeDate.IdConceptoOriginal" multiple="false" data-md-container-class="selectdemoSelectHeader" required>
+                    <md-optgroup label="Concepto">
+                        <md-option ng-value="concepto.IdConcepto" ng-repeat="concepto in monitorCtrl.conceptos">{{concepto.Nombre}}</md-option>
+                    </md-optgroup>
+                </md-select>
+                </md-input-container>
+            </div>
+        </div>
+
+        <div layout="row" layout-align="center" style="padding-top:5px;" ng-hide="monitorCtrl.Spei1">
+          <div flex="50">
+            <md-input-container class="md-block">
+              <label>Contraparte de Negocio</label>
+              <md-select ng-disabled="true" ng-model="monitorCtrl.OperChangeDate.IdContraparte" data-md-container-class="selectdemoSelectHeader" multiple="false">
+                <md-option ng-value="cliente.IdContraparte" ng-repeat="cliente in monitorCtrl.clientes track by cliente.IdContraparte">{{cliente.NombreCorto}} ( {{cliente.IdClaveExterna}} )</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+
+          <div flex="5"></div>
+
+          <div flex="45">
+            <md-input-container class="md-block" class="md-block">
+              <label>Cuenta Contraparte</label>
+              <md-select ng-disabled="true" ng-model="monitorCtrl.OperChangeDate.IdCuentaContraparte" data-md-container-class="selectdemoSelectHeader" multiple="false">
+                <md-optgroup label="Cuenta Contraparte">
+                  <md-option ng-value="datos.IdCuentaContraparte" ng-repeat="datos in monitorCtrl.cuentas">{{datos.NombreBanco}} ( {{datos.Cuenta}} )</md-option>
+                </md-optgroup>
+              </md-select>
+            </md-input-container>
+          </div>
+        </div>
+
+        <div layout="row" layout-align="center" style="padding-top:5px;">
+            <div flex="20" ng-show="monitorCtrl.requiereIva === true" style="padding-left:10px">
+                <label>Monto sin IVA</label>
+                <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2">$</span>
+                    <input ng-disabled="true" name="MontoSinIva" id="MontoSinIva" type="text" class="form-control" ng-model="monitorCtrl.montoSinIva" ng-currency/>
+                </div>
+            </div>
+            <div flex="20" style="padding-left:10px" ng-show="monitorCtrl.requiereIva === true" >
+                <label >IVA </label>
+                <div class="input-group">
+                <span class="input-group-addon" id="sizing-addon2">$</span>
+                <input ng-disabled="true"  id="Iva" type="text" class="form-control" ng-model="monitorCtrl.Payload.Iva" ng-currency readonly/>
+                </div>
+            </div>
+            <div flex="20" style="padding-left:10px">
+                <label ng-show="!monitorCtrl.requiereIva">Monto</label>
+                <label ng-show="monitorCtrl.requiereIva">Monto con IVA</label>
+                <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2">$</span>
+                    <input ng-disabled="true" name="Monto" id="Monto" type="text" class="form-control" ng-model="monitorCtrl.OperChangeDate.Importe" ng-currency ng-change="monitorCtrl.DesglosaIva()" required/>
+                </div>
+            </div>
+
+            <div flex="20" style="position:center;padding-left:20px;">
+                <label>Referencia</label>
+                <input ng-disabled="true" type="text" class="form-control" ng-model="monitorCtrl.OperChangeDate.Referencia" />
+            </div>
+
+            <div flex="20" style="position:center;padding-left:10px;">
+                <label>Fecha</label>
+                <md-datepicker ng-change="monitorCtrl.compareDate()" ng-model="monitorCtrl.OperChangeDate.FechaValor" md-min-date="monitorCtrl.fechaOper" md-date-filter="monitorCtrl.onlyWeekendsPredicate"/>
+            </div>
+        </div>
+
+        <div layout="row">
+          <div flex="80"></div>
+          <div flex="20" style="text-align: right">
+            <md-button type="submit" class="md-raised md-primary" ng-disabled="!monitorCtrl.different">Guardar Cambio</md-button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </md-dialog-content>
+</md-dialog>

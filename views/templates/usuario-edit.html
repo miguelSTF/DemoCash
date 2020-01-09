@@ -1,0 +1,206 @@
+<md-dialog style="width:900px;">
+    <form style="padding-top:20px;" name="usuarioCtrl.UsuarioForm" class="form-horizontal" ng-submit="Save()" role="form" novalidate>
+      <div layout="row" class="panel-body" style="height:50px">
+        <div flex="10"></div>
+        <div flex="50">
+          <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[usuarioCtrl.UsuarioForm.Clave.$valid]">
+            <label for="Clave" class="control-label">Clave</label>
+            <input type="text" class="form-control" id="Clave" name="Clave" maxlength="40" placeholder="Clave usuario" ng-change="usuarioCtrl.formDirty=true;" ng-model="usuarioCtrl.userEdit.Usuario.Clave" ng-disabled="usuarioCtrl.readOnlyEditDiv || !usuarioCtrl.permisoGeneral" tabindex="1" autocomplete="off" required capitalize>
+            <span ng-show="usuarioCtrl.UsuarioForm.Clave.$dirty && usuarioCtrl.UsuarioForm.Clave.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+            <span ng-show="usuarioCtrl.UsuarioForm.Clave.$dirty && usuarioCtrl.UsuarioForm.Clave.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+          </div>
+        </div>
+        <div flex="10"></div>
+        <div flex="30">
+          <center>
+            <button class="btn btn-primary btn-md" title="Guardar" ng-click="usuarioCtrl.checkDataReg();" ng-disabled="usuarioCtrl.userEdit.Usuario.Password !== usuarioCtrl.userEdit.Usuario.passwordConfirm || !usuarioCtrl.checkDirty() || usuarioCtrl.UsuarioForm.$invalid || usuarioCtrl.disabledSave" tabindex="5" ng-hide="usuarioCtrl.readOnlyEditDiv">
+              <span class="glyphicon glyphicon-saved"></span>
+            </button>
+            <label for="IdUsuario" class="control-label" ng-hide="!usuarioCtrl.readOnlyEditDiv" style="margin:15px;">Id Usuario: {{usuarioCtrl.userEdit.Usuario.Id43S4301R1731}}</label>
+            <button class="btn btn-primary btn-md" title="Cancelar" tabindex="6" ng-click="usuarioCtrl.viewDialog()">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+          </center>
+        </div>
+      </div>
+      <br><br>
+      <div layout="row" class="panel-body" style="height:50px">
+        <div flex="10"></div>
+        <div flex="70">
+          <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[usuarioCtrl.UsuarioForm.NombreUser.$valid]">
+            <label for="NombreUser" class="control-label">Nombre</label>
+            <input ng-change="usuarioCtrl.formDirty=true;" type="text" class="form-control" id="NombreUser" name="NombreUser" maxlength="40" placeholder="Nombre usuario" ng-model="usuarioCtrl.userEdit.Usuario.Nombre" tabindex="2" ng-disabled="usuarioCtrl.readOnlyEditDiv || !usuarioCtrl.permisoGeneral" autocomplete="off" required capitalize>
+            <span ng-show="usuarioCtrl.UsuarioForm.NombreUser.$dirty && usuarioCtrl.UsuarioForm.NombreUser.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+            <span ng-show="usuarioCtrl.UsuarioForm.NombreUser.$dirty && usuarioCtrl.UsuarioForm.NombreUser.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+          </div>
+        </div>
+      </div>
+      <br><br>
+      <div layout="row" class="panel-body" style="height:50px">
+        <div flex="10"></div>
+        <div flex="70">
+          <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[usuarioCtrl.UsuarioForm.CorreoUser.$valid]">
+            <label for="CorreoUser" class="control-label">Correo</label>
+            <div class="input-group">
+              <span class="input-group-addon" id="sizing-addon2">@</span>
+              <input ng-change="usuarioCtrl.formDirty=true;" type="text" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" class="form-control" id="CorreoUser" tabindex="3" name="CorreoUser" maxlength="40" placeholder="Correo" ng-model="usuarioCtrl.userEdit.Usuario.Correo" ng-disabled="usuarioCtrl.readOnlyEditDiv || !usuarioCtrl.permisoGeneral" autocomplete="off" required>
+            </div>
+            <span ng-show="usuarioCtrl.UsuarioForm.CorreoUser.$dirty && usuarioCtrl.UsuarioForm.CorreoUser.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+            <span ng-show="usuarioCtrl.UsuarioForm.CorreoUser.$dirty && usuarioCtrl.UsuarioForm.CorreoUser.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+          </div>
+        </div>
+      </div>
+       <br/>
+       <br/>
+       <div layout="row"  class="panel-body" style="height:50px" ng-if="usuarioCtrl.insert === 1 && usuarioCtrl.modoLogin === '1'">
+          <div flex="10"></div>
+          <div flex="30">
+              <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[usuarioCtrl.UsuarioForm.PasswordUser.$valid]">
+                  <label for="PasswordUser" class="control-label">Contraseña</label>
+                  <div class="input-group">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                    <input type="password" class="form-control" id="PasswordUser" tabindex="3" maxlength="100" name="PasswordUser" placeholder="Contraseña" ng-model="usuarioCtrl.userEdit.Usuario.Password" ng-disabled="usuarioCtrl.readOnlyEditDiv || !usuarioCtrl.permisoGeneral" oncopy="return false" onpaste="return false" autocomplete="off" ng-required="usuarioCtrl.insert === 1">
+                  </div>
+                  <span ng-show="usuarioCtrl.UsuarioForm.PasswordUser.$dirty && usuarioCtrl.UsuarioForm.PasswordUser.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                  <span ng-show="usuarioCtrl.UsuarioForm.PasswordUser.$dirty && usuarioCtrl.UsuarioForm.PasswordUser.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+              </div>
+          </div>
+          <div flex="5"></div>
+          <div flex="30">
+              <div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[usuarioCtrl.UsuarioForm.PasswordConfirmUser.$valid && usuarioCtrl.userEdit.Usuario.Password === usuarioCtrl.userEdit.Usuario.passwordConfirm]">
+                  <label for="PasswordConfirmUser" class="control-label">Confirmar Contraseña</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                    <input type="password" class="form-control" id="PasswordConfirmUser" tabindex="3" maxlength="100" name="PasswordConfirmUser" placeholder="Confirmar Contraseña" ng-model="usuarioCtrl.userEdit.Usuario.passwordConfirm" ng-disabled="usuarioCtrl.readOnlyEditDiv || !usuarioCtrl.permisoGeneral" oncopy="return false" onpaste="return false" autocomplete="off" ng-required="usuarioCtrl.insert === 1">
+                  </div>
+                  <span ng-show="usuarioCtrl.UsuarioForm.PasswordConfirmUser.$valid && usuarioCtrl.userEdit.Usuario.Password === usuarioCtrl.userEdit.Usuario.passwordConfirm" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                  <span ng-show="usuarioCtrl.UsuarioForm.PasswordConfirmUser.$dirty && usuarioCtrl.UsuarioForm.PasswordConfirmUser.$invalid || usuarioCtrl.userEdit.Usuario.Password !== usuarioCtrl.userEdit.Usuario.passwordConfirm" class="glyphicon glyphicon-remove form-control-feedback"></span>
+              </div>
+          </div>
+          <div flex="5" style="padding-top:35px;">
+            <md-checkbox  style="left:30px;" ng-click="usuarioCtrl.showContrasena();" class="md-checkbox md-primary" aria-label="Checkbox 1"></md-checkbox>
+          </div>
+          <label style="padding-top:36px; padding-left:10px; font-size:12px;">Mostrar Contraseña</label>
+       </div>
+       <br/><br/>
+      <div layout="row" class="panel-body" style="height:50px">
+        <div flex="10"></div>
+        <div flex="30">
+            <md-input-container class="md-block">
+              <label>Tipo Usuario</label>
+              <md-select ng:class="{true:'has-success', false:'has-error'}[usuarioCtrl.UsuarioForm.Perfiles.$valid]" tabindex="3" ng-required="true" ng-disabled="usuarioCtrl.readOnlyEditDiv || !usuarioCtrl.permisoGeneral" ng-model="usuarioCtrl.userEdit.Usuario.TipoUsuario" multiple="false" md-on-close="usuarioCtrl.searchTypeUser = ''" data-md-container-class="selectdemoSelectHeader">
+                <md-select-header class="demo-select-header">
+                  <input ng-keydown="usuarioCtrl.handleKeyup($event)" ng-model="usuarioCtrl.searchTypeUser" ng-focus="usuarioCtrl.focusInput" type="search" placeholder="Buscar tipo usuario" class="demo-header-searchbox _md-text">
+                </md-select-header>
+                <md-optgroup label="Tipo Usuario">
+                  <md-option ng-click="usuarioCtrl.formDirtyDepto=true;" ng-value="item.Id" ng-repeat="item in usuarioCtrl.tiposUsuario | filter:usuarioCtrl.searchTypeUser">
+                    {{item.Nombre}}
+                  </md-option>
+                </md-optgroup>
+              </md-select>
+            </md-input-container>
+        </div>
+        <div flex="5" style="padding-top:20px;padding-right:30px; margin-right:5px;"></div>
+        <label style="padding-top:20px;padding-right:30px;" for="Activo" class="control-label">Activo </label>
+        <div flex="10">
+          <md-switch tabindex="3" ng-change="usuarioCtrl.formDirty=true;" class="md-primary" ng-disabled="usuarioCtrl.readOnlyEditDiv || !usuarioCtrl.permisoGeneral" ng-model="usuarioCtrl.userEdit.Usuario.Activo" aria-label="Switch 2" tabindex="4" ng-true-value="1" ng-false-value="0">
+          </md-switch>
+        </div>
+      </div>
+      <br><br>
+      <div layout="row" class="panel-body" style="height:50px">
+        <div flex="10"></div>
+        <div flex="30">
+          <div>
+            <md-input-container class="md-block">
+              <label>Perfiles de usuario</label>
+              <md-select tabindex="3" ng-required="true" ng-disabled="usuarioCtrl.readOnlyEditDiv || !usuarioCtrl.permisoGeneral" ng-model="usuarioCtrl.userEdit.Perfiles" multiple=""
+                  md-on-close="usuarioCtrl.searchPerfil = ''" data-md-container-class="selectdemoSelectHeader">
+                <md-select-header class="demo-select-header">
+                  <input ng-keydown="usuarioCtrl.handleKeyup($event)" ng-model="usuarioCtrl.searchPerfil" ng-focus="usuarioCtrl.focusInput" type="search" placeholder="Buscar perfil" class="demo-header-searchbox _md-text">
+                </md-select-header>
+                <md-optgroup label="Perfil">
+                  <md-option ng-click="usuarioCtrl.formDirtyPerfil=true;" ng-value="tipoPerfil" ng-selected="{{tipoPerfil.Selected}}" ng-repeat="tipoPerfil in usuarioCtrl.perfilesUsuarioF | filter:usuarioCtrl.searchPerfil">
+                    {{tipoPerfil.Clave}}
+                  </md-option>
+                </md-optgroup>
+              </md-select>
+            </md-input-container>
+          </div>
+        </div>
+        <div flex="5"></div>
+        <div flex="40">
+          <div>
+            <md-input-container class="md-block">
+              <label>Departamentos de usuario</label>
+              <md-select tabindex="3" ng:class="{true:'has-success', false:'has-error'}[usuarioCtrl.UsuarioForm.Perfiles.$valid]" ng-required="true" ng-disabled="usuarioCtrl.readOnlyEditDiv || !usuarioCtrl.permisoGeneral" ng-model="usuarioCtrl.depa" multiple="" md-on-close="usuarioCtrl.searchDepa = ''"
+                  data-md-container-class="selectdemoSelectHeader">
+                <md-select-header class="demo-select-header">
+                  <input ng-keydown="usuarioCtrl.handleKeyup($event)" ng-model="usuarioCtrl.searchDepa" ng-focus="usuarioCtrl.focusInput" type="search" placeholder="Buscar departamento" class="demo-header-searchbox _md-text">
+                </md-select-header>
+                <md-optgroup label="Departamento">
+                  <md-option ng-click="usuarioCtrl.formDirtyDepto=true;" ng-value="item" ng-selected="{{item.Selected}}" ng-repeat="item in usuarioCtrl.datosUsuario | filter:usuarioCtrl.searchDepa">
+                    {{item.Nombre}}
+                  </md-option>
+                </md-optgroup>
+              </md-select>
+            </md-input-container>
+          </div>
+        </div>
+      </div>
+      <br><br>
+      <div layout="row" class="panel-body" style="height:50px">
+        <div flex="15"></div>
+        <div flex="40">
+          <div class="form-group has-feedback">
+            <div layout="row" class="panel-body" style="height:25px">
+              <div flex="15">
+              </div>
+              <div flex="80">
+                <fieldset class="demo-fieldset">
+                  <legend class="demo-legend">Conceptos Disponibles:</legend>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <br>
+        <div layout="row" class="panel-body" style="height:25px">
+            <div flex="15"></div>
+            <div flex="70">
+              <md-content style="height:350px; " md-theme="altTheme">
+                  <section ng-repeat="ite in usuarioCtrl.depa ">
+                      <md-subheader style="height:45px;margin-top:0px;margin-bottom:0px;" class="md-primary" ng-click="usuarioCtrl.selectAll(ite); usuarioCtrl.formDirtyDepto=true;">
+                            {{ite.Nombre}}
+                      </md-subheader>
+                      <div style="padding-left: 40px;" flex="100" ng-repeat="item in ite.Conceptos |filter : {relacionDepa:true } ">
+                          <md-checkbox ng-disabled="usuarioCtrl.readOnlyEditDiv || !usuarioCtrl.permisoGeneral" class="md-primary" ng-model="item.Selected" ng-click="usuarioCtrl.formDirtyDepto=true;">
+                              {{item.Nombre}}
+                          </md-checkbox>
+                      </div>
+                  </section>
+              </md-content>
+        </div>
+      </div>
+     <br>
+      <div layout="row" class="panel-body" style="height:50px; padding-left:40px;">
+        <div style="width:95%">
+            <hr class="stlyeHr" style="padding-left:10px; position:relative; top:290px; ">
+        </div>
+      </div>
+    </br>
+      <div layout="row" class="panel-body" style="height:50px">
+          <div flex="10"></div>
+          <div flex="70">
+            <div class="form-group has-feedback" style="position:relative; top:260px" ng:class="{true:'has-success', false:'has-error'}[usuarioCtrl.UsuarioForm.CuentaContable.$valid]">
+              <label for="CuentaContable" class="control-label">Cuenta Contable</label>
+              <input ng-change="usuarioCtrl.formDirty=true;" admin-mask mask="{{usuarioCtrl.mascara}}" mask-char="-" type="text" class="form-control" id="CuentaContable"  maxlength="60" placeholder="{{usuarioCtrl.mascara}}" ng-model="usuarioCtrl.userEdit.Usuario.CuentaContable" tabindex="4" ng-disabled="usuarioCtrl.readOnlyEditDiv || !usuarioCtrl.permisoContable" autocomplete="off" capitalize>
+            </div>
+          </div>
+        </div>
+      <div layout="row" class="panel-body" style="height:50px"></div>
+      <br>
+    </form>
+    <br></br>
+  </md-dialog>

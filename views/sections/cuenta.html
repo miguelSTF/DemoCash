@@ -1,0 +1,79 @@
+<div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[BancoForm.Banco.$valid]" ng-form name="BancoForm">
+  <label for="Banco">Banco</label>
+  <select ng-keydown="UsoESC($event)" id="Banco" name="Banco" class="form-control" ng-model="Cuentas.Banco" ng-change="ValiCuent()"
+    ng-options="instituciones.NombreCortoInstitucion for instituciones in instituciones track by instituciones.IdInstitucion" required>
+    <option value="">--Seleccione un Banco--</option>
+  </select>
+  <span ng-show="BancoForm.Banco.$valid" class="glyphicon form-control-feedback"></span>
+  <span ng-show="BancoForm.Banco.$invalid" class="glyphicon form-control-feedback"></span>
+</div>
+<div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[TipoCuentaForm.TipoCuenta.$valid]" ng-form name="TipoCuentaForm">
+  <label for="Tipocuenta">Tipo de Cuenta</label>
+  <select ng-keydown="UsoESC($event)" id="TipoCuenta" name="TipoCuenta" class="form-control" ng-model="Cuentas.TipoCuenta"
+    ng-options="tipoCuenta.Descripcion for tipoCuenta in tipoCuenta track by tipoCuenta.IdTipocuenta" required>
+    <option value="">--Seleccione un Tipo de Cuenta--</option>
+  </select>
+  <span ng-show="TipoCuentaForm.TipoCuenta.$valid" class="glyphicon form-control-feedback"></span>
+  <span ng-show="TipoCuentaForm.TipoCuenta.$invalid" class="glyphicon form-control-feedback"></span>
+</div>
+
+<div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[DivisaForm.divisa.$valid]" ng-form name="DivisaForm">
+  <label for="divisa">Divisa</label>
+  <select ng-keydown="UsoESC($event)" id="divisa" name="divisa" class="form-control" ng-model="Cuentas.Divisa"
+    ng-options="divisa.NomCorto for divisa in divisa track by divisa.IdDivisa"  required>
+    <option value="">--Seleccione una Divisa--</option>
+  </select>
+  <span ng-show="DivisaForm.divisa.$valid" class="glyphicon form-control-feedback"></span>
+  <span ng-show="DivisaForm.divisa.$invalid" class="glyphicon form-control-feedback"></span>
+</div>
+
+<div class="form-group has-feedback" ng-class="{'has-error' : !Resultado,'has-success' : Resultado}"  ng-form name="CuentaForm">
+  <label for="Cuenta">Cuenta</label>
+  <input ng-keydown="UsoESC($event)" name="cuenta" ng-change="ValiCuent()" type="text" class="form-control" maxlength="255" id="cuenta" placeholder="Cuenta" ng-model="Cuentas.Cuenta" autocomplete="off" capitalize required >
+  <span ng-show="CuentaForm.cuenta.$valid && CuentaForm.cuenta.$dirty && Resultado" class="glyphicon glyphicon-ok form-control-feedback"></span>
+  <span ng-show="CuentaForm.cuenta.$dirty && !Resultado" class="glyphicon glyphicon-remove form-control-feedback"></span>
+</div>
+
+<div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[DireccionForm.direccion.$valid]" ng-form name="DireccionForm">
+  <label for="Direccion">Dirección</label>
+  <input ng-keydown="UsoESC($event)" name="direccion" type="text" class="form-control" maxlength="255" id="Direccion" placeholder="Direccion" ng-model="Cuentas.Direccion" autocomplete="off" required capitalize>
+  <span ng-show="DireccionForm.direccion.$dirty && DireccionForm.direccion.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+  <span ng-show="DireccionForm.direccion.$dirty && DireccionForm.direccion.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+</div>
+
+<div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[AliasForm.alias.$valid]" ng-form name="AliasForm">
+  <label for="Alias">Alias</label>
+  <input ng-keydown="UsoESC($event)" name="alias" type="text" class="form-control" maxlength="255" id="Alias" placeholder="Alias" ng-model="Cuentas.Alias" autocomplete="off"  required capitalize>
+  <span ng-show="AliasForm.alias.$dirty && AliasForm.alias.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+  <span ng-show="AliasForm.alias.$dirty && AliasForm.alias.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+</div>
+
+<div class="form-group has-feedback" ng:class="{true:'has-success', false:'has-error'}[ViaLiquidacionForm.vialiq.$valid]" ng-form name="ViaLiquidacionForm">
+  <label for="Vialiq">Via Liquidación</label>
+  <select ng-keydown="UsoESC($event)" id="vialiq" name="vialiq" class="form-control" ng-model="Cuentas.Vialiquidacion"
+    ng-options="vialiquidacion.NombreCorto for vialiquidacion in vialiquidacion track by vialiquidacion.IdVialiquidacion" required>
+    <option value="">--Seleccione una Via de Liquidacion--</option>
+  </select>
+  <span ng-show="ViaLiquidacionForm.vialiq.$valid" class="glyphicon form-control-feedback"></span>
+  <span ng-show="ViaLiquidacionForm.vialiq.$invalid" class="glyphicon form-control-feedback"></span>
+</div>
+
+<div class="form-group">
+  <label for="Activo">Activo</label><br>
+  <a class="btn btn-info btn-lg" ng-click="ToggleActivoSingleCuenta();">
+    <span class="glyphicon" ng:class="{1:'glyphicon-thumbs-up', 0:'glyphicon-thumbs-down'}[toggleActiveCuenta]"></span>
+  </a>
+</div>
+
+<div class="form-group">
+  <button class="btn btn-primary" ng-click="SaveAccount();"  ng-disabled="!Resultado || BancoForm.Banco.$invalid || TipoCuentaForm.TipoCuenta.$invalid || DivisaForm.divisa.$invalid || CuentaForm.cuenta.$invalid || DireccionForm.direccion.$invalid || AliasForm.alias.$invalid  || ViaLiquidacionForm.vialiq.$invalid">
+    <span class="glyphicon glyphicon-floppy-disk"></span> Asociar cuenta
+  </button>
+  <button class="btn btn-primary" ng-click="CancelarEdicion();"  >
+    <span class="glyphicon glyphicon-remove"></span> Cancelar
+  </button>
+</div>
+
+<div class="form-group">
+
+</div>

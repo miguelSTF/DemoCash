@@ -1,0 +1,99 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Detalle de Registro</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="Close()" aria-label="Cerrar">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle">
+            <md-content class="md-padding">
+                  <div layout="row"  style="min-height:25px">
+                      <div flex="25">
+                                <strong>Fecha</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                          <p>
+                              {{fechaStr}}
+                          </p>
+                      </div>
+                      <div flex="20"></div>
+                  </div>
+                  <div layout="row"  style="min-height:25px">
+                    <div flex="25">
+                        <strong>Concepto</strong>
+                    </div>
+                    <div flex style="text-align:left;">
+                        <p>
+                         {{registro.Concepto}}
+                        </p>
+                    </div>
+                  </div>
+                     <div layout="row"  style="min-height:25px">
+                      <div flex="25">
+                                <strong>Referencia</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                           <p>{{registro.Referencia}}</p>
+                      </div>
+                      <div flex="20"></div>
+                      <div flex="25">
+                              <strong>Cargo</strong>
+                      </div>
+                      <div flex="25" style="text-align:right;">
+                              <p>
+                                  {{registro.Cargo | number:2}}
+                              </p>
+                      </div>
+                  </div>
+                    <div layout="row"  style="min-height:25px">
+                            <div flex="25">
+                                    <strong>Abono</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.Abono | number:2}}</p>
+                        </div>
+
+                      <div flex="20"></div>
+                      <div flex="25">
+                              <strong>Saldo</strong>
+                      </div>
+                      <div flex="25"  style="text-align:right;">
+                              <p>
+                                  {{registro.Saldo | number:2}}
+                              </p>
+                      </div>
+                  </div>
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Cuenta</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.Cuenta}}</p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25">
+                                <strong>Código</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                                <p>
+                                    {{registro.Codigo}}
+                                </p>
+                        </div>
+                    </div>
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Número Secuencia</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>{{registro.NumSecuencia }}</p>
+                        </div>
+                        <div flex="20"></div>
+                    </div>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>

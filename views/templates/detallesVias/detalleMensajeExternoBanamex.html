@@ -1,0 +1,133 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Detalle de Registro</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="Close()" aria-label="Cerrar">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="modalDetalle">
+            <md-content class="md-padding">
+                
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Fecha</strong>
+                        </div>
+                        <div flex="25"  style="text-align:right;">
+                            <p>
+                                {{registro.Fecha.substring(0,10)}}
+                            </p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25" style="text-align:left;">
+                                <strong>Depósito</strong>
+                        </div>
+                        <div flex="25"  style="text-align:right;">
+                                <p> 
+                                    {{registro.Deposito}}
+                                </p>
+                        </div>
+                    </div>
+
+                    <div layout="row"  style="min-height:25px">
+                        <div flex="25">
+                                    <strong>Retiro</strong>
+                        </div>
+                        <div flex="25"  style="text-align:right;">
+                            <p>
+                                {{registro.Retiro}}
+                            </p>
+                        </div>
+                        <div flex="20"></div>
+                        <div flex="25">
+                                <strong>Saldo</strong>
+                        </div>
+                        <div flex="25" style="text-align:right;">
+                            <p>
+                                {{registro.Saldo}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div layout="row"  style="min-height:25px" ng-show="!registro.Descripcion">
+                        <div flex="25" >
+                                    <strong>Referencia Numérica</strong>
+                        </div>
+                        <div flex="25" style="text-align:left;">
+                            <p>
+                                {{registro.RefNumerica}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div layout="row"  style="min-height:25px" ng-show="!registro.Descripcion">
+                        <div flex="25" >
+                                    <strong>Banco Emisor</strong>
+                        </div>
+                        <div flex="25" style="text-align:left;">
+                            <p>
+                                {{registro.BancoEmisor}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div layout="row"  style="min-height:25px" ng-show="!registro.Descripcion">
+                            <div flex="25">
+                                        <strong>Ordenante</strong>
+                            </div>
+                            <div flex style="text-align:left;">
+                                <p>
+                                {{registro.Ordenante}}
+                                </p>
+                            </div>
+                    </div>
+
+                    <div layout="row"  style="min-height:25px" ng-show="!registro.Descripcion">
+                        <div flex="25">
+                                    <strong>Autorización</strong>
+                        </div>
+                        <div flex style="text-align:left;">
+                            <p>{{registro.Autorizacion}}</p>
+                        </div>
+                    </div>
+
+                    <div layout="row"  style="min-height:25px" ng-show="!registro.Descripcion">
+                            <div flex="25">
+                                        <strong>Tipo de Pago</strong>
+                            </div>
+                            <div flex style="text-align:left;">
+                                <p>
+                                {{registro.TipoPago}}
+                                </p>
+                            </div>
+                    </div>
+
+                    <div layout="row"  style="min-height:25px" ng-show="!registro.Descripcion">
+                            <div flex="25">
+                                        <strong>Referencia Alfanumérica</strong>
+                            </div>
+                            <div flex style="text-align:left;">
+                                <p>
+                                {{registro.RefAlfaNumerica}}
+                                </p>
+                            </div>
+                    </div>
+
+                    <div layout="row"  style="min-height:25px" ng-show="registro.Descripcion">
+                        <div flex="25">
+                                    <strong>Descripción</strong>
+                        </div>
+                        <div flex style="text-align:left;">
+                            <p>
+                                {{registro.Descripcion}}
+                            </p>
+                        </div>
+                    </div>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>
+

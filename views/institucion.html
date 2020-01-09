@@ -1,0 +1,81 @@
+<div class="row positionPrincipalDiv" ng-init="institucionCtrl.init()">
+	<div layout="row" class="apesaFont14">
+		<div flex></div>
+		<div flex="8">
+			<md-button title="Agregar" permisopantalla permiso="2" idpantalla="8" ng-click="institucionCtrl.newEdit()" class="md-raised md-primary">Agregar</md-button>
+		</div>
+		<div flex="8" class="dropdown">
+			<md-button class="md-icon-button" ng-disabled="institucionCtrl.instituciones.length === 0 || institucionCtrl.instituciones === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+					<span class="glyphicon glyphicon-save" style="font-size:30px;"></span>
+			</md-button>
+			<ul class="table-export dropdown-menu excel-list" table-selector="'tablaInstitucion'" export-options="{type: 'excel', escape: true, htmlContent:'true', ignoreColumn : [6], tableName: 'Instituciones' }" aria-labelledby="dropdownMenu1">
+					<li onclick="export_table_to_excel('tablaInstitucion','Instituciones','[1]','[6]')">
+							<span>Excel</span>
+					</li>
+					<li te-option te-value="'csv'" te-param="'type'">
+							<span>CSV</span>
+					</li>
+					<li te-option te-value="'txt'" te-param="'type'">
+							<span>TXT</span>
+					</li>
+			</ul>
+		</div>
+		<div flex="15" style="margin-left:-50px;"></div>
+	</div>
+	<center>
+		<table st-sticky-header st-table="institucionCtrl.intitucionesCollection" style="width:1000px;" st-safe-src="institucionCtrl.instituciones" class="table-bordered table-striped ng-table-monitor apesaFont14" id="tablaInstitucion">
+			<thead style="border: 0;color: white;background: #22224b;z-index:1;">
+				<tr style="border: 0;">
+					<th style="text-align:center; width:100px;" st-sort="Casfin">Casfim</th>
+					<th style="text-align:center; width:120px;" st-sort="NombreCorto">Nombre Corto</th>
+					<th style="text-align:center; width:360px;" st-sort="Nombre">Nombre</th>
+					<th style="text-align:center; width:110px;" st-sort="IdIndeval">Id Indeval</th>
+					<th style="text-align:center; width:110px;" st-sort="Bic">Clave BIC</th>
+					<th style="text-align:center; width:80px;" st-sort="Activo">Activo</th>
+					<th style="text-align:center; width:150px;"></th>
+				</tr>
+				<tr>
+					<td colspan="7">
+						<input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="institucion in institucionCtrl.intitucionesCollection">
+					<td style="width:100px;position:relative; text-align:center;" title="{{institucion.Casfin}}">
+						<div class="overflowContainer">{{institucion.Casfin}}</div>
+					</td>
+					<td style="width:120px;position:relative;" title="{{institucion.NombreCorto}}">
+						<div class="overflowContainer">{{institucion.NombreCorto}}</div>
+					</td>
+					<td style="width:360px;position:relative;" title="{{institucion.Nombre}}">
+						<div class="overflowContainer">{{institucion.Nombre}}</div>
+					</td>
+					<td style="width:110px;position:relative; text-align:center;" title="{{institucion.IdIndeval}}">
+						<div class="overflowContainer">{{institucion.IdIndeval}}</div>
+					</td>
+					<td style="width:110px;position:relative; text-align:center;" title="{{institucion.Bic}}">
+						<div class="overflowContainer">{{institucion.Bic}}</div>
+					</td>
+					<td style="text-align:center;width:80px;">
+						<span class="glyphicon"><md-switch ng-model="institucion.Activo" ng-disabled="true" class="md-primary md-switch" aria-label="Switch 2" ng-true-value="1" ng-false-value="0"></md-switch></span>
+						<span ng-hide="true">{{institucion.Activo === 1 ? 'Si' : 'No'}}</span>
+					</td>
+					<td style="text-align:center; color:#333;">
+							<span class="glyphicon"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-eye-open" title="Consultar" ng-click="institucionCtrl.watch(institucion)"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-pencil" permisopantalla permiso="3" idpantalla="8" title="Editar" ng-click="institucionCtrl.edit(institucion)"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-trash" permisopantalla permiso="4" idpantalla="8 " title="Borrar" ng-click="institucionCtrl.del(institucion)"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</center>
+	<br>
+</div>
+<loading-modal class="modal show" loadshow="institucionCtrl.loading" data-backdrop="static"/>

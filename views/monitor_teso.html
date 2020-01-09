@@ -1,0 +1,47 @@
+<div layout="column" class="positionPrincipalDiv" ng-init="monitorTesoCtrl.init()">
+      <div layout="row" layout-align="center center" style="height:40px;" class="apesaFont14">
+          <div flex="20">
+              <md-input-container class="md-block">
+                <label>Grupo Cuentas</label>
+                <md-select class="md-selectStyle" ng-change="monitorTesoCtrl.filterData()" ng-model="monitorTesoCtrl.cuenta" multiple="false" data-md-container-class="selectdemoSelectHeader" required>
+                    <md-option  ng-value="cuenta.IdGrupo" ng-repeat="cuenta in monitorTesoCtrl.gpoCuenta track by cuenta.IdGrupo">{{cuenta.Nombre}}</md-option>
+                </md-select>
+              </md-input-container>
+          </div>
+          <div flex="50" layout="row" layout-align="center center">
+              <md-radio-group layout="row" class="md-primary" ng-model="monitorTesoCtrl.filtro" ng-click="monitorTesoCtrl.filterData()">
+                <md-radio-button ng-repeat="filtro in monitorTesoCtrl.btnFilter" ng-value="filtro.value">
+                     <p style="padding-top:10px;"> {{filtro.label}} </p>
+                </md-radio-button>
+              </md-radio-group>
+          </div>
+          <div flex="20">
+              <span>Fecha</span>
+              <md-datepicker md-max-date="monitorTesoCtrl.maxDate" ng-change="monitorTesoCtrl.filterData()" ng-model="monitorTesoCtrl.fecha"></md-datepicker>
+          </div>
+          <div flex="10">
+              <h4 style="font-size:16px">
+                <strong>
+                 {{monitorTesoCtrl.Divisa}}
+                  <md-tooltip md-direction="top">Moneda</md-tooltip>
+                </strong>
+              </h4>
+          </div>
+      </div>
+      <div layout="row">
+        <div flex>
+          <table style="color:#333;" class="table-bordered table-striped table-hover ng-table-monitor">
+            <thead class="table-th-blue">
+              <tr>
+                <th class="td-MCuentaCorriente"> </th>
+                <th class="td-MCuentaCorriente">Grupo</th>
+                <th class="td-MCuentaCorriente">Programado</th>
+                <th class="td-MCuentaCorriente">Liquidado</th>
+                <th class="td-MCuentaCorriente">Por liquidar</th>
+              </tr>
+            </thead>
+            <tbody tree-grid-view content="{{monitorTesoCtrl.tesoreroData}}"></tbody>
+          </table>
+        </div>
+      </div>
+<loading-modal class="modal show" loadshow="monitorTesoCtrl.loading" data-backdrop="static" />

@@ -1,0 +1,63 @@
+<div class="row positionPrincipalDiv" ng-init="perfilCtrl.init()">
+    <div layout="row"  style="padding-right:45px;" class="apesaFont14">
+        <div flex></div>
+        <div flex="8">
+            <md-button title="Agregar" permisopantalla permiso="2" idpantalla="25"  ng-click="perfilCtrl.newEdit()" class="md-raised md-primary">Agregar</md-button>
+        </div>
+        <div flex="8" class="dropdown">
+            <md-button class="md-icon-button" ng-disabled="perfilCtrl.perfilesCollection.length === 0 || perfilCtrl.perfilesCollection === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+                <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+            </md-button>
+            <ul class="table-export dropdown-menu excel-list" table-selector="'tablaPerfiles'" export-options="{type: 'excel', escape: true, ignoreColumn: [2],tableName: 'Perfiles' }" aria-labelledby="dropdownMenu1">
+                <li onclick="export_table_to_excel('tablaPerfiles','Perfiles','[1]','[2]')">
+                    <span>Excel</span>
+                </li>
+                <li te-option te-value="'csv'" te-param="'type'">
+                    <span>CSV</span>
+                </li>
+                <li te-option te-value="'txt'" te-param="'type'">
+                    <span>TXT</span>
+                </li>
+            </ul>
+        </div>
+        <div flex="15" style="margin-left:-4px;"></div>
+    </div>
+    <center>
+        <table st-sticky-header style="width:840px;" st-table="perfilCtrl.perfilesCollection" st-safe-src="perfilCtrl.tipoPerfiles" class="table-bordered table-striped ng-table-monitor table-hover apesaFont14" id="tablaPerfiles">
+            <thead style="border: 0;color: white;background: #22224b;z-index:1;">
+                <tr style="border: 0;">
+                    <th style="text-align:center; width:540px;" st-sort="Clave">Nombre de Perfil</th>
+                    <th style="text-align:center; width:150px;" st-sort="Activo">Activo</th>
+                    <th style="text-align:center; width:150px;"></th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="perfil in perfilCtrl.perfilesCollection">
+                    <td style="width:540px; padding-left:60px" title="{{perfil.Clave}}"><div class="overflowContainer">{{perfil.Clave}} </div></td>
+                    <td style="text-align:center;width:150px;">
+                        <span class="glyphicon"><md-switch ng-model="perfil.Activo" ng-disabled="true" class="md-primary md-switch" aria-label="Switch 2" ng-true-value="1" ng-false-value="0"></md-switch></span>
+                        <span ng-hide="true">{{perfil.Activo === 1 ? 'Si' : 'No'}}</span>
+                    </td>
+                    <td style="text-align:center;width:150px; color:#333;">
+                        <span class="glyphicon"></span>
+                        <span class="glyphicon"></span>
+                        <span class="glyphicon glyphicon-eye-open" title="Consultar" ng-click="perfilCtrl.watch(perfil)"></span>
+                        <span class="glyphicon"></span>
+                        <span class="glyphicon"></span>
+                        <span class="glyphicon glyphicon-pencil" permisopantalla permiso="3" idpantalla="25" title="Editar" ng-click="perfilCtrl.edit(perfil)"></span>
+                        <span class="glyphicon"></span>
+                        <span class="glyphicon"></span>
+                        <span class="glyphicon glyphicon-trash" permisopantalla permiso="4" idpantalla="25" title="Borrar" ng-click="perfilCtrl.del(perfil)"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+    <br>
+</div>
+<loading-modal class="modal show" loadshow="perfilCtrl.loading" data-backdrop="static" />

@@ -1,0 +1,70 @@
+<div style="padding-top: 5%;padding-top: 100px;" ng-init="loginCtrl.setDominio()">
+</div>
+<div class="col-xs-offset-3" style="width: 50%;">
+  <nav class="navbar navbar-default" style="background-color: #22224b;">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" style="color: white">APESA IkosCash Acceso
+        </a>
+      </div>
+    </div>
+  </nav>
+  <br />
+  <div>
+    <center>
+      <form name="form" role="form" id="login_form" style="width: 60%;" ng-hide="loginCtrl.showChangePassword" ng-submit="loginCtrl.ValidateCredentials()">
+        <div class="form-group input-group">
+          <span class="input-group-addon"><span style="color: #22224b;font-size: 15px;" class="glyphicon glyphicon-user"></span></span>
+          <input placeholder="Nombre de Usuario" maxlength="40" type="text" name="user" id="user" class="form-control" autocomplete="off" ng-model="loginCtrl.username" required />
+        </div>
+        <div class="form-group input-group">
+          <span class="input-group-addon"><span style="color: #22224b" class="glyphicon glyphicon-lock"></span></span>
+          <input placeholder="Contraseña" maxlength="40" type="password" name="password" id="password" class="form-control" autocomplete="off" ng-model="loginCtrl.password" oncopy="return false" onpaste="return false" required />
+        </div>
+        <br>
+        <div align="center">
+          <button style="background-color: #22224b" type="reset" class="btn btn-primary">
+            Cancelar
+          </button>
+          <button style="background-color: #22224b" class="btn btn-primary" type="submit">
+            Iniciar Sesión
+          </button>
+        </div>
+      </form>
+      <form name="loginCtrl.changePassword" role="form" id="changePassword" style="width: 60%;" ng-show="loginCtrl.showChangePassword" novalidate>
+        <div class="form-group input-group" ng:class="{true:'has-success', false:'has-error'}[loginCtrl.passwordCurrent !== loginCtrl.passwordNew]">
+          <span class="input-group-addon"><span style="color: #22224b" class="glyphicon glyphicon-lock"></span></span>
+          <input placeholder="Contraseña nueva" maxlength="40" type="password" name="passwordNew" id="passwordNew" class="form-control" autocomplete="off" ng-model="loginCtrl.passwordNew" oncopy="return false" onpaste="return false" required />
+        </div>
+        <div class="form-group input-group" ng:class="{true:'has-success', false:'has-error'}[loginCtrl.changePassword.passwordNewConfirm.$valid && loginCtrl.passwordNew === loginCtrl.passwordNewConfirm]">
+          <span class="input-group-addon"><span style="color: #22224b" class="glyphicon glyphicon-lock"></span></span>
+          <input ng-disabled="loginCtrl.passwordCurrent === loginCtrl.passwordNew" placeholder="Confirmación" maxlength="40" type="password" name="passwordNewConfirm" id="passwordNewConfirm" class="form-control" autocomplete="off" ng-model="loginCtrl.passwordNewConfirm" oncopy="return false" onpaste="return false" required />
+        </div>
+        <div align="center" layout="row">
+          <div flex></div>
+          <div flex="45">
+            <button style="background-color: #22224b" type="reset" class="btn btn-primary" ng-click="loginCtrl.Cancel()">
+              Cancelar
+            </button>
+            <button style="background-color: #22224b" class="btn btn-primary" ng-click="loginCtrl.SaveChange()" >
+              Guardar
+            </button>
+          </div>
+          <div flex="5" style="margin-left:-3px; padding-top:6px;">
+            <md-checkbox ng-click="loginCtrl.showContrasena();" ng-model="loginCtrl.showData" class="md-checkbox md-primary" aria-label="Checkbox 1"></md-checkbox>
+          </div>
+          <div flex="5">
+            <h5 style="display:inline-block; width:130px; font-size:12px; padding-top:1px; margin-left:-9px;">Mostrar constraseña</h5>
+          </div>
+          <div flex></div>
+        </div>
+      </form>
+    </center>
+  </div>
+  &nbsp
+  <nav class="navbar navbar-default" style="background-color: #22224b;">
+    <img style="background-color: white; padding: 0" class="mg-responsive navbar-brand" src="images/logo.png" alt="" />
+    <div class="navbar-text navbar-right" style="padding-right: 4%; color: white"><label>LDAP : <strong>{{loginCtrl.dominio}}</strong> </label> </div>
+  </nav>
+</div>
+<loading-modal class="modal show" loadshow="loginCtrl.loading" data-backdrop="static"/>

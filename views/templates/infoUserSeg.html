@@ -1,0 +1,45 @@
+<md-dialog style="overflow-y: auto;overflow-x: hidden;width:670px; height:auto;">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Usuario: {{usuarioCtrl.userEdit.Usuario.Clave}}</h2>
+      <span flex></span>
+      <md-button permisopantalla permiso="31" idpantalla="7" title="Cambiar Contraseña" class="md-icon-button" ng-click="usuarioCtrl.ShowChangePass()" aria-label="Cerrar">
+        <span class="glyphicon glyphicon-refresh"></span>
+      </md-button>
+      <md-button permisopantalla permiso="32" idpantalla="7" title="Limpiar Sesiones" class="md-icon-button" ng-click="usuarioCtrl.ClearSessionsConfirm()" aria-label="Cerrar">
+        <span class="glyphicon glyphicon-erase"></span>
+      </md-button>
+      <md-button permisopantalla permiso="33" idpantalla="7" title="Desbloquear" class="md-icon-button" ng-click="usuarioCtrl.UnlockUserConfirm()" aria-label="Cerrar">
+        <span class="glyphicon glyphicon-eye-close"></span>
+      </md-button>
+      <md-button title="Cerrar" class="md-icon-button" ng-click="usuarioCtrl.CloseInfoSeg()" aria-label="Cerrar">
+        <span class="glyphicon glyphicon-remove"></span>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <div layout="row" class="panel-body">
+    <md-list flex>
+      <md-list-item>
+         <strong>Bloqueado: </strong> {{usuarioCtrl.userEdit.Usuario.Bloqueado ? 'Si' : 'No'}}
+      </md-list-item>
+      <md-list-item class="md-1-line">
+        <strong>Sesiones: </strong> {{usuarioCtrl.userEdit.Usuario.Sesiones}}
+      </md-list-item>
+      <md-list-item class="md-1-line">
+        <strong>Último Acceso: </strong> {{usuarioCtrl.userEdit.Usuario.UltimoAccesoS}}
+      </md-list-item>
+      <md-list-item class="md-1-line">
+        <strong>Cambio de Contraseña: </strong> {{usuarioCtrl.userEdit.Usuario.CambioPasswordS}}
+      </md-list-item>
+      <md-list-item class="md-1-line">
+        <strong>Último Bloqueo: </strong> {{usuarioCtrl.userEdit.Usuario.UltimoBloqueoS}}
+      </md-list-item>
+      <md-list-item class="md-1-line">
+        <strong>Accesos Fallidos: </strong> {{usuarioCtrl.userEdit.Usuario.AccesosFallidos}}
+      </md-list-item>
+      <md-list-item class="md-1-line">
+        <strong>Fecha Creación: </strong> {{usuarioCtrl.userEdit.Usuario.FechaCreacionS}}
+      </md-list-item>
+    </md-list>
+  </div>
+</md-dialog>

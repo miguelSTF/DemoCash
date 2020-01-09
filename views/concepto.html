@@ -1,0 +1,93 @@
+<div class="row positionPrincipalDiv" ng-init="conceptoCtrl.init()">
+	<div layout="row" class="apesaFont14">
+		<div flex="90"></div>
+		<div flex="8">
+			<md-button title="Agregar" permisopantalla permiso="2" idpantalla="10" ng-click="conceptoCtrl.newEdit()" class="md-raised md-primary">Agregar</md-button>
+		</div>
+		<div flex="8" class="dropdown">
+			<md-button class="md-icon-button" ng-disabled="conceptoCtrl.conceptos.length === 0 || conceptoCtrl.conceptos === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+				<span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+			</md-button>
+			<ul class="table-export dropdown-menu excel-list" style="left:-100px;" table-selector="'tablaConcepto'" export-options="{type: 'excel', escape: true,ignoreColumn:[9], tableName: 'Concepto' }" aria-labelledby="dropdownMenu1">
+				<li onclick="export_table_to_excel('tablaConcepto','Conceptos','[1]','[9]')">
+						<span>Excel</span>
+				</li>
+				<li te-option te-value="'csv'" te-param="'type'">
+						<span>CSV</span>
+				</li>
+				<li te-option te-value="'txt'" te-param="'type'">
+						<span>TXT</span>
+				</li>
+			</ul>
+		</div>
+		<div flex style="margin-left:-5px;"></div>
+	</div>
+	<center>
+		<table st-sticky-header st-table="conceptoCtrl.conceptosCollection" st-safe-src="conceptoCtrl.conceptos" class="table-bordered table-striped ng-table-monitor apesaFont14" id="tablaConcepto">
+			<thead style="border: 0;color: white;background: #22224b;z-index:1;">
+				<tr style="border: 0;">
+					<th style="text-align:center; width:100px;" st-sort="Clave">Clave</th>
+					<th style="text-align:center; width:230px;" st-sort="Nombre">Nombre Corto</th>
+					<th style="text-align:center; width:250px;" st-sort="Descripcion">Descripción</th>
+					<th style="text-align:center; width:80px;" st-sort="CuentaN">Cuenta</th>
+					<th style="text-align:center; width:40px;" st-sort="Tipo">Tipo</th>
+					<th style="text-align:center; width:140px;" st-sort="CuentaContable">Cuenta Contable</th>
+					<th style="text-align:center; width:130px;" st-sort="Activo">Estatus</th>
+					<th style="text-align:center; width:60px;" st-sort="Emite">Emite</th>
+					<th style="text-align:center; width:170px;" st-sort="Departamento">Departamento</th>
+					<th style="text-align:center;position:relative;width:80px;"></th>
+				</tr>
+				<tr>
+					<td colspan="10">
+						<input st-search placeholder="Búsqueda global" class="input-sm form-control" type="text">
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="concepto in conceptoCtrl.conceptosCollection">
+					<td style="width:100px;" title="'{{concepto.Clave}}'">
+						<div class="overflowContainer">{{concepto.Clave}}</div>
+					</td>
+					<td style="width:230px;" title="'{{concepto.Nombre}}'">
+						<div class="overflowContainer">{{concepto.Nombre}}</div>
+					</td>
+					<td style="width:250px;" title="'{{concepto.Descripcion}}'">
+						<div class="overflowContainer">{{concepto.Descripcion}}</div>
+					</td>
+					<td style="width:80px;" title="'{{concepto.CuentaN}}'">
+						<div class="overflowContainer">{{concepto.CuentaN}}</div>
+					</td>
+					<td style="width:40px;height:25px;text-align:center;" title="'{{concepto.Tipo === 1 ? 'Salida' : 'Entrada'}}'">
+							 {{concepto.Tipo === 1 ? 'S' : 'E'}}
+					</td>
+					<td style="width:140px;height:25px;" title="'{{concepto.CuentaContable}}'">
+						<div admin-mask mask="{{conceptoCtrl.mascara}}" mask-char="-" ng-Model="concepto.CuentaContable" class="overflowContainer">{{concepto.CuentaContable}}</div>
+					</td>
+					<td style="width:130px;" title="{{concepto.EstatusActivo}}">
+						<div class="overflowContainer">{{concepto.EstatusActivo}}</div>
+					</td>
+					<td style="width:60px;height:25px;text-align:center;">
+						<span class="glyphicon"><md-switch ng-model="concepto.Emite" ng-disabled="true" class="md-primary md-switch" aria-label="Switch 2" ng-true-value="1" ng-false-value="0"></md-switch></span>
+						<span ng-hide="true">{{concepto.Emite === 1 ? 'Si' : 'No'}}</span>
+					</td>
+					<td style="width:170px; height:25px;text-align:left;" title="{{concepto.Departamento}}">
+						<div class="overflowContainer">{{concepto.Departamento}}</div>
+					</td>
+					<td style="text-align:center; color:#333; height:25px;width:90px;">
+              				<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-eye-open" title="Consultar" ng-click="conceptoCtrl.watch(concepto)"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-pencil" permisopantalla permiso="3" idpantalla="10" title="Editar" ng-click="conceptoCtrl.edit(concepto)"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon"></span>
+							<span class="glyphicon glyphicon-trash" permisopantalla permiso="4" idpantalla="10" title="Borrar" ng-click="conceptoCtrl.del(concepto)"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</center>
+	<br>
+</div>
+<loading-modal class="modal show" loadshow="conceptoCtrl.loading" data-backdrop="static"/>
+<br>

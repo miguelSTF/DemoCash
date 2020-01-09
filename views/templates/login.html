@@ -1,0 +1,35 @@
+<div class="modal-dialog">
+  <h2 class="modal-title" align="center">Iniciar sesión</h2>
+  <div class="modal-body">
+    <form name="form" role="form" ng-submit="loginCtrl.verificar()">
+        <div class="form-group input-group" ng:class="{true:'has-success', false:'has-error'}[form.username.$valid]">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+            <input placeholder="Nombre de Usuario" type="text" name="username" id="username" class="form-control" ng-model="loginCtrl.username" autocomplete="off" required />
+            <span ng-show="form.username.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+            <span ng-show="form.username.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+        <div class="form-group input-group" ng:class="{true:'has-success', false:'has-error'}[form.password.$valid]">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+            <input placeholder="Contraseña" type="password" name="password" id="password" class="form-control" ng-model="loginCtrl.password" autocomplete="off" required />
+            <span ng-show="form.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+            <span ng-show="form.password.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+        <br>
+        <div align="right">
+            <button type="submit" class="btn btn-primary">
+              <span class="glyphicon glyphicon-log-in"></span>
+              Iniciar Sesion
+            </button >
+        </div>
+        <br>
+        <div align="center" class="media alert alert-success" ng-show="loginCtrl.msExito">
+          <span class="glyphicon glyphicon-ok"></span>
+          {{loginCtrl.msNotify}}
+        </div>
+        <div align="center" class="media alert alert-danger" ng-show="loginCtrl.msError">
+          <span class="glyphicon glyphicon-exclamation-sign">  </span>
+          {{loginCtrl.msNotify}}
+        </div>
+    </form>
+  </div>
+</div>

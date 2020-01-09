@@ -1,0 +1,75 @@
+<div class="row positionPrincipalDiv" ng-init="grupocuentasCtrl.init()">
+	<div layout="row" style="padding-right:30px;" class="apesaFont14">
+		<div flex></div>
+		<div flex="8">
+			<md-button title="Agregar" permisopantalla permiso="2" idpantalla="17" ng-click="grupocuentasCtrl.newEdit()" class="md-raised md-primary">Agregar</md-button>
+		</div>
+		<div flex="8" class="dropdown">
+			<md-button class="md-icon-button" ng-disabled="grupocuentasCtrl.Grupos.length === 0 || grupocuentasCtrl.Grupos === undefined" data-toggle="dropdown" title="Exportar" style="margin:0px; padding:0px; top:5px;">
+              <span class="glyphicon glyphicon-save" style="font-size: 30px;"></span>
+            </md-button>
+			<ul class="table-export dropdown-menu excel-list" table-selector="'tablaGrupoCuentas'" export-options="{type: 'excel', escape: true, htmlContent:'true', ignoreColumn : [4], tableName: 'Grupo_Cuentas' }" aria-labelledby="dropdownMenu1">
+					<li onclick="export_table_to_excel('tablaGrupoCuentas','Grupos de Cuentas','[1]','[4]')">
+							<span>Excel</span>
+					</li>
+					<li te-option te-value="'csv'" te-param="'type'">
+							<span style="cursor:pointer">CSV</span>
+					</li>
+					<li te-option te-value="'txt'" te-param="'type'">
+							<span style="cursor:pointer">TXT</span>
+					</li>
+			</ul>
+		</div>
+		<div flex="10" style="margin-left:-5px;"></div>
+	</div>
+	<center>
+		<table st-sticky-header style="width:1000px;" st-table="grupocuentasCtrl.GrupoCuentas" st-safe-src="grupocuentasCtrl.Grupos" class="table-bordered table-striped ng-table-monitor apesaFont14" id="tablaGrupoCuentas">
+			<thead style="border: 0;color: white;background: #22224b;z-index:1;">
+				<tr style="border: 0;">
+					<th style="text-align:center; width:200px" st-sort="Nombre">Grupos</th>
+					<th style="text-align:center; width:350px">Cuentas</th>
+					<th style="text-align:center; width:200px" st-sort="IdDivisa">Divisas</th>
+					<th style="text-align:center; width:100px" st-sort="Activo">Activo</th>
+					<th style="text-align:center; width:200px" ></th>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<input st-search placeholder="Búsqueda Global" class="input-sm form-control" type="text">
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="Grupocuenta in grupocuentasCtrl.GrupoCuentas">
+					<td title="{{Grupocuenta.Nombre}}" style="width:200px; position:relative;">
+						<div class="overflowContainer">{{Grupocuenta.Nombre}}</div>
+					</td>
+					<td title="{{Grupocuenta.ncuenta}}" style="width:350px; position:relative;">
+						<div style="height:25px; overflow:auto;width:auto;">
+								<div class="overflowContainerDropDown" ng-repeat="relacionI in Grupocuenta.ncuenta" title="{{relacionI}}">
+										{{relacionI}}
+								</div>
+						</div>
+					</td>
+					<td style="text-align:center;width:200px;" title="{{Grupocuenta.divisa}}"><div class="overflowContainer">{{Grupocuenta.divisa}}</div></td>
+					<td style="text-align:center;width:100px;">
+						<span class="glyphicon"><md-switch ng-model="Grupocuenta.Activo" ng-disabled="true" class="md-switch md-primary" aria-label="Switch 2" ng-true-value="1" ng-false-value="0"></md-switch></span>
+						<span ng-hide="true">{{Grupocuenta.Activo === 1? "Si" : "No"}}</span>
+					</td>
+					<td style="text-align:center; width:200px; color:#333;">
+						<span class="glyphicon"></span>
+            			<span class="glyphicon"></span>
+						<span class="glyphicon glyphicon-eye-open" title="Consultar" ng-click="grupocuentasCtrl.watch(Grupocuenta)"></span>
+						<span class="glyphicon"></span>
+						<span class="glyphicon"></span>
+						<span class="glyphicon glyphicon-pencil" permisopantalla permiso="3" idpantalla="17" title="Editar" ng-click="grupocuentasCtrl.edit(Grupocuenta)"></span>
+						<span class="glyphicon"></span>
+						<span class="glyphicon"></span>
+						<span class="glyphicon glyphicon-trash" permisopantalla permiso="4" idpantalla="17" title="Borrar" ng-click="grupocuentasCtrl.del(Grupocuenta)"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</center>
+	<br>
+</div>
+<loading-modal class="modal show" loadshow="grupocuentasCtrl.loading" data-backdrop="static"/>

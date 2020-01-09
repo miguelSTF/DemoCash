@@ -1,0 +1,131 @@
+<md-dialog style="width:850px; height:500px;" class="row positionPrincipalDiv">
+  <form style="padding-top:20px" name="configTrasCtrl.ConfigTraspasoForm" class="form-horizontal" ng-submit="Save()" role="form" novalidate>
+    <div layout="row">
+        <div flex="50" style="padding-left:5.5%;">
+            <md-input-container flex="100">
+                <label>Nombre</label>
+                <input ng-disabled="configTrasCtrl.readOnlyEditDiv" style="width:300px" type="text" ng-model="configTrasCtrl.configTraspadoEdit.Nombre" maxlength="30" required capitalize />
+            </md-input-container>
+        </div>
+        <div flex="5">
+        </div>
+        <div flex="20">
+            <label style="text-align:right;" for="Id_Config_Traspaso" class="control-label" ng-hide="!configTrasCtrl.readOnlyEditDiv" style="margin:15px;">Id_Config_Traspaso: {{configTrasCtrl.configTraspadoEdit.IdTraspaso}}</label>
+        </div>
+        <div flex="10"></div>
+        <div flex="15">
+            <button class="btn btn-primary btn-md" title="Guardar" ng-click="configTrasCtrl.saveEdit()" ng-disabled="configTrasCtrl.ConfigTraspasoForm.$invalid || !configTrasCtrl.ConfigTraspasoForm.$dirty" tabindex="5" ng-hide="configTrasCtrl.readOnlyEditDiv">
+                <span class="glyphicon glyphicon-saved"></span>
+            </button>
+            <button class="btn btn-primary btn-md" title="Cancelar" tabindex="6" ng-click="configTrasCtrl.viewDialog()">
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+        </div>
+    </div>
+    <br>
+    <div layout="row" layout="center">
+        <div flex="5"></div>
+        <div flex="45" style="text-align: center">
+            <md-input-container class="md-block" style="text-align:left">
+                <label>Cuenta Origen</label>
+                <md-select ng-disabled="configTrasCtrl.readOnlyEditDiv" ng-model="configTrasCtrl.configTraspadoEdit.IdCuentaOrigen" multiple="false" md-on-close="configTrasCtrl.searchCuentaOrigen = ''" data-md-container-class="selectdemoSelectHeader" required>
+                    <md-select-header class="demo-select-header">
+                    <input ng-keydown="configTrasCtrl.handleKeyup($event)" ng-model="configTrasCtrl.searchCuentaOrigen" ng-focus="configTrasCtrl.focusInput" type="search" placeholder="Buscar cuenta origen" class="demo-header-searchbox _md-text">
+                    </md-select-header>
+                    <md-optgroup label="Cuenta Origen">
+                    <md-option ng-value="cuentaOrigen.IdCuentaCorriente" ng-repeat="cuentaOrigen in configTrasCtrl.cuentas | filter:configTrasCtrl.searchCuentaOrigen">{{cuentaOrigen.Alias}} {{cuentaOrigen.Cuenta}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div flex="5"></div>
+        <div flex="40">
+            <md-input-container class="md-block" style="text-align:left">
+                <label>Departamento Origen</label>
+                <md-select ng-disabled="configTrasCtrl.readOnlyEditDiv" ng-change="configTrasCtrl.DepartamentoChange(configTrasCtrl.configTraspadoEdit.IdDepartamentoOrigen,'Origen',true)" ng-model="configTrasCtrl.configTraspadoEdit.IdDepartamentoOrigen" multiple="false" md-on-close="configTrasCtrl.searchDepaOrigen = ''" data-md-container-class="selectdemoSelectHeader" required>
+                    <md-select-header class="demo-select-header">
+                    <input ng-keydown="configTrasCtrl.handleKeyup($event)" ng-model="configTrasCtrl.searchDepaOrigen" ng-focus="configTrasCtrl.focusInput" type="search" placeholder="Buscar departamento origen" class="demo-header-searchbox _md-text">
+                    </md-select-header>
+                    <md-optgroup label="Departamento">
+                    <md-option ng-value="departamentoOrigen.IdDepartamento" ng-repeat="departamentoOrigen in configTrasCtrl.departamentos | catalogRelation: configTrasCtrl.departamentoPorUsuario:'Departamento' | filter:configTrasCtrl.searchDepaOrigen">{{departamentoOrigen.Nombre}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+    <div layout="row" layout="center">
+        <div flex="5"></div>
+        <div flex="90">
+            <md-input-container class="md-block" style="text-align:left">
+                <label>Concepto Origen</label>
+                <md-select ng-disabled="configTrasCtrl.readOnlyEditDiv" ng-model="configTrasCtrl.configTraspadoEdit.IdConceptoOrigen" multiple="false" md-on-close="configTrasCtrl.searchCeptoOrigen = ''" data-md-container-class="selectdemoSelectHeader" required>
+                <md-select-header class="demo-select-header">
+                    <input ng-keydown="configTrasCtrl.handleKeyup($event)" ng-model="configTrasCtrl.searchCeptoOrigen" ng-focus="configTrasCtrl.focusInput" type="search" placeholder="Buscar concepto origen" class="demo-header-searchbox _md-text">
+                </md-select-header>
+                <md-optgroup label="Concepto Origen">
+                    <md-option ng-value="ceptoOrigen.IdConcepto" ng-repeat="ceptoOrigen in configTrasCtrl.conceptos | filter:{IdCuentaCorriente:configTrasCtrl.configTraspadoEdit.IdCuentaOrigen,Tipo:1} | catalogRelation: configTrasCtrl.conceptoPorDepartamentoOrigen:'Concepto' | catalogRelation: configTrasCtrl.conceptoPorUsuarioOrigen:'Concepto' | filter:configTrasCtrl.searchCeptoOrigen">{{ceptoOrigen.Nombre}}</md-option>
+                </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+    <div layout="row" layout="center">
+        <div flex="5"></div>
+        <div flex="45" style="text-align: center">
+            <md-input-container class="md-block" style="text-align:left">
+                <label>Cuenta Destino</label>
+                <md-select ng-disabled="configTrasCtrl.readOnlyEditDiv" ng-model="configTrasCtrl.configTraspadoEdit.IdCuentaDestino" multiple="false" md-on-close="configTrasCtrl.searchCuentaDestino = ''" data-md-container-class="selectdemoSelectHeader" required>
+                    <md-select-header class="demo-select-header">
+                    <input ng-keydown="configTrasCtrl.handleKeyup($event)" ng-model="configTrasCtrl.searchCuentaDestino" ng-focus="configTrasCtrl.focusInput" type="search" placeholder="Buscar cuenta destino" class="demo-header-searchbox _md-text">
+                    </md-select-header>
+                    <md-optgroup label="Cuenta Origen">
+                    <md-option ng-value="cuentaDestino.IdCuentaCorriente" ng-repeat="cuentaDestino in configTrasCtrl.cuentas | filter:configTrasCtrl.searchCuentaDestino">{{cuentaDestino.Alias}} {{cuentaDestino.Cuenta}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div flex="5"></div>
+        <div flex="40">
+            <md-input-container class="md-block" style="text-align:left">
+                <label>Departamento Destino</label>
+                <md-select ng-disabled="configTrasCtrl.readOnlyEditDiv" ng-change="configTrasCtrl.DepartamentoChange(configTrasCtrl.configTraspadoEdit.IdDepartamentoDestino,'Destino',true)" ng-model="configTrasCtrl.configTraspadoEdit.IdDepartamentoDestino" multiple="false" md-on-close="configTrasCtrl.searchDepaDestino = ''" data-md-container-class="selectdemoSelectHeader" required>
+                    <md-select-header class="demo-select-header">
+                    <input ng-keydown="configTrasCtrl.handleKeyup($event)" ng-model="configTrasCtrl.searchDepaDestino" ng-focus="configTrasCtrl.focusInput" type="search" placeholder="Buscar departamento destino" class="demo-header-searchbox _md-text">
+                    </md-select-header>
+                    <md-optgroup label="Departamento">
+                    <md-option ng-value="departamentoDestino.IdDepartamento" ng-repeat="departamentoDestino in configTrasCtrl.departamentos | catalogRelation: configTrasCtrl.departamentoPorUsuario:'Departamento' | filter:configTrasCtrl.searchDepaDestino">{{departamentoDestino.Nombre}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+    <div layout="row" layout="center">
+        <div flex="5"></div>
+        <div flex="90">
+        <md-input-container class="md-block" style="text-align:left">
+            <label>Concepto Destino</label>
+            <md-select ng-disabled="configTrasCtrl.readOnlyEditDiv" ng-model="configTrasCtrl.configTraspadoEdit.IdConceptoDestino" multiple="false" md-on-close="configTrasCtrl.searchCeptoDestino = ''" data-md-container-class="selectdemoSelectHeader" required>
+            <md-select-header class="demo-select-header">
+                <input ng-keydown="configTrasCtrl.handleKeyup($event)" ng-model="configTrasCtrl.searchCeptoDestino" ng-focus="configTrasCtrl.focusInput" type="search" placeholder="Buscar concepto destino" class="demo-header-searchbox _md-text">
+            </md-select-header>
+            <md-optgroup label="Concepto Destino">
+                <md-option ng-value="ceptoDestino.IdConcepto" ng-repeat="ceptoDestino in configTrasCtrl.conceptos | filter:{IdCuentaCorriente:configTrasCtrl.configTraspadoEdit.IdCuentaDestino,Tipo:0} | catalogRelation: configTrasCtrl.conceptoPorDepartamentoDestino:'Concepto' | catalogRelation: configTrasCtrl.conceptoPorUsuarioDestino:'Concepto' | filter:configTrasCtrl.searchCeptoDestino">{{ceptoDestino.Nombre}}</md-option>
+            </md-optgroup>
+            </md-select>
+        </md-input-container>
+        </div>
+    </div>
+    <div layout="row" layout="center">
+        <div flex="10">
+        </div>
+        <div flex="10" style="padding-top:10px;">
+            <label for="Activo" class="control-label">Activo:</label>              
+        </div>
+        <div flex="5">
+            <md-switch class="md-primary" tabindex="3" ng-disabled="configTrasCtrl.readOnlyEditDiv" ng-model="configTrasCtrl.configTraspadoEdit.Activo" aria-label="Switch 2" ng-true-value="1" ng-false-value="0">
+            </md-switch>
+        </div>
+    </div>
+  </form>
+</md-dialog>
+<div id="toast-container"></div>

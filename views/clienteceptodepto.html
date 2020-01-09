@@ -1,0 +1,122 @@
+
+<div class="row positionPrincipalDiv" ng-init="clienteceptodeptoCtrl.init()">
+    <div class="apesaFont14">
+        <div class="col-md-5 col-md-offset-3">
+            <md-input-container class="md-block">
+                <label>Selecciona un cliente</label>
+                <md-select ng-change="clienteceptodeptoCtrl.selectedItemChange(clienteceptodeptoCtrl.selectedItem)" ng-model="clienteceptodeptoCtrl.selectedItem" multiple="false" md-on-close="clienteceptodeptoCtrl.searchCliente = ''" data-md-container-class="selectdemoSelectHeader" required>
+                    <md-select-header class="demo-select-header">
+                        <input ng-keydown="clienteceptodeptoCtrl.handleKeyup($event)" ng-model="clienteceptodeptoCtrl.searchCliente" type="search" placeholder="Buscar un cliente" class="demo-header-searchbox _md-text">
+                    </md-select-header>
+                    <md-optgroup label="Cliente">
+                        <md-option ng-value="item" ng-repeat="item in clienteceptodeptoCtrl.clientes | orderBy : 'NombreCorto' | filter: {display: clienteceptodeptoCtrl.searchCliente}">{{item.display}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-7 col-md-offset-2">
+            <div>
+                <table class="table" style="color:#333; font-size:14px;">
+                    <thead>
+                        <tr>
+                            <th>Clave Externa</th>
+                            <th>Nombre</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{clienteceptodeptoCtrl.selectedItem.IdClaveExterna}}</td>
+                            <td>{{clienteceptodeptoCtrl.selectedItem.Nombre}}</td>
+                            <td>
+                                <span class="glyphicon glyphicon-th-list" style="font-size: 20px;" title="Cuentas" ng-click="clienteceptodeptoCtrl.SearchCuentas(clienteceptodeptoCtrl.selectedItem.IdContraparte)"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7 col-md-offset-2">
+            <md-input-container class="md-block" style="font-size:14px; color:#333;">
+                <label>Selecciona los departamentos del cliente</label>
+                <md-select md-on-open="clienteceptodeptoCtrl.cambioEstado()" ng-model="clienteceptodeptoCtrl.datosCliente.Departamentos" md-on-close="clienteceptodeptoCtrl.clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" multiple="">
+                    <md-select-header class="demo-select-header">
+                        <input ng-keydown="clienteceptodeptoCtrl.handleKeyup($event)" ng-model="clienteceptodeptoCtrl.searchTerm" type="search" placeholder="Departamentos.." class="demo-header-searchbox md-text">
+                    </md-select-header>
+                    <md-optgroup label="depto">
+                        <md-option ng-value="depto" ng-repeat="depto in clienteceptodeptoCtrl.datosCliente | filter:clienteceptodeptoCtrl.searchTerm">
+                          {{depto.Nombre}}
+                        </md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 col-md-offset-8">
+          <md-button title="Guardar" ng-click="clienteceptodeptoCtrl.save()" ng-disabled="clienteceptodeptoCtrl.selectedItem === null" class="md-raised md-primary">Guardar</md-button>
+        </div>
+    </div>
+</div>
+<br>
+<center>
+    <div class="col-md-12">
+        <table class="table table-striped" style="color:#333; font-size:14px; border-collapse:separate;">
+            <thead>
+                <tr>
+                  <th style="width:215px;">Departamentos</th>
+                  <th style="width:825px;">Conceptos</th>
+                  <th style="width:215px; padding-left:40px;">Agregar Conceptos</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="depto in clienteceptodeptoCtrl.datosCliente.Departamentos">
+                  <td class="td-width td-height" style="width:215px; vertical-align:middle;">
+                    <span>{{depto.Nombre}}</span>
+                  </td>
+                  <td style="width:825px; vertical-align:middle;">
+                    <span  class="overflowContainer" title="{{depto.ceptosAsignadosUsuarioToolCopy}}">{{ depto.ceptosAsignadosUsuarioTool }}</span>
+                    <div uib-collapse="!isCollapsed">
+                      <br></br>
+                      <div layout="row" layout-wrap="" flex="">
+                        <div flex="100">
+                          <center>
+                            <label>Selecciona conceptos</label>
+                          </center>
+                        </div>
+                        <div style="padding-left: 30px;" flex="75" ng-show="clienteceptodeptoCtrl.haveCeptos(depto)">
+                          <md-checkbox style="margin-top:2px;margin-bottom:5px;" class="md-primary" aria-label="Select All" ng-checked="clienteceptodeptoCtrl.isChecked(depto)" ng-click="clienteceptodeptoCtrl.selectAll(depto)">
+                            <label>Seleccionar Todo</label>
+                          </md-checkbox>
+                        </div>
+                      </div>
+                      <div style="padding-left: 50px;" layout="row" layout-wrap="" flex="">
+                        <div style="padding-left: 8px;" flex="45" ng-repeat="relacion in depto.conceptos  | filter :{relacionDepa:true}">
+                          <md-checkbox style="margin-top:1px;margin-bottom:1px;" class="md-primary" ng-model="relacion.relacionCliente" ng-change="clienteceptodeptoCtrl.cambioEstado()" aria-label="Checkbox 1">
+                            <span style="width:290px"  class="overflowContainer" title="{{relacion.Nombre}}">{{ relacion.Nombre }}</span>
+                          </md-checkbox>
+                        </div>
+                      </div>
+                      <center>
+                        <label ng-show="!clienteceptodeptoCtrl.haveCeptos(depto)">No tiene conceptos asignados!!</label>
+                      </center>
+                    </div>
+                  </td>
+                  <td class="td-width td-height" style="width:215px;position: relative;padding-left:80px">
+                    <md-button class="md-raised md-icon-button md-primary" style="margin-top:0px;margin-bottom:0px;margin-right:0px;"  ng-click="isCollapsed = !isCollapsed" ng-disabled="clienteceptodeptoCtrl.selectedItem === null">
+                      <span class="glyphicon glyphicon-menu-down" ng-show="!isCollapsed"></span>
+                      <span class="glyphicon glyphicon-menu-up" ng-show="isCollapsed"></span>
+                    </md-button>
+                  </td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+</center>
+<loading-modal class="modal show" loadshow="clienteceptodeptoCtrl.loading" data-backdrop="static" />
